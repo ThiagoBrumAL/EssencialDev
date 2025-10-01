@@ -8,7 +8,7 @@ body{
   padding: 0;
   box-sizing: border-box;
   background-color: #FFFFFF;
-  height: 100dvh;
+  min-height: 100dvh;
 }
 
 #root{

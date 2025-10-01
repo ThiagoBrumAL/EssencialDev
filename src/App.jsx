@@ -4,7 +4,7 @@ import LoginScreen from "./pages/LoginScreen"
 
 function App() {
   return (
-    <main className="h-[100%] w-[100%]">
+    <main className="min-h-dvh w-full">
       <LoginScreen />
     </main>
   )

@@ -20,8 +20,8 @@ function LoginScreen(){
 
 
     return (
-        <div id="login-screen" className="w-full h-full flex">
-            <section id="login-screen-section-one" className={`w-full h-full bg-gradient-to-tr ${theme ? "from-indigo-400 to-indigo-300" : " from-slate-950 to-indigo-950"}`}>
+        <div id="login-screen" className="w-full min-h-dvh flex">
+            <section id="login-screen-section-one" className={`w-full min-h-full bg-gradient-to-tr ${theme ? "from-indigo-400 to-indigo-300" : " from-slate-950 to-indigo-950"} py-6`}>
                 <div className="h-[50%] w-full flex justify-center items-center">
                     <div id="box" className="space-y-6">
                         <h1 className="text-slate-50 text-4xl text-left font-[700]
@@ -33,33 +33,55 @@ function LoginScreen(){
                     <img id="logo" className="max-h-[180px] max-w-[242px]" src="/Vector.png" alt="" />
                 </div>
             </section>
-            <section id="login-screen-div-two" className="bg-slate-50 w-full h-full flex items-center flex-col relative py-6">
-                <div className="flex justify-center flex-col max-w-[436px] w-[100%] mt-[80px]">
-                    <div className="w-[100%] p-6">
-                        <h1 className="text-slate-950 font-[700] text-[28px] ">Faça seu login agora!</h1>
-                        <p className="text-slate-950 text-[16px] mb-[70px]">Deixe seus exames em dia.</p>
-                    </div>
-                    <form id="form" className="mb-[31px] w-[100%] p-6" action="">
-                        {
-                            fields.map((field, index) => {
-                                return <FormField key={index} value={field}/>
-                            })
-                        }
-                        
-                        <ButtonMain link={""}/>
-                    </form>
-                </div>
+            <section id="login-screen-div-two" className="bg-slate-50 w-full min-h-full flex items-center justify-center relative py-6">
+                <div className="max-w-[436px] w-full flex flex-col items-center">
+                    <div className="flex justify-center flex-col w-full">
+                        <div className="w-[100%] p-6">
+                            <h1 className="text-slate-950 font-[700] text-[28px] ">Faça seu login agora!</h1>
+                            <p className="text-slate-950 text-[16px] mb-[70px]">Deixe seus exames em dia.</p>
+                        </div>
+                        <form id="form" className="mb-[31px] w-[100%] p-6" action="">
 
-                < MessageAfter id={"message-after-button-sign-in"} message1={"Não possui conta?"} message2={"Faça o seu Cadastro"} link={"https://google.com"} size={"text-[16px]"} padding={"px-6"}/>
+                            {
+                                fields.map((field, index) => {
+                                    return <FormField key={index} value={field}/>
+                                })
+                            }
 
-                <div id="container-theme" className="bottom-[44px] flex gap-12 absolute">
-                    <div className="flex gap-1 items-center">
-                        <Lightbulb className={`m-0 p-0 text-slate-500 font-[500] `}/>
-                        
-                        <p className="m-0 p-0 text-slate-500 font-[500]">{theme ? "Modo escuro" : "Modo claro"}</p>
+                            <ButtonMain 
+                                link={""}
+                            />
+
+                        </form>
                     </div>
-                    <div className="flex items-center">
-                        <ButtonTheme theme={theme} changeTheme={changeTheme}/>
+
+                    < MessageAfter 
+                        id={"message-after-button-sign-in"} 
+                        message1={"Não possui conta?"} 
+                        message2={"Faça o seu Cadastro"} 
+                        link={"https://google.com"} 
+                        size={"text-[16px]"} 
+                        padding={"px-6"}
+                    />
+
+                    <div id="container-theme" className="flex gap-12">
+                        <div className="flex gap-1 items-center">
+
+                            <Lightbulb 
+                                className={`m-0 p-0 text-slate-500 font-[500] `}
+                            />
+                            
+                            <p className="m-0 p-0 text-slate-500 font-[500]">{theme ? "Modo escuro" : "Modo claro"}</p>
+
+                        </div>
+                        <div className="flex items-center">
+
+                            <ButtonTheme 
+                                theme={theme} 
+                                changeTheme={changeTheme}
+                            />
+
+                        </div>
                     </div>
                 </div>
             </section>
