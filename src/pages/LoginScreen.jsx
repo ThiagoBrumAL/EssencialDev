@@ -36,7 +36,7 @@ function LoginScreen(){
                     <img id="logo" className="max-h-[180px] max-w-[242px]" src="/Vector.png" alt="" />
                 </div>
             </section>
-            <section id="login-screen-div-two" className={`${validateTheme(theme, "bg-slate-50", "bg-slate-900")} w-full min-h-dvh flex items-center justify-between py-8 flex-col`}>
+            <section id="login-screen-div-two" className={`${validateTheme(theme, "bg-slate-50", "bg-slate-900")} w-full min-h-dvh flex items-center justify-between py-4 flex-col`}>
                 <div className="max-w-[436px] w-full flex flex-col items-center md:mt-[100px]">
                     <div className="flex justify-center flex-col w-full">
                         <div className={`${validateTheme(theme, "text-slate-950", "text-slate-500")} w-[100%] px-6`}>
@@ -65,7 +65,7 @@ function LoginScreen(){
                         padding={"px-6"}
                     />
                 </div>
-                <div id="container-theme" className="flex flex-col gap-4 items-center sm:gap-12 sm:flex-row">
+                <div id="container-theme" className="flex flex-col gap-4 items-center mt-2 sm:gap-12 sm:flex-row">
                     <div className="flex gap-1 items-center">
 
                         <Lightbulb 
