@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #FFFFFF;
+  height: 100dvh;
+}
+
+#root{
+  height: 100%;
+  width: 100%;
+}
+
+@media (max-width: 490px){
+  #container-theme{
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+  }
+}
+
+@media (max-width: 700px) {
+  #login-screen-section-one{
+    display: none;
+  }
+}
+
+@media (max-width: 960px) {
+  #login-screen{
+    flex-direction: column;
+  }
+  #form{
+    margin-bottom: 0px;
+  }
+  #message-after-button-sign-in{
+    margin-bottom: 70px;
+  }
+}
