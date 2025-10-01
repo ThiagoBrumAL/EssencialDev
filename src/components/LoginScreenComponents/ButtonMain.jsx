@@ -6,7 +6,7 @@ function ButtonMain({link}){
     }
 
     return (
-        <button onClick={() => Enter()} className="bg-indigo-500 w-full text-slate-50 py-2 rounded-full mt-[90px] font-[500]">ENTRAR</button>
+        <button onClick={() => Enter()} className="bg-indigo-500 w-full text-slate-50 py-2 rounded-full mt-[30px] sm:mt-[90px] font-[500]">ENTRAR</button>
     )
 }
 
