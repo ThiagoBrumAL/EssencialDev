@@ -21,7 +21,7 @@ function LoginScreen(){
 
     return (
         <div id="login-screen" className="w-full min-h-dvh flex md:flex-row flex-col">
-            <section id="login-screen-section-one" className={` hidden sm:block w-full min-h-full bg-gradient-to-tr ${theme ? "from-indigo-400 to-indigo-300" : " from-slate-950 to-indigo-950"} py-6`}>
+            <section id="login-screen-section-one" className={` hidden sm:block w-full min-h-full bg-gradient-to-tr ${theme ? "from-indigo-400 to-indigo-300" : " from-slate-950 to-slate-800"} py-6`}>
                 <div className="h-[50%] w-full flex justify-center items-center">
                     <div id="box" className="space-y-6">
                         <h1 className="text-slate-50 text-4xl text-left font-[700]
@@ -33,21 +33,20 @@ function LoginScreen(){
                     <img id="logo" className="max-h-[180px] max-w-[242px]" src="/Vector.png" alt="" />
                 </div>
             </section>
-            <section id="login-screen-div-two" className="bg-slate-50 w-full min-h-full flex items-center justify-between py-6 flex-col">
+            <section id="login-screen-div-two" className={`${theme ? "bg-slate-50" : "bg-slate-900"} w-full min-h-full flex items-center justify-between py-6 flex-col`}>
                 <div className="max-w-[436px] w-full flex flex-col items-center md:mt-[100px]">
                     <div className="flex justify-center flex-col w-full">
-                        <div className="w-[100%] p-6">
-                            <h1 className="text-slate-950 font-[700] text-[28px] ">Faça seu login agora!</h1>
-                            <p className="text-slate-950 text-[16px] mb-0 md:mb-[70px]">Deixe seus exames em dia.</p>
+                        <div className={`${theme ? "text-slate-950" : "text-slate-500"} w-[100%] p-6`}>
+                            <h1 className="font-[700] text-[28px]">Faça seu login agora!</h1>
+                            <p className="text-[16px] mb-0 md:mb-[70px]">Deixe seus exames em dia.</p>
                         </div>
                         <form id="form" className="sm:mb-[31px] w-[100%] p-6 mb-0" action="">
 
                             {
                                 fields.map((field, index) => {
-                                    return <FormField key={index} value={field}/>
+                                    return <FormField key={index} value={field} theme={theme}/>
                                 })
                             }
-
                             <ButtonMain 
                                 link={""}
                             />
