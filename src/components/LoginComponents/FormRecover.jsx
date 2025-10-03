@@ -17,7 +17,7 @@ function FormRecover({validateTheme, theme, fields}){
                 )} w-[100%]`}
                 >
                 <h1 className="font-[700] text-[28px]">Recupere sua conta!</h1>
-                <p className="text-[16px] mb-0 md:mb-[70px]">
+                <p className="text-[16px] mb-[20px] md:mb-[70px]">
                     digite seu e-mail para receber um link de verificação
                 </p>
                 </div>
@@ -43,7 +43,7 @@ function FormRecover({validateTheme, theme, fields}){
                     message1={"Lembrou sua senha?"}
                     message2={"Retorne para fazer login"}
                     size={"text-[16px]"}
-                    link={"/signin"}
+                    link={"/sign-in"}
                     flexAlign={"items-center"}
                     flexJustify={"justify-center"}
                 />

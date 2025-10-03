@@ -23,7 +23,7 @@ function FormSignUp({validateTheme, theme, fields}){
                     <h1 className="font-[700] text-[28px]">
                         Faça seu login agora!
                     </h1>
-                    <p className="text-[16px] mb-0 md:mb-[70px]">
+                    <p className="text-[16px] mb-[20px] md:mb-[70px]">
                         Seu cuidado começa aqui. Crie sua conta em poucos passos.
                     </p>
 
@@ -33,7 +33,7 @@ function FormSignUp({validateTheme, theme, fields}){
                 className="sm:mb-[15px] w-[100%] flex flex-col items-center"
                 action=""
                 >
-                    <div id="body-form" className=" w-full flex lg:flex-row flex-col lg:gap-[40px] gap-[20px]">
+                    <div id="body-form" className=" w-full flex lg:flex-row flex-col lg:gap-[40px]">
                         <div className="w-full">
                         {left.map((field, index) => {
                             return (
@@ -85,7 +85,7 @@ function FormSignUp({validateTheme, theme, fields}){
                 message2={"Faça o seu Login"}
                 size={"text-[16px]"}
                 padding={"px-6"}
-                link={"/signin"}
+                link={"/sign-in"}
             />
         </div>
     )

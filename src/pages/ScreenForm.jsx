@@ -7,22 +7,22 @@ import FormRecover from "../components/LoginComponents/FormRecover";
 import { Routes, Route, useLocation } from "react-router-dom"
 import Title from "../components/LoginComponents/Title";
 
-function SignIn() {
+function ScreenForm() {
 
     const locale = useLocation()
 
     const [fields] = useState([
-        { name: "Nome Completo", type: "text", placeholder: "Insira seu nome completo", link: false, id:"name"},
-        { name: "Altura", type: "text", placeholder: "Insira sua senha", link: false, id:"height"},
-        { name: "Data de Nascimento", type: "text", placeholder: "Insira sua data de nascimento", link: false, id:"data_nascimento"},
-        { name: "Peso", type: "text", placeholder: "Insira seu peso", link: false, id:"weight"},
-        { name: "E-mail", type: "email", placeholder: "Insira seu email", link: false, id:"email"},
-        { name: "Senha", type: "password", placeholder: "Insira sua senha", link: true, id:"password"},
+        { name: "Nome Completo", type: "text", placeholder: "Insira seu nome completo", link: false, id:"name",  },
+        { name: "Altura", type: "text", placeholder: "Insira sua senha", link: false, id:"height", regex:""},
+        { name: "Data de Nascimento", type: "text", placeholder: "Insira sua data de nascimento", link: false, id:"data_nascimento", regex:""},
+        { name: "Peso", type: "text", placeholder: "Insira seu peso", link: false, id:"weight", regex:""},
+        { name: "E-mail", type: "email", placeholder: "Insira seu email", link: false, id:"email", regex:""},
+        { name: "Senha", type: "password", placeholder: "Insira sua senha", link: true, id:"password", regex:""},
     ]);
 
     const [titles] = useState([
-        {page: "/signin", title:"Bem vindo(a) de volta!", subTitle:"Cadastre-se e tenha sua saúde na palma da mão."},
-        {page: "/signup", title:"Estamos prontos para cuidar de você.", subTitle:"Cadastre-se e tenha sua saúde na palma da mão."},
+        {page: "/sign-in", title:"Bem vindo(a) de volta!", subTitle:"Cadastre-se e tenha sua saúde na palma da mão."},
+        {page: "/sign-up", title:"Estamos prontos para cuidar de você.", subTitle:"Cadastre-se e tenha sua saúde na palma da mão."},
         {page: "/recover", title:"Você esqueceu sua senha", subTitle:"Não se apavore!"},
     ])
 
@@ -46,7 +46,7 @@ function SignIn() {
             theme,
             "from-indigo-400 to-indigo-300",
             "from-slate-950 to-slate-800"
-            )} py-6`}
+            )} py-6 px-[24px]`}
         >
             <div className="h-[50%] w-full flex justify-center items-center">
                 <Title path={locale.pathname} titles={titles}/>
@@ -72,8 +72,8 @@ function SignIn() {
         >
 
             <Routes>
-                <Route path="/signin" element={<FormSignIn theme={theme} validateTheme={validateTheme} fields={fields}/>}></Route>
-                <Route path="/signup" element={<FormSignUp theme={theme} validateTheme={validateTheme} fields={fields} />}></Route>
+                <Route path="/sign-in" element={<FormSignIn theme={theme} validateTheme={validateTheme} fields={fields}/>}></Route>
+                <Route path="/sign-up" element={<FormSignUp theme={theme} validateTheme={validateTheme} fields={fields} />}></Route>
                 <Route path="/recover" element={<FormRecover theme={theme} validateTheme={validateTheme} fields={fields}/>}></Route>
             </Routes>
             
@@ -99,4 +99,4 @@ function SignIn() {
     );
 }
 
-export default SignIn;
+export default ScreenForm;

@@ -19,7 +19,7 @@ function FormSignIn({theme, fields, validateTheme}){
                     <h1 className="font-[700] text-[28px]">
                         Faça seu login agora!
                     </h1>
-                    <p className="text-[16px] mb-0 md:mb-[70px]">
+                    <p className="text-[16px] mb-[20px] md:mb-[70px]">
                         Deixe seus exames em dia.
                     </p>
                 </div>
@@ -53,7 +53,7 @@ function FormSignIn({theme, fields, validateTheme}){
                 message1={"Não possui conta?"}
                 message2={"Faça o seu Cadastro"}
                 size={"text-[16px]"}
-                link={"/signup"}
+                link={"/sign-up"}
                 flexAlign={"items-center"}
                 flexJustify={"justify-center"}
             />
