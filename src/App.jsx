@@ -9,7 +9,7 @@ function App() {
     <main className="min-h-dvh w-full">
       <BrowserRouter>
         <Routes>
-            <Route path="/*" element={<ScreenForm />}></Route>
+            <Route path="/sign-in" element={<ScreenForm />}></Route>
         </Routes>
       </BrowserRouter>
     </main>
