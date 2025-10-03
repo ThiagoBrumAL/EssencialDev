@@ -7,7 +7,6 @@ function MessageAfterLink({message1, message2, link, size, flexAlign, flexJustif
                 {message1} <Link to={link} className={`text-indigo-700 font-[600] ${size}`}>
                     {message2}
                 </Link>
-                
             </p>
         </div>
     )

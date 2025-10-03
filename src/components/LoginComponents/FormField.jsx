@@ -28,7 +28,7 @@ function FormField({ value, theme, functionTheme, bool}) {
             <label
                 className={`mb-2 
                 ${theme ? "text-slate-950" : "text-slate-500"}`}
-                htmlFor={`${value.type}`}
+                htmlFor={`${value.id}`}
             >
                 {value.name}
             </label>
@@ -46,7 +46,7 @@ function FormField({ value, theme, functionTheme, bool}) {
                 type={`${value.type}`}
                 placeholder={value.placeholder}
                 name={`${value.type}`}
-                id={`${value.type}`}
+                id={`${value.id}`}
             />
 
             {value.name === "Senha" ? withoutLink(bool) : null}
