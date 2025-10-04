@@ -6,6 +6,7 @@ import FormSignUp from "../components/LoginComponents/FormSignUp";
 import FormRecover from "../components/LoginComponents/FormRecover";
 import { Routes, Route, useLocation } from "react-router-dom"
 import Title from "../components/LoginComponents/Title";
+import Welcome from "./Welcome";
 
 function ScreenForm() {
 
@@ -40,7 +41,7 @@ function ScreenForm() {
         id="login-screen"
         className="w-full min-h-dvh flex md:flex-row flex-col"
         >
-        <section
+        {locale.pathname === "/" ? null : <section
             id="login-screen-section-one"
             className={` hidden sm:block w-full min-h-full bg-gradient-to-tr ${validateTheme(
             theme,
@@ -60,7 +61,7 @@ function ScreenForm() {
                 alt=""
             />
             </div>
-        </section>
+        </section>}
 
         <section
             id="login-screen-div-two"
@@ -75,6 +76,7 @@ function ScreenForm() {
                 <Route path="/sign-in" element={<FormSignIn theme={theme} validateTheme={validateTheme} fields={fields}/>}></Route>
                 <Route path="/sign-up" element={<FormSignUp theme={theme} validateTheme={validateTheme} fields={fields} />}></Route>
                 <Route path="/recover" element={<FormRecover theme={theme} validateTheme={validateTheme} fields={fields}/>}></Route>
+                <Route path="/" element={<Welcome theme={theme} validateTheme={validateTheme}/>}></Route>
             </Routes>
             
             

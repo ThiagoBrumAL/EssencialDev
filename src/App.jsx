@@ -1,7 +1,7 @@
 import "./index.css"
 import './App.css'
-import ScreenForm from "./pages/ScreenForm"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+import ScreenForm from "./pages/ScreenForm"
 
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
     <main className="min-h-dvh w-full">
       <BrowserRouter>
         <Routes>
-            <Route path="/sign-in" element={<ScreenForm />}></Route>
+            <Route path="/*" element={<ScreenForm />}></Route>
         </Routes>
       </BrowserRouter>
     </main>
