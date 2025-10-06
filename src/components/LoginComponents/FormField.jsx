@@ -22,11 +22,6 @@ function FormField({ value, theme, functionTheme, bool}) {
             />
     }
 
-    function onChangeInput(event){
-        console.log(event.target.value);
-    }
-
-
     return (
         <div id="form-field" className="flex flex-col w-[100%] sm:mb-6 mb-3">
             <label
@@ -51,7 +46,6 @@ function FormField({ value, theme, functionTheme, bool}) {
                 placeholder={value.placeholder}
                 name={`${value.type}`}
                 id={`${value.id}`}
-                onChange={(event) => onChangeInput(event)}
                 pattern={value.regex}
             />
 

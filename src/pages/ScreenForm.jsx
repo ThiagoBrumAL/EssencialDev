@@ -27,6 +27,39 @@ function ScreenForm() {
         {page: "/recover", title:"Você esqueceu sua senha", subTitle:"Não se apavore!"},
     ])
 
+    async function sendDatas(event){
+        event.preventDefault();
+
+        const authorized = document.getElementById("authorized");
+        const data = {
+            role: "pacient",
+        };
+
+        for(let f of fields){
+            if(!(document.getElementById(f.id).value)){
+                throw new Error("Field Blank");
+            }else{
+                data[f.id] = document.getElementById(f.id).value;
+            }
+        }
+
+        if(!authorized) throw new Error("Field Blank");
+        data["authorized"] = authorized.checked;
+
+        try {
+            const response =  await fetch("https://essencial-server.vercel.app/auth/sign-up", {
+                method: "POST",
+                headers: {"Content-type": "application/json"},
+                body: JSON.stringify(data)
+            })
+            console.log(response.status);
+            return true;
+        } catch (error) {
+            console.log(error);
+        }
+        
+    }
+
     const [theme, setTheme] = useState(true);
     const changeTheme = () => {
         setTheme((prev) => !prev);
@@ -45,7 +78,7 @@ function ScreenForm() {
             id="login-screen-section-one"
             className={` hidden sm:block w-full min-h-full bg-gradient-to-tr ${validateTheme(
             theme,
-            "from-indigo-400 to-indigo-300",
+            "from-teal-400 to-indigo-400",
             "from-slate-950 to-slate-800"
             )} py-6 px-[24px]`}
         >
@@ -73,8 +106,8 @@ function ScreenForm() {
         >
 
             <Routes>
-                <Route path="/sign-in" element={<FormSignIn theme={theme} validateTheme={validateTheme} fields={fields}/>}></Route>
-                <Route path="/sign-up" element={<FormSignUp theme={theme} validateTheme={validateTheme} fields={fields} />}></Route>
+                <Route path="/sign-in" element={<FormSignIn theme={theme} validateTheme={validateTheme} fields={fields} />}></Route>
+                <Route path="/sign-up" element={<FormSignUp theme={theme} validateTheme={validateTheme} fields={fields} sendDatas={sendDatas}/>}></Route>
                 <Route path="/recover" element={<FormRecover theme={theme} validateTheme={validateTheme} fields={fields}/>}></Route>
                 <Route path="/" element={<Welcome theme={theme} validateTheme={validateTheme}/>}></Route>
             </Routes>

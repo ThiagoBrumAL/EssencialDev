@@ -3,7 +3,7 @@ import ButtonMain from "./ButtonMain";
 import FormField from "./FormField";
 import TextLink from "./TextLink";
 
-function FormSignUp({validateTheme, theme, fields}){
+function FormSignUp({validateTheme, theme, fields, sendDatas}){
 
     const middle = fields.length/2;
 
@@ -75,6 +75,7 @@ function FormSignUp({validateTheme, theme, fields}){
                             marginDefault={"mt-[30px]"}
                             marginResponsive={"sm:mt-[90px]"}
                             name={"CADASTRAR"}
+                            operation={sendDatas}
                         />
                     </div>
                 </form>

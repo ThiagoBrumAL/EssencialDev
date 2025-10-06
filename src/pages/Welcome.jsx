@@ -14,6 +14,7 @@ function Welcome({theme, validateTheme}){
         <div>
             <h1 className={`lg:text-[48px] md:text-[32px] text-[28px] mt-[80px] font-bold ${validateTheme(theme, "text-slate-950", "text-slate-300")}`}>Seja Bem vindo!</h1>
             {renderSignIn()}
+            <h1 className="font-sans  text-slate-900">Você está sendo redirecionado...</h1>
         </div>
         
         

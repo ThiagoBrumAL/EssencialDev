@@ -2,7 +2,7 @@ import MessageAfterLink from "./MessageAfterLink";
 import ButtonMain from "./ButtonMain";
 import FormField from "./FormField";
 
-function FormSignIn({theme, fields, validateTheme}){
+function FormSignIn({theme, fields, validateTheme, sendDatas}){
 
     const newFields = fields.slice(4)
 
@@ -45,6 +45,7 @@ function FormSignIn({theme, fields, validateTheme}){
                     marginDefault={"mt-[30px]"}
                     marginResponsive={"sm:mt-[90px]"}
                     name={"ENTRAR"}
+                    operation={sendDatas}
                 />
                 </form>
             </div>
