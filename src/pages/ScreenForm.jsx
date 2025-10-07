@@ -4,18 +4,19 @@ import ButtonTheme from "../components/LoginComponents/ButtonTheme";
 import FormSignIn from "../components/LoginComponents/FormSignIn";
 import FormSignUp from "../components/LoginComponents/FormSignUp";
 import FormRecover from "../components/LoginComponents/FormRecover";
-import { Routes, Route, useLocation } from "react-router-dom"
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom"
 import Title from "../components/LoginComponents/Title";
 import Welcome from "./Welcome";
+import Home from "./Home";
 
 function ScreenForm() {
-
+    const navigate = useNavigate();
     const locale = useLocation()
 
     const [fields] = useState([
         { name: "Nome Completo", type: "text", placeholder: "Insira seu nome completo", link: false, id:"name",  },
         { name: "Altura", type: "text", placeholder: "Insira sua senha", link: false, id:"height", regex:""},
-        { name: "Data de Nascimento", type: "text", placeholder: "Insira sua data de nascimento", link: false, id:"data_nascimento", regex:""},
+        { name: "Data de Nascimento", type: "text", placeholder: "Insira sua data de nascimento", link: false, id:"birthday", regex:""},
         { name: "Peso", type: "text", placeholder: "Insira seu peso", link: false, id:"weight", regex:""},
         { name: "E-mail", type: "email", placeholder: "Insira seu email", link: false, id:"email", regex:""},
         { name: "Senha", type: "password", placeholder: "Insira sua senha", link: true, id:"password", regex:""},
@@ -32,14 +33,19 @@ function ScreenForm() {
 
         const authorized = document.getElementById("authorized");
         const data = {
-            role: "pacient",
+            role: "pacient"
         };
 
         for(let f of fields){
             if(!(document.getElementById(f.id).value)){
                 throw new Error("Field Blank");
             }else{
-                data[f.id] = document.getElementById(f.id).value;
+                if(f.id === "height" || f.id === "weight"){
+                    const value = document.getElementById(f.id).value;
+                    data[f.id] = parseFloat(value);
+                }else{
+                    data[f.id] =  document.getElementById(f.id).value;
+                }
             }
         }
 
@@ -52,10 +58,11 @@ function ScreenForm() {
                 headers: {"Content-type": "application/json"},
                 body: JSON.stringify(data)
             })
-            console.log(response.status);
-            return true;
+            console.log(data);
+            if(response.ok) return navigate(<Home />)
         } catch (error) {
-            console.log(error);
+            console.log(error.message);
+            return false;
         }
         
     }
