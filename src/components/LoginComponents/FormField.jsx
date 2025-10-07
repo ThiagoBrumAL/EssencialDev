@@ -39,7 +39,7 @@ function FormField({ value, theme, functionTheme, bool}) {
                         "bg-slate-200  placeholder:text-slate-500 text-slate-950",
                         "bg-slate-900 border-[1px] border-slate-500 placeholder:text-slate-400 text-slate-300"
                     )}
-                    rounded-[6px]  font-[500px] outline-none border-[2px] border-slate-300`
+                    rounded-[6px] font-[500px] outline-none border-[2px] border-slate-300`
                 }
 
                 type={`${value.type}`}

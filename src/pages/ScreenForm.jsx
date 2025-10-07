@@ -15,7 +15,7 @@ function ScreenForm() {
 
     const [fields] = useState([
         { name: "Nome Completo", type: "text", placeholder: "Insira seu nome completo", link: false, id:"name",  },
-        { name: "Altura", type: "text", placeholder: "Insira sua senha", link: false, id:"height", regex:""},
+        { name: "Altura", type: "text", placeholder: "Insira sua altura", link: false, id:"height", regex:""},
         { name: "Data de Nascimento", type: "text", placeholder: "Insira sua data de nascimento", link: false, id:"birthday", regex:""},
         { name: "Peso", type: "text", placeholder: "Insira seu peso", link: false, id:"weight", regex:""},
         { name: "E-mail", type: "email", placeholder: "Insira seu email", link: false, id:"email", regex:""},
@@ -38,6 +38,12 @@ function ScreenForm() {
 
         for(let f of fields){
             if(!(document.getElementById(f.id).value)){
+                const field = document.getElementById(`${f.id}`);
+                field.placeholder = "Campo obrigatório";
+                field.style.borderColor = "oklch(70.4% 0.191 22.216)";
+                field.classList.add("placeholder-red-400");
+                
+
                 throw new Error("Field Blank");
             }else{
                 if(f.id === "height" || f.id === "weight"){
