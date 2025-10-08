@@ -29,7 +29,7 @@ function FormRecover({validateTheme, theme, fields}){
                 >
                 <FormField
                     key={0}
-                    value={emailField}
+                    object={emailField}
                     theme={theme}
                     functionTheme={validateTheme}
                 />

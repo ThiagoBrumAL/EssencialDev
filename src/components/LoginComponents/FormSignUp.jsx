@@ -39,7 +39,7 @@ function FormSignUp({validateTheme, theme, fields, sendDatas}){
                             return (
                             <FormField
                                 key={index}
-                                value={field}
+                                object={field}
                                 theme={theme}
                                 functionTheme={validateTheme}
                                 bool={field.link}
@@ -53,7 +53,7 @@ function FormSignUp({validateTheme, theme, fields, sendDatas}){
                             return (
                             <FormField
                                 key={index}
-                                value={field}
+                                object={field}
                                 theme={theme}
                                 functionTheme={validateTheme}
                                 bool={field.link}

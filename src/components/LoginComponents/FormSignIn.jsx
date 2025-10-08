@@ -4,7 +4,7 @@ import FormField from "./FormField";
 
 function FormSignIn({theme, fields, validateTheme, sendDatas}){
 
-    const newFields = fields.slice(4)
+    const newFields = fields.slice(4);
 
     return (
         <div className="max-w-[436px] w-full flex flex-col items-center md:mt-[100px]">
@@ -32,7 +32,7 @@ function FormSignIn({theme, fields, validateTheme, sendDatas}){
                     return (
                     <FormField
                         key={index}
-                        value={field}
+                        object={field}
                         theme={theme}
                         functionTheme={validateTheme}
                         bool={field.link}

@@ -1,7 +1,10 @@
 import MessageAfterLink from "./MessageAfterLink";
 import MessageAfter from "./MessageAfter";
+import { useState } from "react";
 
-function FormField({ value, theme, functionTheme, bool}) {
+function FormField({ object, theme, functionTheme, bool}) {
+
+    const [inputValue, setInputValue] = useState("");
 
     function withoutLink(bool){
         return bool ? <MessageAfterLink
@@ -27,29 +30,34 @@ function FormField({ value, theme, functionTheme, bool}) {
             <label
                 className={`mb-2 
                 ${theme ? "text-slate-950" : "text-slate-500"}`}
-                htmlFor={`${value.id}`}
+                htmlFor={`${object.id}`}
             >
-                {value.name}
+                {object.name}
             </label>
 
             <input
                 className={`py-[6px] px-[10px]
                     ${functionTheme(
                         theme,
-                        "bg-slate-200  placeholder:text-slate-500 text-slate-950",
-                        "bg-slate-900 border-[1px] border-slate-500 placeholder:text-slate-400 text-slate-300"
+                        `bg-slate-200  ${object.placeholder === "Campo obrigatório" ? "placeholder:text-red-400" : "placeholder:text-slate-500"} text-slate-950`,
+                        `bg-slate-900 border-[2px] ${object.placeholder === "Campo obrigatório" ? "placeholder:text-red-400" : "placeholder:text-slate-400"} text-slate-300`
                     )}
-                    rounded-[6px] font-[500px] outline-none border-[2px] border-slate-300`
+                    rounded-[6px] font-[500px] outline-none border-[2px] ${object.empty ? "border-red-500" : "border-slate-300"}`
                 }
-
-                type={`${value.type}`}
-                placeholder={value.placeholder}
-                name={`${value.type}`}
-                id={`${value.id}`}
-                pattern={value.regex}
+                pattern={object.regex}
+                type={`${object.type}`}
+                placeholder={object.placeholder}
+                name={`${object.type}`}
+                id={`${object.id}`}
+                onChange={(event) => {
+                    const rawValue = event.target.value;
+                    const value = object.mask(rawValue, object.id);
+                    setInputValue(value);
+                }}
+                value={inputValue}
             />
 
-            {value.name === "Senha" ? withoutLink(bool) : null}
+            {object.name === "Senha" ? withoutLink(bool) : null}
         </div>
     );
 }

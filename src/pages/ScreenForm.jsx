@@ -1,32 +1,133 @@
 import { useState } from "react";
 import { Lightbulb } from "lucide-react";
+import { Routes, Route, useLocation } from "react-router-dom"
+
+// My Components
 import ButtonTheme from "../components/LoginComponents/ButtonTheme";
 import FormSignIn from "../components/LoginComponents/FormSignIn";
 import FormSignUp from "../components/LoginComponents/FormSignUp";
 import FormRecover from "../components/LoginComponents/FormRecover";
-import { Routes, Route, useLocation, useNavigate } from "react-router-dom"
 import Title from "../components/LoginComponents/Title";
 import Welcome from "./Welcome";
 import Home from "./Home";
 
-function ScreenForm() {
-    const navigate = useNavigate();
-    const locale = useLocation()
+//My Handlings
+import { handlingFullname, maskHeightWeightDate, maskFullName, maskPassword, maskEmail } from "../handlings/functions.js"
 
-    const [fields] = useState([
-        { name: "Nome Completo", type: "text", placeholder: "Insira seu nome completo", link: false, id:"name",  },
-        { name: "Altura", type: "text", placeholder: "Insira sua altura", link: false, id:"height", regex:""},
-        { name: "Data de Nascimento", type: "text", placeholder: "Insira sua data de nascimento", link: false, id:"birthday", regex:""},
-        { name: "Peso", type: "text", placeholder: "Insira seu peso", link: false, id:"weight", regex:""},
-        { name: "E-mail", type: "email", placeholder: "Insira seu email", link: false, id:"email", regex:""},
-        { name: "Senha", type: "password", placeholder: "Insira sua senha", link: true, id:"password", regex:""},
+function ScreenForm() {
+    // const navigate = useNavigate();
+    const locale = useLocation()
+    const [theme, setTheme] = useState(true);
+    
+    const [fields, setFields] = useState([
+        { 
+            name: "Nome Completo", 
+            type: "text", 
+            placeholder: "Insira seu nome completo", 
+            link: false, 
+            id:"name",
+            empty: false,
+            mask: maskFullName
+        },
+        { 
+            name: "Altura", 
+            type: "text", 
+            placeholder: "Insira sua altura", 
+            link: false, 
+            id:"height", 
+            mask: maskHeightWeightDate,
+        },
+        { 
+            name: "Data de Nascimento", 
+            type: "text", 
+            placeholder: "Insira sua data de nascimento", 
+            link: false, 
+            id:"birthday", 
+            mask: maskHeightWeightDate
+        },
+        { 
+            name: "Peso", 
+            type: "text", 
+            placeholder: "Insira seu peso", 
+            link: false, 
+            id:"weight", 
+            mask: maskHeightWeightDate
+        },
+        { 
+            name: "E-mail", 
+            type: "email", 
+            placeholder: "Insira seu email", 
+            link: false, 
+            id:"email",
+            mask: maskEmail,
+            message: ""
+        },
+        { 
+            name: "Senha", 
+            type: "password", 
+            placeholder: "Insira sua senha", 
+            link: true, 
+            id:"password",
+            mask: maskPassword
+        },
     ]);
 
     const [titles] = useState([
-        {page: "/sign-in", title:"Bem vindo(a) de volta!", subTitle:"Cadastre-se e tenha sua saúde na palma da mão."},
-        {page: "/sign-up", title:"Estamos prontos para cuidar de você.", subTitle:"Cadastre-se e tenha sua saúde na palma da mão."},
-        {page: "/recover", title:"Você esqueceu sua senha", subTitle:"Não se apavore!"},
+        {
+            page: "/sign-in", 
+            title:"Bem vindo(a) de volta!", 
+            subTitle:"Cadastre-se e tenha sua saúde na palma da mão."
+        },
+        {
+            page: "/sign-up", 
+            title:"Estamos prontos para cuidar de você.", 
+            subTitle:"Cadastre-se e tenha sua saúde na palma da mão."
+        },
+        {
+            page: "/recover", 
+            title:"Você esqueceu sua senha", 
+            subTitle:"Não se apavore!"
+        },
     ])
+
+    function validateFields(array){
+        const newFields = array.map((f) => {
+            if(!f.empty) return {...f, empty: true, placeholder: "Campo obrigatório"};
+        })
+
+        setFields(newFields);
+    }
+
+    function validateEmail(value, array){
+        const providers = [
+            "@gmail.com",
+            "@outlook.com",
+            "@hotmail.com",
+            "@yahoo.com",
+            "@protonmail.com",
+            "@zoho.com",
+            "@icloud.com",
+            "@aol.com",
+            "@gmx.com",
+            "@yandex.com",
+            "@mail.com",
+            "@fastmail.com",
+            "@tutanota.com"
+        ]
+
+        let index = value.indexOf("@");
+        let provider = value.slice(index, value.length);
+
+        const newFields = array.map((f) => {
+            if(!f.empty) return {...f, empty: true, placeholder: "Campo obrigatório"};
+            if(f.type === "email" && !(providers.includes(provider))) return {...f, empty: true, message: "Provedor não encontrado"}
+        })
+        
+        setFields(newFields);
+    }
+
+
+
 
     async function sendDatas(event){
         event.preventDefault();
@@ -37,15 +138,18 @@ function ScreenForm() {
         };
 
         for(let f of fields){
+            const field = document.getElementById(`${f.id}`);
+
             if(!(document.getElementById(f.id).value)){
-                const field = document.getElementById(`${f.id}`);
                 field.placeholder = "Campo obrigatório";
-                field.style.borderColor = "oklch(70.4% 0.191 22.216)";
-                field.classList.add("placeholder-red-400");
-                
+                validateFields(fields);
+                if(f.type === "email") validateEmail(document.getElementById(f.id).value, fields)
 
                 throw new Error("Field Blank");
             }else{
+                field.classList.remove("border-red-500")
+                field.classList.remove("placeholder:text-red-500")
+
                 if(f.id === "height" || f.id === "weight"){
                     const value = document.getElementById(f.id).value;
                     data[f.id] = parseFloat(value);
@@ -55,17 +159,19 @@ function ScreenForm() {
             }
         }
 
+        data["name"] = handlingFullname(data.name);
+
         if(!authorized) throw new Error("Field Blank");
         data["authorized"] = authorized.checked;
 
         try {
-            const response =  await fetch("https://essencial-server.vercel.app/auth/sign-up", {
-                method: "POST",
-                headers: {"Content-type": "application/json"},
-                body: JSON.stringify(data)
-            })
+            // const response =  await fetch("https://essencial-server.vercel.app/auth/sign-up", {
+            //     method: "POST",
+            //     headers: {"Content-type": "application/json"},
+            //     body: JSON.stringify(data)
+            // })
             console.log(data);
-            if(response.ok) return navigate(<Home />)
+            // if(response.ok) return navigate(<Home />)
         } catch (error) {
             console.log(error.message);
             return false;
@@ -73,14 +179,22 @@ function ScreenForm() {
         
     }
 
-    const [theme, setTheme] = useState(true);
+
+
+
+
+    
     const changeTheme = () => {
         setTheme((prev) => !prev);
     };
 
+
+
     function validateTheme(theme, light, dark) {
         return theme ? light : dark;
     }
+
+
 
     return (
         <div
