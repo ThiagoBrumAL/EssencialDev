@@ -90,41 +90,68 @@ function ScreenForm() {
         },
     ])
 
-    function validateFields(array){
+    function hasError(array, bool, currentField){
         const newFields = array.map((f) => {
-            if(!f.empty) return {...f, empty: true, placeholder: "Campo obrigatório"};
+            if(f.id === currentField) return {...f, empty: bool, placeholder: "Campo obrigatório"};
+            return {...f, empty: false}
         })
 
         setFields(newFields);
     }
 
-    function validateEmail(value, array){
-        const providers = [
-            "@gmail.com",
-            "@outlook.com",
-            "@hotmail.com",
-            "@yahoo.com",
-            "@protonmail.com",
-            "@zoho.com",
-            "@icloud.com",
-            "@aol.com",
-            "@gmx.com",
-            "@yandex.com",
-            "@mail.com",
-            "@fastmail.com",
-            "@tutanota.com"
-        ]
+    function validateFields(data){
+        for(let f of fields){
+            const field = document.getElementById(`${f.id}`);
 
-        let index = value.indexOf("@");
-        let provider = value.slice(index, value.length);
+            if(!(document.getElementById(f.id).value)){
 
-        const newFields = array.map((f) => {
-            if(!f.empty) return {...f, empty: true, placeholder: "Campo obrigatório"};
-            if(f.type === "email" && !(providers.includes(provider))) return {...f, empty: true, message: "Provedor não encontrado"}
-        })
+                field.placeholder = "Campo obrigatório";
+                hasError(fields, true, f.id);
+
+                throw new Error("Field Blank");
+
+            }else{
+
+                hasError(fields, false, f.id);
+
+                if(f.id === "height" || f.id === "weight"){
+                    const value = document.getElementById(f.id).value;
+                    data[f.id] = parseFloat(value);
+                }else{
+                    data[f.id] =  document.getElementById(f.id).value;
+                }
+            }
+        }
+        return data;
+    }
+
+    // function validateEmail(value, array){
+    //     const providers = [
+    //         "@gmail.com",
+    //         "@outlook.com",
+    //         "@hotmail.com",
+    //         "@yahoo.com",
+    //         "@protonmail.com",
+    //         "@zoho.com",
+    //         "@icloud.com",
+    //         "@aol.com",
+    //         "@gmx.com",
+    //         "@yandex.com",
+    //         "@mail.com",
+    //         "@fastmail.com",
+    //         "@tutanota.com"
+    //     ]
+
+    //     let index = value.indexOf("@");
+    //     let provider = value.slice(index, value.length);
+
+    //     const newFields = array.map((f) => {
+    //         if(!f.empty) return {...f, empty: true, placeholder: "Campo obrigatório"};
+    //         if(f.type === "email" && !(providers.includes(provider))) return {...f, empty: true, message: "Provedor não encontrado"}
+    //     })
         
-        setFields(newFields);
-    }
+    //     setFields(newFields);
+    // }
 
 
 
@@ -137,41 +164,22 @@ function ScreenForm() {
             role: "pacient"
         };
 
-        for(let f of fields){
-            const field = document.getElementById(`${f.id}`);
+        const newData = validateFields(data);
 
-            if(!(document.getElementById(f.id).value)){
-                field.placeholder = "Campo obrigatório";
-                validateFields(fields);
-                if(f.type === "email") validateEmail(document.getElementById(f.id).value, fields)
+        newData["name"] = handlingFullname(data.name);
 
-                throw new Error("Field Blank");
-            }else{
-                field.classList.remove("border-red-500")
-                field.classList.remove("placeholder:text-red-500")
-
-                if(f.id === "height" || f.id === "weight"){
-                    const value = document.getElementById(f.id).value;
-                    data[f.id] = parseFloat(value);
-                }else{
-                    data[f.id] =  document.getElementById(f.id).value;
-                }
-            }
-        }
-
-        data["name"] = handlingFullname(data.name);
-
-        if(!authorized) throw new Error("Field Blank");
-        data["authorized"] = authorized.checked;
+        if(!authorized){
+            throw new Error("Field Blank");
+        } 
+        newData["authorized"] = authorized.checked;
 
         try {
-            // const response =  await fetch("https://essencial-server.vercel.app/auth/sign-up", {
-            //     method: "POST",
-            //     headers: {"Content-type": "application/json"},
-            //     body: JSON.stringify(data)
-            // })
-            console.log(data);
-            // if(response.ok) return navigate(<Home />)
+            const response =  await fetch("https://essencial-server.vercel.app/auth/sign-up", {
+                method: "POST",
+                headers: {"Content-type": "application/json"},
+                body: JSON.stringify(newData)
+            })
+            if(response.ok) console.log(data) 
         } catch (error) {
             console.log(error.message);
             return false;
