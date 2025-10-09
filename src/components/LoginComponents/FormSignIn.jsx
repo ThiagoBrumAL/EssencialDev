@@ -1,10 +1,76 @@
 import MessageAfterLink from "./MessageAfterLink";
 import ButtonMain from "./ButtonMain";
 import FormField from "./FormField";
+import { useState } from "react";
+import { maskPassword, maskEmail, validateEmail } from "../../handlings/functions"
 
-function FormSignIn({theme, fields, validateTheme, sendDatas}){
+function FormSignIn({theme, validateTheme}){
 
-    const newFields = fields.slice(4);
+    const [fields, setFields] = useState([
+        { 
+            name: "E-mail", 
+            type: "email", 
+            placeholder: "Insira seu email", 
+            link: false, 
+            id:"email",
+            mask: maskEmail,
+            hasErrorInField: false,
+            messageError: "Campo obrigatório"
+        },
+        { 
+            name: "Senha", 
+            type: "password", 
+            placeholder: "Insira sua senha", 
+            link: true, 
+            id:"password",
+            mask: maskPassword,
+            hasErrorInField: false,
+            messageError: "Campo obrigatório"
+        },
+    ]);
+
+    function validateInputsFields(){
+        let data = {}
+        let newFields = [...fields];
+        
+        newFields = newFields.map((f) => {
+            const field = document.getElementById(`${f.id}`);
+
+            if(!(field.value.trim())){
+                return {...f, hasErrorInField: true}
+            }else{
+
+                if(f.id === "email"){
+                    return validateEmail(field.value, f);
+                }
+
+                data[f.id] =  field.value;
+                return {...f, hasErrorInField: false}
+            }
+        })
+
+        setFields(newFields)
+        return data;
+    }
+
+    async function sendDatas(event){
+        event.preventDefault();
+        
+        const newData = validateInputsFields();
+        console.log(newData);
+        try {
+            // const response =  await fetch("https://essencial-server.vercel.app/auth/sign-up", {
+            //     method: "POST",
+            //     headers: {"Content-type": "application/json"},
+            //     body: JSON.stringify(newData)
+            // })
+            // if(response.ok) console.log(data) 
+        } catch (error) {
+            console.log(error.message);
+            return false;
+        }
+        
+    }
 
     return (
         <div className="max-w-[436px] w-full flex flex-col items-center md:mt-[100px]">
@@ -28,14 +94,14 @@ function FormSignIn({theme, fields, validateTheme, sendDatas}){
                 className="sm:mb-[31px] w-[100%] flex flex-col items-center"
                 action=""
                 >
-                {newFields.map((field, index) => {
+                {fields.map((field, index) => {
                     return (
                     <FormField
                         key={index}
                         object={field}
                         theme={theme}
                         functionTheme={validateTheme}
-                        bool={field.link}
+                        bool={field.link ?? false}
                         id={field.id}
                     />
                     );

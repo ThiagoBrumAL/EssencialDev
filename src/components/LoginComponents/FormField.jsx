@@ -2,7 +2,7 @@ import MessageAfterLink from "./MessageAfterLink";
 import MessageAfter from "./MessageAfter";
 import { useState } from "react";
 
-function FormField({ object, theme, functionTheme, bool, error}) {
+function FormField({ object, theme, functionTheme, bool}) {
 
     const [inputValue, setInputValue] = useState("");
 
@@ -14,7 +14,7 @@ function FormField({ object, theme, functionTheme, bool, error}) {
             link={"/recover"}
             flexAlign={"items-start"}
             flexJustify={"justify-start"}
-            error={error}
+            error={object.hasErrorInField}
             />
             
             : 
@@ -23,7 +23,7 @@ function FormField({ object, theme, functionTheme, bool, error}) {
             message1={"Deve conter pelo menos 8 Caracteres"}
             size={"text-[13px]"}
             padding={"p-0"}
-            error={error}
+            error={object.hasErrorInField}
             />
     }
 

@@ -2,13 +2,134 @@ import MessageAfterLink from "./MessageAfterLink";
 import ButtonMain from "./ButtonMain";
 import FormField from "./FormField";
 import TextLink from "./TextLink";
+import { maskHeightWeightDate, maskFullName, maskPassword, maskEmail, validateEmail } from "../../handlings/functions"
+import { useState } from "react";
 
-function FormSignUp({validateTheme, theme, fields, sendDatas, error}){
+function FormSignUp({validateTheme, theme}){
+
+    const [fields, setFields] = useState([
+            { 
+                name: "Nome Completo", 
+                type: "text", 
+                placeholder: "Insira seu nome completo", 
+                link: false, 
+                id:"name",
+                mask: maskFullName,
+                hasErrorInField: false,
+                messageError: "Campo obrigatório"
+            },
+            { 
+                name: "Altura", 
+                type: "text", 
+                placeholder: "Insira sua altura", 
+                link: false, 
+                id:"height",
+                mask: maskHeightWeightDate,
+                hasErrorInField: false,
+                messageError: "Campo obrigatório"
+            },
+            { 
+                name: "Data de Nascimento", 
+                type: "text", 
+                placeholder: "Insira sua data de nascimento", 
+                link: false, 
+                id:"birthday",
+                mask: maskHeightWeightDate,
+                hasErrorInField: false,
+                messageError: "Campo obrigatório"
+            },
+            { 
+                name: "Peso", 
+                type: "text", 
+                placeholder: "Insira seu peso", 
+                link: false, 
+                id:"weight",
+                mask: maskHeightWeightDate,
+                hasErrorInField: false,
+                messageError: "Campo obrigatório"
+            },
+            { 
+                name: "E-mail", 
+                type: "email", 
+                placeholder: "Insira seu email", 
+                link: false, 
+                id:"email",
+                mask: maskEmail,
+                hasErrorInField: false,
+                messageError: "Campo obrigatório"
+            },
+            { 
+                name: "Senha", 
+                type: "password", 
+                placeholder: "Insira sua senha", 
+                link: true, 
+                id:"password",
+                mask: maskPassword,
+                hasErrorInField: false,
+                messageError: "Campo obrigatório"
+            },
+        ]);
+
+    function validateInputsFields(data){
+        let newFields = [...fields];
+        
+        newFields = newFields.map((f) => {
+            const field = document.getElementById(`${f.id}`);
+
+            if(!(field.value.trim())){
+                return {...f, hasErrorInField: true}
+            }else{
+
+                if(f.id === "email"){
+                    return validateEmail(field.value, f);
+                }
+
+                if(f.id === "height" || f.id === "weight"){
+                    data[f.id] = parseFloat(field.value);
+                }else{
+                    data[f.id] =  field.value;
+                }
+
+                return {...f, hasErrorInField: false}
+            }
+        })
+
+        setFields(newFields)
+        return data;
+    }
 
     const middle = Math.floor(fields.length/2);
-
     const left = fields.slice(0,middle);
     const right = fields.slice(middle);
+
+    async function sendDatas(event){
+        event.preventDefault();
+
+        const authorized = document.getElementById("authorized");
+        const data = {
+            role: "pacient"
+        };
+        
+
+        const newData = validateInputsFields(data);
+
+        if(!authorized){
+            throw new Error("Field Blank");
+        } 
+        newData["authorized"] = authorized.checked;
+        try {
+            // const response =  await fetch("https://essencial-server.vercel.app/auth/sign-up", {
+            //     method: "POST",
+            //     headers: {"Content-type": "application/json"},
+            //     body: JSON.stringify(newData)
+            // })
+            // if(response.ok) console.log(data) 
+        } catch (error) {
+            console.log(error.message);
+            return false;
+        }
+        
+    }
 
     return (
         <div className="max-w-[694px] w-full flex flex-col items-center md:mt-[50px]">
@@ -44,7 +165,6 @@ function FormSignUp({validateTheme, theme, fields, sendDatas, error}){
                                     functionTheme={validateTheme}
                                     bool={field.link ?? false}
                                     id={field.id}
-                                    error={error}
                                 />
                             );
                         })}
@@ -59,7 +179,6 @@ function FormSignUp({validateTheme, theme, fields, sendDatas, error}){
                                     functionTheme={validateTheme}
                                     bool={field.link ?? false}
                                     id={field.id}
-                                    error={error}
                                 />
                             );
                         })}

@@ -39,3 +39,33 @@ export function maskHeightWeightDate(value, fieldId){
     
     return value;
 }
+
+
+
+export function validateEmail(value, object){
+        const providers = [
+            "@gmail.com",
+            "@outlook.com",
+            "@outlook.pt",
+            "@hotmail.com",
+            "@yahoo.com",
+            "@protonmail.com",
+            "@zoho.com",
+            "@icloud.com",
+            "@aol.com",
+            "@gmx.com",
+            "@yandex.com",
+            "@mail.com",
+            "@fastmail.com",
+            "@tutanota.com"
+        ]
+
+        let index = value.indexOf("@");
+        let provider = value.slice(index, value.length);
+
+        if(!providers.includes(provider)){
+            return {...object, hasErrorInField: true, messageError: "Provedor inválido"};
+        }
+
+        return {...object, hasErrorInField: false}
+    }

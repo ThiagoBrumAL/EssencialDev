@@ -1,10 +1,59 @@
 import MessageAfterLink from "./MessageAfterLink";
 import ButtonMain from "./ButtonMain";
 import FormField from "./FormField";
+import { maskEmail } from "../../handlings/functions"
+import { useState } from "react";
 
-function FormRecover({validateTheme, theme, fields}){
+import { validateEmail } from "../../handlings/functions"
 
-    const emailField = fields.filter((v) => v.type === "email")[0]
+function FormRecover({validateTheme, theme, }){
+
+    const [field, setField] = useState(
+        { 
+            name: "E-mail", 
+            type: "email", 
+            placeholder: "Insira seu email", 
+            link: false, 
+            id:"email",
+            mask: maskEmail,
+            hasErrorInField: false,
+            messageError: "Campo obrigatório"
+        },
+    );
+
+    function validateInputField(){
+        let data = {};
+        let newField = field;
+        const input = document.getElementById(`email`);
+
+        if(!(input.value.trim())){
+            newField = {...field, hasErrorInField: true}
+        }else{
+            newField = validateEmail(input.value, field);
+        }
+
+        setField(newField)
+        return data;
+    }
+
+    async function sendDatas(event){
+        event.preventDefault();
+        const newData = validateInputField();
+
+        try {
+            // const response =  await fetch("https://essencial-server.vercel.app/auth/sign-up", {
+            //     method: "POST",
+            //     headers: {"Content-type": "application/json"},
+            //     body: JSON.stringify(newData)
+            // })
+            // if(response.ok) console.log(data)
+            console.log(newData);
+        } catch (error) {
+            console.log(error.message);
+            return false;
+        }
+        
+    }
     
     return (
         <div className="max-w-[436px] w-full flex flex-col items-center md:mt-[100px]">
@@ -28,8 +77,8 @@ function FormRecover({validateTheme, theme, fields}){
                 action=""
                 >
                 <FormField
-                    key={0}
-                    object={emailField}
+                    key={field.id}
+                    object={field}
                     theme={theme}
                     functionTheme={validateTheme}
                 />
@@ -38,6 +87,7 @@ function FormRecover({validateTheme, theme, fields}){
                     marginDefault={"mt-[20px]"}
                     marginResponsive={"sm:mt-[20px]"}
                     name={"ENVIAR"}
+                    operation={sendDatas}
                 />
                 <MessageAfterLink
                     message1={"Lembrou sua senha?"}
