@@ -70,29 +70,37 @@ function FormSignUp({validateTheme, theme}){
             },
         ]);
 
-    function validateInputsFields(data){
+    function validateInputsFields(){
         let newFields = [...fields];
+        let data = {
+            role: "pacient",
+            isValid: true
+        };
         
         newFields = newFields.map((f) => {
             const field = document.getElementById(`${f.id}`);
 
             if(!(field.value.trim())){
+                data.isValid = false;
                 return {...f, hasErrorInField: true}
             }else{
+                data.isValid = true;
 
                 if(f.id === "email"){
+                    data[f.id] =  field.value;
                     return validateEmail(field.value, f);
                 }
 
                 if(f.id === "height" || f.id === "weight"){
                     data[f.id] = parseFloat(field.value);
-                }else{
-                    data[f.id] =  field.value;
                 }
 
+                data[f.id] =  field.value;
                 return {...f, hasErrorInField: false}
             }
         })
+
+        console.log(data);
 
         setFields(newFields)
         return data;
@@ -105,25 +113,33 @@ function FormSignUp({validateTheme, theme}){
     async function sendDatas(event){
         event.preventDefault();
 
-        const authorized = document.getElementById("authorized");
-        const data = {
-            role: "pacient"
-        };
-        
+        const authorized = document.getElementById("authorized");        
 
-        const newData = validateInputsFields(data);
+        const newData = validateInputsFields();
 
         if(!authorized){
             throw new Error("Field Blank");
         } 
         newData["authorized"] = authorized.checked;
+        console.log(newData);
         try {
-            // const response =  await fetch("https://essencial-server.vercel.app/auth/sign-up", {
-            //     method: "POST",
-            //     headers: {"Content-type": "application/json"},
-            //     body: JSON.stringify(newData)
-            // })
-            // if(response.ok) console.log(data) 
+            if(newData.isValid){
+                let user = {};
+                for(let k in newData){
+                    if(k !== "isValid"){
+                        user[k] = newData[k]
+                    }
+                }
+
+                const response =  await fetch("https://essencial-server.vercel.app/auth/sign-up", {
+                    method: "POST",
+                    headers: {"Content-type": "application/json"},
+                    body: JSON.stringify(user)
+                })
+                if(response.ok) alert("Cadastrado com sucesso!")
+            }else{
+                throw new Error("Invalid operation")
+            }
         } catch (error) {
             console.log(error.message);
             return false;
