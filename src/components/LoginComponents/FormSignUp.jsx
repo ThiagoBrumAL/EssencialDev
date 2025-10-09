@@ -3,15 +3,15 @@ import ButtonMain from "./ButtonMain";
 import FormField from "./FormField";
 import TextLink from "./TextLink";
 
-function FormSignUp({validateTheme, theme, fields, sendDatas}){
+function FormSignUp({validateTheme, theme, fields, sendDatas, error}){
 
-    const middle = fields.length/2;
+    const middle = Math.floor(fields.length/2);
 
     const left = fields.slice(0,middle);
     const right = fields.slice(middle);
 
     return (
-        <div className="max-w-[694px] w-full flex flex-col items-center md:mt-[100px]">
+        <div className="max-w-[694px] w-full flex flex-col items-center md:mt-[50px]">
             <div className="flex justify-center flex-col w-full">
                 <div
                     className={`${validateTheme(
@@ -37,33 +37,35 @@ function FormSignUp({validateTheme, theme, fields, sendDatas}){
                         <div className="w-full">
                         {left.map((field, index) => {
                             return (
-                            <FormField
-                                key={index}
-                                object={field}
-                                theme={theme}
-                                functionTheme={validateTheme}
-                                bool={field.link}
-                                id={field.id}
-                            />
+                                <FormField
+                                    key={index}
+                                    object={field}
+                                    theme={theme}
+                                    functionTheme={validateTheme}
+                                    bool={field.link ?? false}
+                                    id={field.id}
+                                    error={error}
+                                />
                             );
                         })}
                         </div>
                         <div className="w-full">
                         {right.map((field, index) => {
                             return (
-                            <FormField
-                                key={index}
-                                object={field}
-                                theme={theme}
-                                functionTheme={validateTheme}
-                                bool={field.link}
-                                id={field.id}
-                            />
+                                <FormField
+                                    key={index}
+                                    object={field}
+                                    theme={theme}
+                                    functionTheme={validateTheme}
+                                    bool={field.link ?? false}
+                                    id={field.id}
+                                    error={error}
+                                />
                             );
                         })}
                         </div>
                     </div>
-                    <div className="flex gap-2 max-w-[424px] sm:mt-[50px] relative">
+                    <div className="flex gap-2 max-w-[424px] sm:mt-[50px mt-[60px] relative">
                         <input type="checkbox" id="authorized" value="authorized" name="authorized" className="absolute top-[5px]"/>
                         <label htmlFor="authorized" className="p-0 m-0 inline-block text-[14px] text-slate-600 ml-[24px]"> 
                             Ao criar sua conta, você concorda com os <TextLink message={"Termos e Condições"} link={"https://www.gov.br/esporte/pt-br/acesso-a-informacao/lgpd"}/> e nossa <TextLink message={"Política de Privacidade."} link={"https://www.gov.br/esporte/pt-br/acesso-a-informacao/lgpd"}/>
@@ -71,7 +73,6 @@ function FormSignUp({validateTheme, theme, fields, sendDatas}){
                     </div>
                     <div className="flex gap-2 items-start sm:w-[320px] w-[200px]">
                         <ButtonMain
-                            link={""}
                             marginDefault={"mt-[30px]"}
                             marginResponsive={"sm:mt-[90px]"}
                             name={"CADASTRAR"}

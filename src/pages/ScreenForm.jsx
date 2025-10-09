@@ -9,15 +9,18 @@ import FormSignUp from "../components/LoginComponents/FormSignUp";
 import FormRecover from "../components/LoginComponents/FormRecover";
 import Title from "../components/LoginComponents/Title";
 import Welcome from "./Welcome";
+import CardFeddback from "../components/LoginComponents/CardFeedback.jsx";
 import Home from "./Home";
 
 //My Handlings
-import { handlingFullname, maskHeightWeightDate, maskFullName, maskPassword, maskEmail } from "../handlings/functions.js"
+import { maskHeightWeightDate, maskFullName, maskPassword, maskEmail } from "../handlings/functions.js"
 
 function ScreenForm() {
     // const navigate = useNavigate();
     const locale = useLocation()
     const [theme, setTheme] = useState(true);
+    const [messageFeedback] = useState("")
+    const [error, setError] = useState(false)
     
     const [fields, setFields] = useState([
         { 
@@ -26,32 +29,39 @@ function ScreenForm() {
             placeholder: "Insira seu nome completo", 
             link: false, 
             id:"name",
-            empty: false,
-            mask: maskFullName
+            mask: maskFullName,
+            hasErrorInField: false,
+            messageError: "Campo obrigatório"
         },
         { 
             name: "Altura", 
             type: "text", 
             placeholder: "Insira sua altura", 
             link: false, 
-            id:"height", 
+            id:"height",
             mask: maskHeightWeightDate,
+            hasErrorInField: false,
+            messageError: "Campo obrigatório"
         },
         { 
             name: "Data de Nascimento", 
             type: "text", 
             placeholder: "Insira sua data de nascimento", 
             link: false, 
-            id:"birthday", 
-            mask: maskHeightWeightDate
+            id:"birthday",
+            mask: maskHeightWeightDate,
+            hasErrorInField: false,
+            messageError: "Campo obrigatório"
         },
         { 
             name: "Peso", 
             type: "text", 
             placeholder: "Insira seu peso", 
             link: false, 
-            id:"weight", 
-            mask: maskHeightWeightDate
+            id:"weight",
+            mask: maskHeightWeightDate,
+            hasErrorInField: false,
+            messageError: "Campo obrigatório"
         },
         { 
             name: "E-mail", 
@@ -60,7 +70,8 @@ function ScreenForm() {
             link: false, 
             id:"email",
             mask: maskEmail,
-            message: ""
+            hasErrorInField: false,
+            messageError: "Campo obrigatório"
         },
         { 
             name: "Senha", 
@@ -68,7 +79,9 @@ function ScreenForm() {
             placeholder: "Insira sua senha", 
             link: true, 
             id:"password",
-            mask: maskPassword
+            mask: maskPassword,
+            hasErrorInField: false,
+            messageError: "Campo obrigatório"
         },
     ]);
 
@@ -90,71 +103,70 @@ function ScreenForm() {
         },
     ])
 
-    function hasError(array, bool, currentField){
-        const newFields = array.map((f) => {
-            if(f.id === currentField) return {...f, empty: bool, placeholder: "Campo obrigatório"};
-            return {...f, empty: false}
-        })
+    function validateEmail(value, id){
+        const providers = [
+            "@gmail.com",
+            "@outlook.com",
+            "@outlook.pt",
+            "@hotmail.com",
+            "@yahoo.com",
+            "@protonmail.com",
+            "@zoho.com",
+            "@icloud.com",
+            "@aol.com",
+            "@gmx.com",
+            "@yandex.com",
+            "@mail.com",
+            "@fastmail.com",
+            "@tutanota.com"
+        ]
 
-        setFields(newFields);
+        let index = value.indexOf("@");
+        let provider = value.slice(index, value.length);
+
+        if(!providers.includes(provider)){
+            setError(true);
+            let newFields = fields.map((f) => {
+                if(f.id === id){
+                    return {...f, hasErrorInField: true, messageError: "Provedor inválido"}
+                }else{
+                    return {...f}
+                }
+            })
+            setFields(newFields);
+            throw new Error("Provider Error");
+        }
     }
 
-    function validateFields(data){
-        for(let f of fields){
+    function validateInputsFields(data){
+        let newFields = [...fields];
+        
+        newFields = newFields.map((f) => {
             const field = document.getElementById(`${f.id}`);
 
-            if(!(document.getElementById(f.id).value)){
-
-                field.placeholder = "Campo obrigatório";
-                hasError(fields, true, f.id);
-
-                throw new Error("Field Blank");
-
+            if(!(field.value.trim())){
+                setError(true);
+                return {...f, hasErrorInField: true}
             }else{
+                setError(false);
 
-                hasError(fields, false, f.id);
+                if(f.id === "email"){
+                    validateEmail(field.value, f.id);
+                }
 
                 if(f.id === "height" || f.id === "weight"){
-                    const value = document.getElementById(f.id).value;
-                    data[f.id] = parseFloat(value);
+                    data[f.id] = parseFloat(field.value);
                 }else{
-                    data[f.id] =  document.getElementById(f.id).value;
+                    data[f.id] =  field.value;
                 }
+
+                return {...f, hasErrorInField: false}
             }
-        }
+        })
+
+        setFields(newFields)
         return data;
     }
-
-    // function validateEmail(value, array){
-    //     const providers = [
-    //         "@gmail.com",
-    //         "@outlook.com",
-    //         "@hotmail.com",
-    //         "@yahoo.com",
-    //         "@protonmail.com",
-    //         "@zoho.com",
-    //         "@icloud.com",
-    //         "@aol.com",
-    //         "@gmx.com",
-    //         "@yandex.com",
-    //         "@mail.com",
-    //         "@fastmail.com",
-    //         "@tutanota.com"
-    //     ]
-
-    //     let index = value.indexOf("@");
-    //     let provider = value.slice(index, value.length);
-
-    //     const newFields = array.map((f) => {
-    //         if(!f.empty) return {...f, empty: true, placeholder: "Campo obrigatório"};
-    //         if(f.type === "email" && !(providers.includes(provider))) return {...f, empty: true, message: "Provedor não encontrado"}
-    //     })
-        
-    //     setFields(newFields);
-    // }
-
-
-
 
     async function sendDatas(event){
         event.preventDefault();
@@ -163,33 +175,28 @@ function ScreenForm() {
         const data = {
             role: "pacient"
         };
+        
 
-        const newData = validateFields(data);
-
-        newData["name"] = handlingFullname(data.name);
+        const newData = validateInputsFields(data);
+        console.log(newData);
 
         if(!authorized){
             throw new Error("Field Blank");
         } 
         newData["authorized"] = authorized.checked;
-
         try {
-            const response =  await fetch("https://essencial-server.vercel.app/auth/sign-up", {
-                method: "POST",
-                headers: {"Content-type": "application/json"},
-                body: JSON.stringify(newData)
-            })
-            if(response.ok) console.log(data) 
+            // const response =  await fetch("https://essencial-server.vercel.app/auth/sign-up", {
+            //     method: "POST",
+            //     headers: {"Content-type": "application/json"},
+            //     body: JSON.stringify(newData)
+            // })
+            // if(response.ok) console.log(data) 
         } catch (error) {
             console.log(error.message);
             return false;
         }
         
     }
-
-
-
-
 
     
     const changeTheme = () => {
@@ -207,7 +214,7 @@ function ScreenForm() {
     return (
         <div
         id="login-screen"
-        className="w-full min-h-dvh flex md:flex-row flex-col"
+        className="w-full min-h-dvh flex md:flex-row flex-col overflow-x-hidden"
         >
         {locale.pathname === "/" ? null : <section
             id="login-screen-section-one"
@@ -237,16 +244,17 @@ function ScreenForm() {
             theme,
             "bg-slate-50",
             "bg-slate-900"
-            )} w-full min-h-dvh flex items-center justify-between py-4 flex-col px-[24px]`}
+            )} w-full min-h-dvh flex items-center justify-between py-4 flex-col px-[24px] relative`}
         >
 
             <Routes>
                 <Route path="/sign-in" element={<FormSignIn theme={theme} validateTheme={validateTheme} fields={fields} />}></Route>
-                <Route path="/sign-up" element={<FormSignUp theme={theme} validateTheme={validateTheme} fields={fields} sendDatas={sendDatas}/>}></Route>
+                <Route path="/sign-up" element={<FormSignUp theme={theme} validateTheme={validateTheme} fields={fields} sendDatas={sendDatas} error={error}/>}></Route>
                 <Route path="/recover" element={<FormRecover theme={theme} validateTheme={validateTheme} fields={fields}/>}></Route>
                 <Route path="/" element={<Welcome theme={theme} validateTheme={validateTheme}/>}></Route>
             </Routes>
             
+            {<CardFeddback message={error ? messageFeedback : undefined}/>}
             
 
             <div

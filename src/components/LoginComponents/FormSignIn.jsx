@@ -41,7 +41,6 @@ function FormSignIn({theme, fields, validateTheme, sendDatas}){
                     );
                 })}
                 <ButtonMain
-                    link={""}
                     marginDefault={"mt-[30px]"}
                     marginResponsive={"sm:mt-[90px]"}
                     name={"ENTRAR"}

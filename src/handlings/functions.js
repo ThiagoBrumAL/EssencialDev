@@ -1,20 +1,13 @@
-function firstName(name){
-    const firstletter = name.charAt(0).toUpperCase();
-    const restname = name.slice(1);
-    return firstletter+restname;
-}
-export function handlingFullname(fullname){
-    const arr = fullname.split(" ");
-    let text = "";
-    for(let i in arr){
-        text += firstName(arr[i]);
-    }
-    return text.replace(/([A-Z])/g, " $1").trim();
-}
-
 export function maskFullName(value){
     value.trim();
-    return value.split(" ").map((word) => word.charAt(0).toUpperCase() + word.slice(1, word.length)).join(" ")
+    value = value.replace(/[0-9]/g, "");
+
+    if(!value){
+        throw new Error("Name Field Blank")
+    } else {
+        return value.split(" ").map((word) => word.charAt(0).toUpperCase() + word.slice(1, word.length)).join(" ");
+    } 
+    
 }
 
 export function maskPassword(value){
