@@ -93,6 +93,7 @@ function FormSignUp({validateTheme, theme}){
 
                 if(f.id === "height" || f.id === "weight"){
                     data[f.id] = parseFloat(field.value);
+                    return {...f, hasErrorInField: false}
                 }
 
                 data[f.id] =  field.value;
