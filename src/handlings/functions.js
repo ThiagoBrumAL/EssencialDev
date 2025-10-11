@@ -81,16 +81,31 @@ export function validadeHeightAndWeight(value, object){
 }
 
 export function validateBornDate(value, object){
-    const date = new Date();
-    const array = [];
-    for(let l in value){
-        array.push(value.charAt(l));
+
+    function validateAge(month, year){
+        const date = new Date();
+        const currentYear = date.getFullYear();
+        const currentMonth = date.getMonth() + 1;
+        
+        let currentAge = currentYear - year;
+        if(currentMonth < month){
+            currentAge -=1
+        }
+
+        return currentAge >= 18 ? true : false;
     }
 
-    const userYear = Number(array.slice(6,array.length).join(""))
 
-    if(array.length <= 9) return {...object, hasErrorInField: true, messageError: "Formato inválido"}
-    if(userYear > date.getFullYear()) return {...object, hasErrorInField: true, messageError: "Este ano não existe"}
-    
+    const date = new Date();
+    const array = value.split("/")
+
+    const userMonth = array[1]
+    const userYear = array[2]
+
+    if(value.length <= 9) return {...object, hasErrorInField: true, messageError: "Formato inválido"}
+    if(userYear > date.getFullYear()) return {...object, hasErrorInField: true, messageError: "Ano inválido"}
+    if(userMonth < 0 || userMonth > 12) return {...object, hasErrorInField: true, messageError: "Mês inválido"}
+    if(!validateAge(userMonth, userYear)) return {...object, hasErrorInField: true, messageError: "A idade miníma é de 18 anos"}
+
     return {...object, hasErrorInField: false}
 }
