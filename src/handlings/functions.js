@@ -1,13 +1,6 @@
 export function maskFullName(value){
-    value.trim();
     value = value.replace(/[0-9]/g, "");
-
-    if(!value){
-        throw new Error("Name Field Blank")
-    } else {
-        return value.split(" ").map((word) => word.charAt(0).toUpperCase() + word.slice(1, word.length)).join(" ");
-    } 
-    
+    return value.split(" ").map((word) => word.charAt(0).toUpperCase() + word.slice(1, word.length)).join(" ")
 }
 
 export function maskPassword(value){
@@ -40,8 +33,6 @@ export function maskHeightWeightDate(value, fieldId){
     return value;
 }
 
-
-
 export function validateEmail(value, object){
         const providers = [
             "@gmail.com",
@@ -68,4 +59,38 @@ export function validateEmail(value, object){
         }
 
         return {...object, hasErrorInField: false}
+}
+
+export function validadeHeightAndWeight(value, object){
+    const array = [];
+    for(let l in value){
+        array.push(value.charAt(l));
     }
+    
+    if(object.id === "height"){
+        if(array.length <= 2){
+            return {...object, hasErrorInField: true, messageError: "Formato inválido"}
+        }
+        return {...object, hasErrorInField: false}
+    }else{
+        if(array.length <= 4){
+            return {...object, hasErrorInField: true, messageError: "Formato inválido"}
+        }
+        return {...object, hasErrorInField: false}
+    }
+}
+
+export function validateBornDate(value, object){
+    const date = new Date();
+    const array = [];
+    for(let l in value){
+        array.push(value.charAt(l));
+    }
+
+    const userYear = Number(array.slice(6,array.length).join(""))
+
+    if(array.length <= 9) return {...object, hasErrorInField: true, messageError: "Formato inválido"}
+    if(userYear > date.getFullYear()) return {...object, hasErrorInField: true, messageError: "Este ano não existe"}
+    
+    return {...object, hasErrorInField: false}
+}

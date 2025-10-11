@@ -2,7 +2,7 @@ import MessageAfterLink from "./MessageAfterLink";
 import ButtonMain from "./ButtonMain";
 import FormField from "./FormField";
 import TextLink from "./TextLink";
-import { maskHeightWeightDate, maskFullName, maskPassword, maskEmail, validateEmail } from "../../handlings/functions"
+import { maskHeightWeightDate, maskFullName, maskPassword, maskEmail, validateEmail, validadeHeightAndWeight, validateBornDate } from "../../handlings/functions"
 import { useState } from "react";
 
 function FormSignUp({validateTheme, theme}){
@@ -87,13 +87,36 @@ function FormSignUp({validateTheme, theme}){
                 data.isValid = true;
 
                 if(f.id === "email"){
-                    data[f.id] =  field.value;
-                    return validateEmail(field.value, f);
+                    const object = validateEmail(field.value, f);
+                    if(!object.hasErrorInField){
+                        data[f.id] = field.value;
+                        return object
+                    }else{
+                        data.isValid = false;
+                        return object
+                    } 
+                }
+
+                if(f.id === "birthday"){
+                    const object = validateBornDate(field.value, f);
+                    if(!object.hasErrorInField){
+                        data[f.id] = field.value;
+                        return object
+                    }else{
+                        data.isValid = false;
+                        return object
+                    } 
                 }
 
                 if(f.id === "height" || f.id === "weight"){
-                    data[f.id] = parseFloat(field.value);
-                    return {...f, hasErrorInField: false}
+                    const object = validadeHeightAndWeight(field.value, f);
+                    if(!object.hasErrorInField){
+                        data[f.id] = parseFloat(field.value);
+                        return object
+                    }else{
+                        data.isValid = false;
+                        return object
+                    }
                 }
 
                 data[f.id] =  field.value;
