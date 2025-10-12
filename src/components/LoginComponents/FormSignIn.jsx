@@ -2,9 +2,14 @@ import MessageAfterLink from "./MessageAfterLink";
 import ButtonMain from "./ButtonMain";
 import FormField from "./FormField";
 import { useState } from "react";
-import { maskPassword, maskEmail, validateEmail } from "../../handlings/functions"
+import { maskPassword, maskEmail, validateInputsFieldsSingIn } from "../../handlings/functions"
+import { useNavigate } from "react-router-dom";
 
-function FormSignIn({theme, validateTheme}){
+import { Ban } from 'lucide-react';
+
+function FormSignIn({theme, validateTheme, setShowMessage, setMessageFeedback, setIconFeedback, setColorFeedback}){
+
+    const navigate = useNavigate();
 
     const [fields, setFields] = useState([
         { 
@@ -29,48 +34,42 @@ function FormSignIn({theme, validateTheme}){
         },
     ]);
 
-    function validateInputsFields(){
-        let data = {}
-        let newFields = [...fields];
-        
-        newFields = newFields.map((f) => {
-            const field = document.getElementById(`${f.id}`);
-
-            if(!(field.value.trim())){
-                return {...f, hasErrorInField: true}
-            }else{
-
-                if(f.id === "email"){
-                    return validateEmail(field.value, f);
-                }
-
-                data[f.id] =  field.value;
-                return {...f, hasErrorInField: false}
-            }
-        })
-
-        setFields(newFields)
-        return data;
-    }
-
     async function sendDatas(event){
-        event.preventDefault();
-        
-        const newData = validateInputsFields();
-        console.log(newData);
-        try {
-            // const response =  await fetch("https://essencial-server.vercel.app/auth/sign-up", {
-            //     method: "POST",
-            //     headers: {"Content-type": "application/json"},
-            //     body: JSON.stringify(newData)
-            // })
-            // if(response.ok) console.log(data) 
-        } catch (error) {
-            console.log(error.message);
-            return false;
+            event.preventDefault();
+            const newData = validateInputsFieldsSingIn(fields, setFields);
+            try {
+                if(newData.isValid){
+                    let user = {};
+                    for(let k in newData){
+                        if(k !== "isValid"){
+                            user[k] = newData[k]
+                        }
+                    }
+    
+                    const response =  await fetch("https://essencial-server.vercel.app/auth/sign-in", {
+                        method: "POST",
+                        headers: {"Content-type": "application/json"},
+                        body: JSON.stringify(user)
+                    })
+                    if(response.ok){
+                        navigate('/home')
+                    }else{
+                        setIconFeedback(<Ban />)
+                        setColorFeedback("bg-red-400")
+                        setShowMessage(true);
+                        setMessageFeedback("Usuário não autorizado");
+                        
+                        setTimeout(() => {
+                            setShowMessage(false);
+                        }, 5000)
+                    }
+                }
+            } catch (error) {
+                console.log(error.message);
+                return false;
+            }
+            
         }
-        
-    }
 
     return (
         <div className="max-w-[436px] w-full flex flex-col items-center md:mt-[100px]">

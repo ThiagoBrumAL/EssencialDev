@@ -107,14 +107,14 @@ export function validateBornDate(value, object){
     const userYear = array[2]
 
     if(value.length <= 9) return {...object, hasErrorInField: true, messageError: "Formato inválido"}
-    if(userYear > date.getFullYear()) return {...object, hasErrorInField: true, messageError: "Ano inválido"}
-    if(userMonth < 0 || userMonth > 12) return {...object, hasErrorInField: true, messageError: "Mês inválido"}
+    if(userYear > date.getFullYear() || userYear < 1950) return {...object, hasErrorInField: true, messageError: "Ano inválido"}
+    if(userMonth <= 0 || userMonth > 12) return {...object, hasErrorInField: true, messageError: "Mês inválido"}
     if(!validateAge(userMonth, userYear)) return {...object, hasErrorInField: true, messageError: "A idade miníma é de 18 anos"}
 
     return {...object, hasErrorInField: false}
 }
 
-export function validateInputsFields(fields, setFields, isChecked, setCheckColor){
+export function validateInputsFieldsSingUp(fields, setFields, isChecked, setCheckColor){
     let newFields = [...fields];
     let data = {
         role: "pacient",
@@ -175,6 +175,41 @@ export function validateInputsFields(fields, setFields, isChecked, setCheckColor
         data["authorized"] = true
         setCheckColor("text-slate-500")
     }
+
+    setFields(newFields)
+    return data;
+}
+
+export function validateInputsFieldsSingIn(fields, setFields,){
+    let newFields = [...fields];
+    let data = {
+        isValid: true
+    };
+    
+    newFields = newFields.map((f) => {
+        const field = document.getElementById(`${f.id}`);
+
+        if(!(field.value.trim())){
+            data.isValid = false;
+            return {...f, hasErrorInField: true}
+        }else{
+            data.isValid = true;
+
+            if(f.id === "email"){
+                const object = validateEmail(field.value, f);
+                if(!object.hasErrorInField){
+                    data[f.id] = field.value;
+                    return object
+                }else{
+                    data.isValid = false;
+                    return object
+                } 
+            }
+
+            data[f.id] =  field.value;
+            return {...f, hasErrorInField: false}
+        }
+    })
 
     setFields(newFields)
     return data;

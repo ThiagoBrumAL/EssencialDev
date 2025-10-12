@@ -8,12 +8,14 @@ import {
     maskFullName, 
     maskPassword, 
     maskEmail, 
-    validateInputsFields
+    validateInputsFieldsSingUp
 } from "../../handlings/functions"
 
 import { useState } from "react";
 
-function FormSignUp({validateTheme, theme, setMessageFeedback}){
+import { UserRoundCheck } from 'lucide-react';
+
+function FormSignUp({validateTheme, theme, setMessageFeedback, setShowMessage, setColorFeedback, setIconFeedback}){
 
     const [isChecked, setIsChecked] = useState();
     const [checkColor, setCheckColor] = useState("text-slate-500")
@@ -89,8 +91,7 @@ function FormSignUp({validateTheme, theme, setMessageFeedback}){
 
     async function sendDatas(event){
         event.preventDefault();
-        const newData = validateInputsFields(fields, setFields, isChecked, setCheckColor);
-        console.log(newData);
+        const newData = validateInputsFieldsSingUp(fields, setFields, isChecked, setCheckColor);
         try {
             if(newData.isValid){
                 let user = {};
@@ -106,9 +107,13 @@ function FormSignUp({validateTheme, theme, setMessageFeedback}){
                     body: JSON.stringify(user)
                 })
                 if(response.ok){
-                    setMessageFeedback("Usuário foi cadastrado com sucesso!")
+                    setIconFeedback(<UserRoundCheck />)
+                    setColorFeedback("bg-indigo-300")
+                    setShowMessage(true);
+                    setMessageFeedback("Usuário foi cadastrado com sucesso!");
+                    
                     setTimeout(() => {
-                        setMessageFeedback("undefined")
+                        setShowMessage(false);
                     }, 5000)
                 }
             }else{

@@ -12,13 +12,16 @@ import Welcome from "./Welcome";
 import CardFeddback from "../components/LoginComponents/CardFeedback.jsx";
 import Home from "./Home";
 
-//My Handlings
+//My Handlings 
 
 function ScreenForm() {
     // const navigate = useNavigate();
     const locale = useLocation()
     const [theme, setTheme] = useState(true);
     const [messageFeedback, setMessageFeedback] = useState("undefined");
+    const [showMessage, setShowMessage] = useState(false);
+    const [colorFeedback, setColorFeedback] = useState("bg-indigo-300")
+    const [iconFeedback, setIconFeedback] = useState()
 
     const [titles] = useState([
         {
@@ -92,7 +95,11 @@ function ScreenForm() {
                     element={
                         <FormSignIn 
                             theme={theme} 
-                            validateTheme={validateTheme} 
+                            validateTheme={validateTheme}
+                            setMessageFeedback={setMessageFeedback}
+                            setShowMessage={setShowMessage}
+                            setColorFeedback={setColorFeedback}
+                            setIconFeedback={setIconFeedback}
                         />
                     }>
                 </Route>
@@ -104,6 +111,9 @@ function ScreenForm() {
                             theme={theme} 
                             validateTheme={validateTheme}
                             setMessageFeedback={setMessageFeedback}
+                            setShowMessage={setShowMessage}
+                            setColorFeedback={setColorFeedback}
+                            setIconFeedback={setIconFeedback}
                         />
                     }>
                 </Route>
@@ -113,7 +123,9 @@ function ScreenForm() {
                     element={
                         <FormRecover 
                             theme={theme} 
-                            validateTheme={validateTheme} 
+                            validateTheme={validateTheme}
+                            setMessageFeedback={setMessageFeedback}
+                            setShowMessage={setShowMessage}
                         />
                     }>
                 </Route>
@@ -129,7 +141,7 @@ function ScreenForm() {
                 </Route>
             </Routes>
 
-                {messageFeedback && <CardFeddback theme={theme} message={messageFeedback}/>}
+                {messageFeedback && <CardFeddback theme={theme} object={{message: messageFeedback, show: showMessage, color: colorFeedback, icon: iconFeedback}}/>}
 
             <div
             id="container-theme"
