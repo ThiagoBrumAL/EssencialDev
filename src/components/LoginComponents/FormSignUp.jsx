@@ -2,133 +2,81 @@ import MessageAfterLink from "./MessageAfterLink";
 import ButtonMain from "./ButtonMain";
 import FormField from "./FormField";
 import TextLink from "./TextLink";
-import { maskHeightWeightDate, maskFullName, maskPassword, maskEmail, validateEmail, validadeHeightAndWeight, validateBornDate } from "../../handlings/functions"
+
+import {
+    maskHeightWeightDate, 
+    maskFullName, 
+    maskPassword, 
+    maskEmail, 
+    validateInputsFields
+} from "../../handlings/functions"
+
 import { useState } from "react";
 
-function FormSignUp({validateTheme, theme}){
+function FormSignUp({validateTheme, theme, setMessageFeedback}){
 
     const [fields, setFields] = useState([
-            { 
-                name: "Nome Completo", 
-                type: "text", 
-                placeholder: "Insira seu nome completo", 
-                link: false, 
-                id:"name",
-                mask: maskFullName,
-                hasErrorInField: false,
-                messageError: "Campo obrigatório"
-            },
-            { 
-                name: "Altura", 
-                type: "text", 
-                placeholder: "Insira sua altura", 
-                link: false, 
-                id:"height",
-                mask: maskHeightWeightDate,
-                hasErrorInField: false,
-                messageError: "Campo obrigatório"
-            },
-            { 
-                name: "Data de Nascimento", 
-                type: "text", 
-                placeholder: "Insira sua data de nascimento", 
-                link: false, 
-                id:"birthday",
-                mask: maskHeightWeightDate,
-                hasErrorInField: false,
-                messageError: "Campo obrigatório"
-            },
-            { 
-                name: "Peso", 
-                type: "text", 
-                placeholder: "Insira seu peso", 
-                link: false, 
-                id:"weight",
-                mask: maskHeightWeightDate,
-                hasErrorInField: false,
-                messageError: "Campo obrigatório"
-            },
-            { 
-                name: "E-mail", 
-                type: "email", 
-                placeholder: "Insira seu email", 
-                link: false, 
-                id:"email",
-                mask: maskEmail,
-                hasErrorInField: false,
-                messageError: "Campo obrigatório"
-            },
-            { 
-                name: "Senha", 
-                type: "password", 
-                placeholder: "Insira sua senha", 
-                link: true, 
-                id:"password",
-                mask: maskPassword,
-                hasErrorInField: false,
-                messageError: "Campo obrigatório"
-            },
-        ]);
-
-    function validateInputsFields(){
-        let newFields = [...fields];
-        let data = {
-            role: "pacient",
-            isValid: true
-        };
-        
-        newFields = newFields.map((f) => {
-            const field = document.getElementById(`${f.id}`);
-
-            if(!(field.value.trim())){
-                data.isValid = false;
-                return {...f, hasErrorInField: true}
-            }else{
-                data.isValid = true;
-
-                if(f.id === "email"){
-                    const object = validateEmail(field.value, f);
-                    if(!object.hasErrorInField){
-                        data[f.id] = field.value;
-                        return object
-                    }else{
-                        data.isValid = false;
-                        return object
-                    } 
-                }
-
-                if(f.id === "birthday"){
-                    const object = validateBornDate(field.value, f);
-                    if(!object.hasErrorInField){
-                        data[f.id] = field.value;
-                        return object
-                    }else{
-                        data.isValid = false;
-                        return object
-                    } 
-                }
-
-                if(f.id === "height" || f.id === "weight"){
-                    const object = validadeHeightAndWeight(field.value, f);
-                    if(!object.hasErrorInField){
-                        data[f.id] = parseFloat(field.value);
-                        return object
-                    }else{
-                        data.isValid = false;
-                        return object
-                    }
-                }
-
-                data[f.id] =  field.value;
-                return {...f, hasErrorInField: false}
-            }
-        })
-
-        console.log(data);
-
-        setFields(newFields)
-        return data;
-    }
+        { 
+            name: "Nome Completo", 
+            type: "text", 
+            placeholder: "Insira seu nome completo", 
+            link: false, 
+            id:"name",
+            mask: maskFullName,
+            hasErrorInField: false,
+            messageError: "Campo obrigatório"
+        },
+        { 
+            name: "Altura", 
+            type: "text", 
+            placeholder: "Insira sua altura", 
+            link: false, 
+            id:"height",
+            mask: maskHeightWeightDate,
+            hasErrorInField: false,
+            messageError: "Campo obrigatório"
+        },
+        { 
+            name: "Data de Nascimento", 
+            type: "text", 
+            placeholder: "Insira sua data de nascimento", 
+            link: false, 
+            id:"birthday",
+            mask: maskHeightWeightDate,
+            hasErrorInField: false,
+            messageError: "Campo obrigatório"
+        },
+        { 
+            name: "Peso", 
+            type: "text", 
+            placeholder: "Insira seu peso", 
+            link: false, 
+            id:"weight",
+            mask: maskHeightWeightDate,
+            hasErrorInField: false,
+            messageError: "Campo obrigatório"
+        },
+        { 
+            name: "E-mail", 
+            type: "email", 
+            placeholder: "Insira seu email", 
+            link: false, 
+            id:"email",
+            mask: maskEmail,
+            hasErrorInField: false,
+            messageError: "Campo obrigatório"
+        },
+        { 
+            name: "Senha", 
+            type: "password", 
+            placeholder: "Insira sua senha", 
+            link: true, 
+            id:"password",
+            mask: maskPassword,
+            hasErrorInField: false,
+            messageError: "Campo obrigatório"
+        },
+    ]);
 
     const middle = Math.floor(fields.length/2);
     const left = fields.slice(0,middle);
@@ -139,13 +87,12 @@ function FormSignUp({validateTheme, theme}){
 
         const authorized = document.getElementById("authorized");        
 
-        const newData = validateInputsFields();
+        const newData = validateInputsFields(fields, setFields);
 
         if(!authorized){
             throw new Error("Field Blank");
         } 
         newData["authorized"] = authorized.checked;
-        console.log(newData);
         try {
             if(newData.isValid){
                 let user = {};
@@ -160,7 +107,12 @@ function FormSignUp({validateTheme, theme}){
                     headers: {"Content-type": "application/json"},
                     body: JSON.stringify(user)
                 })
-                if(response.ok) alert("Cadastrado com sucesso!")
+                if(response.ok){
+                    setMessageFeedback("Usuário cadastrado!")
+                    setTimeout(() => {
+                        setMessageFeedback("")
+                    }, 5000)
+                }
             }else{
                 throw new Error("Invalid operation")
             }

@@ -1,3 +1,4 @@
+//Máscaras
 export function maskFullName(value){
     value = value.replace(/[0-9]/g, "");
     return value.split(" ").map((word) => word.charAt(0).toUpperCase() + word.slice(1, word.length)).join(" ")
@@ -33,6 +34,9 @@ export function maskHeightWeightDate(value, fieldId){
     return value;
 }
 
+
+
+//Validações
 export function validateEmail(value, object){
         const providers = [
             "@gmail.com",
@@ -108,4 +112,62 @@ export function validateBornDate(value, object){
     if(!validateAge(userMonth, userYear)) return {...object, hasErrorInField: true, messageError: "A idade miníma é de 18 anos"}
 
     return {...object, hasErrorInField: false}
+}
+
+export function validateInputsFields(fields, setFields){
+    let newFields = [...fields];
+    let data = {
+        role: "pacient",
+        isValid: true
+    };
+    
+    newFields = newFields.map((f) => {
+        const field = document.getElementById(`${f.id}`);
+
+        if(!(field.value.trim())){
+            data.isValid = false;
+            return {...f, hasErrorInField: true}
+        }else{
+            data.isValid = true;
+
+            if(f.id === "email"){
+                const object = validateEmail(field.value, f);
+                if(!object.hasErrorInField){
+                    data[f.id] = field.value;
+                    return object
+                }else{
+                    data.isValid = false;
+                    return object
+                } 
+            }
+
+            if(f.id === "birthday"){
+                const object = validateBornDate(field.value, f);
+                if(!object.hasErrorInField){
+                    data[f.id] = field.value;
+                    return object
+                }else{
+                    data.isValid = false;
+                    return object
+                } 
+            }
+
+            if(f.id === "height" || f.id === "weight"){
+                const object = validadeHeightAndWeight(field.value, f);
+                if(!object.hasErrorInField){
+                    data[f.id] = parseFloat(field.value);
+                    return object
+                }else{
+                    data.isValid = false;
+                    return object
+                }
+            }
+
+            data[f.id] =  field.value;
+            return {...f, hasErrorInField: false}
+        }
+    })
+
+    setFields(newFields)
+    return data;
 }
