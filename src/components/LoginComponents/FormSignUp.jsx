@@ -2,20 +2,12 @@ import MessageAfterLink from "./MessageAfterLink";
 import ButtonMain from "./ButtonMain";
 import FormField from "./FormField";
 import TextLink from "./TextLink";
-
-import {
-    maskHeightWeightDate, 
-    maskFullName, 
-    maskPassword, 
-    maskEmail, 
-    validateInputsFieldsSingUp
-} from "../../handlings/functions"
-
+import {maskHeightWeightDate, maskFullName, maskPassword, maskEmail, } from "../../handlings/functions"
+import { sendDatasPost } from "../../api/api";
 import { useState } from "react";
-
 import { UserRoundCheck } from 'lucide-react';
 
-function FormSignUp({validateTheme, theme, setMessageFeedback, setShowMessage, setColorFeedback, setIconFeedback}){
+function FormSignUp({validateTheme, theme, renderCardFeedback, locale}){
 
     const [isChecked, setIsChecked] = useState();
     const [checkColor, setCheckColor] = useState("text-slate-500")
@@ -87,45 +79,6 @@ function FormSignUp({validateTheme, theme, setMessageFeedback, setShowMessage, s
     const left = fields.slice(0,middle);
     const right = fields.slice(middle);
 
-    
-
-    async function sendDatas(event){
-        event.preventDefault();
-        const newData = validateInputsFieldsSingUp(fields, setFields, isChecked, setCheckColor);
-        try {
-            if(newData.isValid){
-                let user = {};
-                for(let k in newData){
-                    if(k !== "isValid"){
-                        user[k] = newData[k]
-                    }
-                }
-
-                const response =  await fetch("https://essencial-server.vercel.app/auth/sign-up", {
-                    method: "POST",
-                    headers: {"Content-type": "application/json"},
-                    body: JSON.stringify(user)
-                })
-                if(response.ok){
-                    setIconFeedback(<UserRoundCheck />)
-                    setColorFeedback("bg-indigo-300")
-                    setShowMessage(true);
-                    setMessageFeedback("Usuário foi cadastrado com sucesso!");
-                    
-                    setTimeout(() => {
-                        setShowMessage(false);
-                    }, 5000)
-                }
-            }else{
-                throw new Error("Invalid operation")
-            }
-        } catch (error) {
-            console.log(error.message);
-            return false;
-        }
-        
-    }
-
     return (
         <div className="max-w-[694px] w-full flex flex-col items-center md:mt-[50px]">
             <div className="flex justify-center flex-col w-full">
@@ -190,7 +143,14 @@ function FormSignUp({validateTheme, theme, setMessageFeedback, setShowMessage, s
                             marginDefault={"mt-[30px]"}
                             marginResponsive={"sm:mt-[90px]"}
                             name={"CADASTRAR"}
-                            operation={sendDatas}
+                            operation={sendDatasPost}
+                            URL={"https://essencial-server.vercel.app/auth/sign-up"}
+                            fields={fields}
+                            setFields={setFields}
+                            renderCardFeedbackOk={() => renderCardFeedback(<UserRoundCheck />, "bg-indigo-300", "Usuário foi cadastrado com sucesso!", 5000)}
+                            isChecked={isChecked}
+                            setCheckColor={setCheckColor}
+                            path={locale.pathname}
                         />
                     </div>
                 </form>

@@ -2,12 +2,12 @@ import MessageAfterLink from "./MessageAfterLink";
 import ButtonMain from "./ButtonMain";
 import FormField from "./FormField";
 import { useState } from "react";
-import { maskPassword, maskEmail, validateInputsFieldsSingIn } from "../../handlings/functions"
+import { maskPassword, maskEmail } from "../../handlings/functions"
+import { Ban } from 'lucide-react';
+import { sendDatasPost } from "../../api/api";
 import { useNavigate } from "react-router-dom";
 
-import { Ban } from 'lucide-react';
-
-function FormSignIn({theme, validateTheme, setShowMessage, setMessageFeedback, setIconFeedback, setColorFeedback}){
+function FormSignIn({theme, validateTheme, renderCardFeedback, locale}){
 
     const navigate = useNavigate();
 
@@ -33,43 +33,6 @@ function FormSignIn({theme, validateTheme, setShowMessage, setMessageFeedback, s
             messageError: "Campo obrigatório"
         },
     ]);
-
-    async function sendDatas(event){
-            event.preventDefault();
-            const newData = validateInputsFieldsSingIn(fields, setFields);
-            try {
-                if(newData.isValid){
-                    let user = {};
-                    for(let k in newData){
-                        if(k !== "isValid"){
-                            user[k] = newData[k]
-                        }
-                    }
-    
-                    const response =  await fetch("https://essencial-server.vercel.app/auth/sign-in", {
-                        method: "POST",
-                        headers: {"Content-type": "application/json"},
-                        body: JSON.stringify(user)
-                    })
-                    if(response.ok){
-                        navigate('/home')
-                    }else{
-                        setIconFeedback(<Ban />)
-                        setColorFeedback("bg-red-400")
-                        setShowMessage(true);
-                        setMessageFeedback("Usuário não autorizado");
-                        
-                        setTimeout(() => {
-                            setShowMessage(false);
-                        }, 5000)
-                    }
-                }
-            } catch (error) {
-                console.log(error.message);
-                return false;
-            }
-            
-        }
 
     return (
         <div className="max-w-[436px] w-full flex flex-col items-center md:mt-[100px]">
@@ -109,7 +72,13 @@ function FormSignIn({theme, validateTheme, setShowMessage, setMessageFeedback, s
                     marginDefault={"mt-[30px]"}
                     marginResponsive={"sm:mt-[90px]"}
                     name={"ENTRAR"}
-                    operation={sendDatas}
+                    operation={sendDatasPost}
+                    URL={"https://essencial-server.vercel.app/auth/sign-in"}
+                    fields={fields}
+                    setFields={setFields}
+                    renderCardFeedbackOk={() => renderCardFeedback(<Ban />, "bg-red-400", "Usuário não autorizado", 5000)}
+                    path={locale.pathname}
+                    navigate={navigate}
                 />
                 </form>
             </div>

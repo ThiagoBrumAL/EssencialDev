@@ -1,14 +1,14 @@
 import MessageAfterLink from "./MessageAfterLink";
 import ButtonMain from "./ButtonMain";
 import FormField from "./FormField";
-import { maskEmail } from "../../handlings/functions"
 import { useState } from "react";
+import { Send } from 'lucide-react';
+import { maskEmail } from "../../handlings/functions"
+import { sendDatasPost } from "../../api/api";
 
-import { validateEmail } from "../../handlings/functions"
+function FormRecover({validateTheme, theme, renderCardFeedback, locale}){
 
-function FormRecover({validateTheme, theme, }){
-
-    const [field, setField] = useState(
+    const [fields, setFields] = useState([
         { 
             name: "E-mail", 
             type: "email", 
@@ -19,41 +19,7 @@ function FormRecover({validateTheme, theme, }){
             hasErrorInField: false,
             messageError: "Campo obrigatório"
         },
-    );
-
-    function validateInputField(){
-        let data = {};
-        let newField = field;
-        const input = document.getElementById(`email`);
-
-        if(!(input.value.trim())){
-            newField = {...field, hasErrorInField: true}
-        }else{
-            newField = validateEmail(input.value, field);
-        }
-
-        setField(newField)
-        return data;
-    }
-
-    async function sendDatas(event){
-        event.preventDefault();
-        const newData = validateInputField();
-
-        try {
-            // const response =  await fetch("https://essencial-server.vercel.app/auth/sign-up", {
-            //     method: "POST",
-            //     headers: {"Content-type": "application/json"},
-            //     body: JSON.stringify(newData)
-            // })
-            // if(response.ok) console.log(data)
-            console.log(newData);
-        } catch (error) {
-            console.log(error.message);
-            return false;
-        }
-        
-    }
+    ]);
     
     return (
         <div className="max-w-[436px] w-full flex flex-col items-center md:mt-[100px]">
@@ -77,8 +43,8 @@ function FormRecover({validateTheme, theme, }){
                 action=""
                 >
                 <FormField
-                    key={field.id}
-                    object={field}
+                    key={fields[0].id}
+                    object={fields[0]}
                     theme={theme}
                     functionTheme={validateTheme}
                 />
@@ -87,7 +53,12 @@ function FormRecover({validateTheme, theme, }){
                     marginDefault={"mt-[20px]"}
                     marginResponsive={"sm:mt-[20px]"}
                     name={"ENVIAR"}
-                    operation={sendDatas}
+                    operation={sendDatasPost}
+                    URL={"https://essencial-server.vercel.app/auth/forgot-password"}
+                    fields={fields}
+                    setFields={setFields}
+                    renderCardFeedbackOk={() => renderCardFeedback(<Send />, "bg-green-400", "Messagem enviada com sucesso", 5000)}
+                    path={locale.pathname}
                 />
                 <MessageAfterLink
                     message1={"Lembrou sua senha?"}

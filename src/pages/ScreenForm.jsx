@@ -10,12 +10,10 @@ import FormRecover from "../components/LoginComponents/FormRecover";
 import Title from "../components/LoginComponents/Title";
 import Welcome from "./Welcome";
 import CardFeddback from "../components/LoginComponents/CardFeedback.jsx";
-import Home from "./Home";
 
 //My Handlings 
 
 function ScreenForm() {
-    // const navigate = useNavigate();
     const locale = useLocation()
     const [theme, setTheme] = useState(true);
     const [messageFeedback, setMessageFeedback] = useState("undefined");
@@ -45,12 +43,19 @@ function ScreenForm() {
         setTheme((prev) => !prev);
     };
 
-
-
     function validateTheme(theme, light, dark) {
         return theme ? light : dark;
     }
 
+    function renderCardFeedback(icon, indicator, message, timeout){
+        setIconFeedback(icon)
+        setColorFeedback(indicator)
+        setShowMessage(true);
+        setMessageFeedback(message);
+        setTimeout(() => {
+            setShowMessage(false);
+        }, timeout)
+    }
 
 
     return (
@@ -96,10 +101,8 @@ function ScreenForm() {
                         <FormSignIn 
                             theme={theme} 
                             validateTheme={validateTheme}
-                            setMessageFeedback={setMessageFeedback}
-                            setShowMessage={setShowMessage}
-                            setColorFeedback={setColorFeedback}
-                            setIconFeedback={setIconFeedback}
+                            renderCardFeedback={renderCardFeedback}
+                            locale={locale}
                         />
                     }>
                 </Route>
@@ -110,10 +113,8 @@ function ScreenForm() {
                         <FormSignUp 
                             theme={theme} 
                             validateTheme={validateTheme}
-                            setMessageFeedback={setMessageFeedback}
-                            setShowMessage={setShowMessage}
-                            setColorFeedback={setColorFeedback}
-                            setIconFeedback={setIconFeedback}
+                            renderCardFeedback={renderCardFeedback}
+                            locale={locale}
                         />
                     }>
                 </Route>
@@ -124,8 +125,8 @@ function ScreenForm() {
                         <FormRecover 
                             theme={theme} 
                             validateTheme={validateTheme}
-                            setMessageFeedback={setMessageFeedback}
-                            setShowMessage={setShowMessage}
+                            renderCardFeedback={renderCardFeedback}
+                            locale={locale}
                         />
                     }>
                 </Route>

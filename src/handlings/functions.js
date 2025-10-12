@@ -5,7 +5,7 @@ export function maskFullName(value){
 }
 
 export function maskPassword(value){
-    if(value > 10) return value.slice(0, 10);
+    if(value.length > 20) return value.slice(0, 20);
     return value;
 }
 
@@ -65,7 +65,16 @@ export function validateEmail(value, object){
         return {...object, hasErrorInField: false}
 }
 
-export function validadeHeightAndWeight(value, object){
+function validatePassword(value, object){
+    const role = /^(?=.*[A-Za-z])(?=.*\d).+$/;
+
+    if(value.length < 5) return {...object, hasErrorInField: true, messageError: "A senha precisa ter no minímo 5 digitos"}
+    if(!(role.test(value))) return {...object, hasErrorInField: true, messageError: "A senha precisa ter letras e números"}
+
+    return {...object, hasErrorInField: false}
+}
+
+function validadeHeightAndWeight(value, object){
     const array = [];
     for(let l in value){
         array.push(value.charAt(l));
@@ -84,7 +93,7 @@ export function validadeHeightAndWeight(value, object){
     }
 }
 
-export function validateBornDate(value, object){
+function validateBornDate(value, object){
 
     function validateAge(month, year){
         const date = new Date();
@@ -114,100 +123,65 @@ export function validateBornDate(value, object){
     return {...object, hasErrorInField: false}
 }
 
-export function validateInputsFieldsSingUp(fields, setFields, isChecked, setCheckColor){
+function validateFullName(value, object){
+    if(value.length <= 2) return {...object, hasErrorInField: true, messageError: "O deve ter no minímo 3 caracteres"}
+    return {...object, hasErrorInField: false}
+}
+
+export function validateCheckbox(newData, isChecked, setCheckColor){
+    if(!isChecked){
+        setCheckColor("text-red-500")
+        return newData.isValid = false 
+    }else{
+        setCheckColor("text-slate-500")
+        newData["authorized"] = true
+        return newData
+    }
+}
+
+function validator(fieldValue, field, data){
+    const funcs = {
+        "email": validateEmail(fieldValue, field),
+        "password": validatePassword(fieldValue, field),
+        "birthday": validateBornDate(fieldValue, field),
+        "height": validadeHeightAndWeight(fieldValue, field),
+        "weight": validadeHeightAndWeight(fieldValue, field),
+        "name": validateFullName(fieldValue, field)
+    }
+
+    const object = funcs[field.id];
+
+    const box = {
+        data: data,
+        object: object
+    }
+
+    if(!object.hasErrorInField){
+        box.data[field.id] = field.id === "height" || field.id === "weight" ? parseFloat(fieldValue) : fieldValue;
+        return box
+    }else{
+        box.data.isValid = false;
+        return box
+    } 
+}
+
+export function validateInputsFields(fields, setFields){
     let newFields = [...fields];
     let data = {
         role: "pacient",
         isValid: true
     };
-    
+
     newFields = newFields.map((f) => {
         const field = document.getElementById(`${f.id}`);
 
         if(!(field.value.trim())){
             data.isValid = false;
-            return {...f, hasErrorInField: true}
+            return {...f, hasErrorInField: true};
         }else{
-            data.isValid = true;
-
-            if(f.id === "email"){
-                const object = validateEmail(field.value, f);
-                if(!object.hasErrorInField){
-                    data[f.id] = field.value;
-                    return object
-                }else{
-                    data.isValid = false;
-                    return object
-                } 
-            }
-
-            if(f.id === "birthday"){
-                const object = validateBornDate(field.value, f);
-                if(!object.hasErrorInField){
-                    data[f.id] = field.value;
-                    return object
-                }else{
-                    data.isValid = false;
-                    return object
-                } 
-            }
-
-            if(f.id === "height" || f.id === "weight"){
-                const object = validadeHeightAndWeight(field.value, f);
-                if(!object.hasErrorInField){
-                    data[f.id] = parseFloat(field.value);
-                    return object
-                }else{
-                    data.isValid = false;
-                    return object
-                }
-            }
-
-            data[f.id] =  field.value;
-            return {...f, hasErrorInField: false}
-        }
-    })
-
-    if(!isChecked){
-        data.isValid = false;
-        setCheckColor("text-red-500")
-    }else{
-        data["authorized"] = true
-        setCheckColor("text-slate-500")
-    }
-
-    setFields(newFields)
-    return data;
-}
-
-export function validateInputsFieldsSingIn(fields, setFields,){
-    let newFields = [...fields];
-    let data = {
-        isValid: true
-    };
-    
-    newFields = newFields.map((f) => {
-        const field = document.getElementById(`${f.id}`);
-
-        if(!(field.value.trim())){
-            data.isValid = false;
-            return {...f, hasErrorInField: true}
-        }else{
-            data.isValid = true;
-
-            if(f.id === "email"){
-                const object = validateEmail(field.value, f);
-                if(!object.hasErrorInField){
-                    data[f.id] = field.value;
-                    return object
-                }else{
-                    data.isValid = false;
-                    return object
-                } 
-            }
-
-            data[f.id] =  field.value;
-            return {...f, hasErrorInField: false}
+            const object = validator(field.value, f, data);
+            data = object.data;
+            return object.object;
         }
     })
 
