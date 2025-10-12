@@ -15,6 +15,9 @@ import { useState } from "react";
 
 function FormSignUp({validateTheme, theme, setMessageFeedback}){
 
+    const [isChecked, setIsChecked] = useState();
+    const [checkColor, setCheckColor] = useState("text-slate-500")
+
     const [fields, setFields] = useState([
         { 
             name: "Nome Completo", 
@@ -82,17 +85,12 @@ function FormSignUp({validateTheme, theme, setMessageFeedback}){
     const left = fields.slice(0,middle);
     const right = fields.slice(middle);
 
+    
+
     async function sendDatas(event){
         event.preventDefault();
-
-        const authorized = document.getElementById("authorized");        
-
-        const newData = validateInputsFields(fields, setFields);
-
-        if(!authorized){
-            throw new Error("Field Blank");
-        } 
-        newData["authorized"] = authorized.checked;
+        const newData = validateInputsFields(fields, setFields, isChecked, setCheckColor);
+        console.log(newData);
         try {
             if(newData.isValid){
                 let user = {};
@@ -108,9 +106,9 @@ function FormSignUp({validateTheme, theme, setMessageFeedback}){
                     body: JSON.stringify(user)
                 })
                 if(response.ok){
-                    setMessageFeedback("Usuário cadastrado!")
+                    setMessageFeedback("Usuário foi cadastrado com sucesso!")
                     setTimeout(() => {
-                        setMessageFeedback("")
+                        setMessageFeedback("undefined")
                     }, 5000)
                 }
             }else{
@@ -177,8 +175,8 @@ function FormSignUp({validateTheme, theme, setMessageFeedback}){
                         </div>
                     </div>
                     <div className="flex gap-2 max-w-[424px] sm:mt-[50px mt-[60px] relative">
-                        <input type="checkbox" id="authorized" value="authorized" name="authorized" className="absolute top-[5px]"/>
-                        <label htmlFor="authorized" className="p-0 m-0 inline-block text-[14px] text-slate-600 ml-[24px]"> 
+                        <input type="checkbox" id="authorized" checked={isChecked} onChange={(event) => setIsChecked(event.target.checked)} name="authorized" className="absolute top-[5px] w-4 h-4"/>
+                        <label className={`p-0 m-0 inline-block text-[14px] ml-[24px] ${checkColor}`}> 
                             Ao criar sua conta, você concorda com os <TextLink message={"Termos e Condições"} link={"https://www.gov.br/esporte/pt-br/acesso-a-informacao/lgpd"}/> e nossa <TextLink message={"Política de Privacidade."} link={"https://www.gov.br/esporte/pt-br/acesso-a-informacao/lgpd"}/>
                         </label>
                     </div>

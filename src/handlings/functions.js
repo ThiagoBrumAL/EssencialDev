@@ -114,7 +114,7 @@ export function validateBornDate(value, object){
     return {...object, hasErrorInField: false}
 }
 
-export function validateInputsFields(fields, setFields){
+export function validateInputsFields(fields, setFields, isChecked, setCheckColor){
     let newFields = [...fields];
     let data = {
         role: "pacient",
@@ -167,6 +167,14 @@ export function validateInputsFields(fields, setFields){
             return {...f, hasErrorInField: false}
         }
     })
+
+    if(!isChecked){
+        data.isValid = false;
+        setCheckColor("text-red-500")
+    }else{
+        data["authorized"] = true
+        setCheckColor("text-slate-500")
+    }
 
     setFields(newFields)
     return data;

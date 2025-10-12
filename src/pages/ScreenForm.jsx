@@ -18,7 +18,7 @@ function ScreenForm() {
     // const navigate = useNavigate();
     const locale = useLocation()
     const [theme, setTheme] = useState(true);
-    const [messageFeedback, setMessageFeedback] = useState("");
+    const [messageFeedback, setMessageFeedback] = useState("undefined");
 
     const [titles] = useState([
         {
@@ -129,7 +129,7 @@ function ScreenForm() {
                 </Route>
             </Routes>
 
-            {messageFeedback && <CardFeddback message={messageFeedback}/>}
+                {messageFeedback && <CardFeddback theme={theme} message={messageFeedback}/>}
 
             <div
             id="container-theme"
