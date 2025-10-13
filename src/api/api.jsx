@@ -1,5 +1,5 @@
 import { validateInputsFields, validateCheckbox } from "../handlings/functions";
-import { ShieldOff } from 'lucide-react';
+import { ShieldOff, MailWarning  } from 'lucide-react';
 
 export async function sendDatasPost(event, object){
     event.preventDefault();
@@ -22,19 +22,21 @@ export async function sendDatasPost(event, object){
                 body: JSON.stringify(user)
             })
 
-            if(response.status === 400){
-                const message = await response.json();
-                console.log(message);
-            }
-
-            if(response.status === 401){
-                object.renderCardFeedbackError(<ShieldOff />, "bg-red-400", "Acesso não autorizado", 5000, ShieldOff)
-            }
-
             if(response.ok){
 
                 if(object.path === "/sign-in" && object.navigate) return object.navigate("/home")
                 object.renderCardFeedbackOk()
+
+            }else{
+
+                switch(response.status){
+                    case 401:
+                        object.renderCardFeedbackError(<ShieldOff />, "bg-red-400", "Acesso não autorizado", 5000)
+                        break
+                    case 409:
+                        object.renderCardFeedbackError(<MailWarning  />, "bg-red-400", "Este e-mail já registrado", 5000)
+                        break
+                }
             }
         }else{
             throw new Error("Invalid operation")
@@ -43,5 +45,4 @@ export async function sendDatasPost(event, object){
         console.log(error.message);
         return false;
     }
-    
 }
