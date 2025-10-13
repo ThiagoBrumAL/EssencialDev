@@ -2,8 +2,8 @@ import MessageAfterLink from "./MessageAfterLink";
 import ButtonMain from "./ButtonMain";
 import FormField from "./FormField";
 import TextLink from "./TextLink";
-import {maskHeightWeightDate, maskFullName, maskPassword, maskEmail, } from "../../handlings/functions"
-import { sendDatasPost } from "../../api/api";
+import { maskHeightWeightDate, maskFullName, maskPassword, maskEmail, } from "../../handlings/functions"
+import { sendDatasPost } from "../../api/api.jsx";
 import { useState } from "react";
 import { UserRoundCheck } from 'lucide-react';
 
@@ -147,7 +147,8 @@ function FormSignUp({validateTheme, theme, renderCardFeedback, locale}){
                             URL={"https://essencial-server.vercel.app/auth/sign-up"}
                             fields={fields}
                             setFields={setFields}
-                            renderCardFeedbackOk={() => renderCardFeedback(<UserRoundCheck />, "bg-indigo-300", "Usuário foi cadastrado com sucesso!", 5000)}
+                            renderCardFeedbackOk={() => renderCardFeedback(<UserRoundCheck />, "bg-green-400", "Usuário cadastrado!", 5000)}
+                            renderCardFeedbackError={renderCardFeedback}
                             isChecked={isChecked}
                             setCheckColor={setCheckColor}
                             path={locale.pathname}

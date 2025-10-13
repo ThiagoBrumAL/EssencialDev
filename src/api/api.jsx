@@ -1,10 +1,11 @@
 import { validateInputsFields, validateCheckbox } from "../handlings/functions";
+import { ShieldOff } from 'lucide-react';
 
 export async function sendDatasPost(event, object){
     event.preventDefault();
     let newData = validateInputsFields(object.fields, object.setFields);
 
-    if(object.path === "/sign-up" && object.isChecked && object.setCheckColor) newData = validateCheckbox(newData, object.isChecked, object.setCheckColor);
+    if(object.path === "/sign-up") newData = validateCheckbox(newData, object.isChecked, object.setCheckColor);
 
     try {
         if(newData.isValid){
@@ -26,10 +27,13 @@ export async function sendDatasPost(event, object){
                 console.log(message);
             }
 
+            if(response.status === 401){
+                object.renderCardFeedbackError(<ShieldOff/>, "bg-red-400", "Acesso não autorizado", 5000)
+            }
+
             if(response.ok){
 
-                if(object.path === "/sign-in" && object.navigate) object.navigate("/home")
-
+                if(object.path === "/sign-in" && object.navigate) return object.navigate("/home")
                 object.renderCardFeedbackOk()
             }
         }else{

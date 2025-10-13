@@ -9,14 +9,14 @@ import FormSignUp from "../components/LoginComponents/FormSignUp";
 import FormRecover from "../components/LoginComponents/FormRecover";
 import Title from "../components/LoginComponents/Title";
 import Welcome from "./Welcome";
-import CardFeddback from "../components/LoginComponents/CardFeedback.jsx";
+import CardFeedback from "../components/LoginComponents/CardFeedback.jsx";
 
 //My Handlings 
 
 function ScreenForm() {
     const locale = useLocation()
     const [theme, setTheme] = useState(true);
-    const [messageFeedback, setMessageFeedback] = useState("undefined");
+    const [messageFeedback, setMessageFeedback] = useState("Usuario cadastrado!");
     const [showMessage, setShowMessage] = useState(false);
     const [colorFeedback, setColorFeedback] = useState("bg-indigo-300")
     const [iconFeedback, setIconFeedback] = useState()
@@ -142,11 +142,11 @@ function ScreenForm() {
                 </Route>
             </Routes>
 
-                {messageFeedback && <CardFeddback theme={theme} object={{message: messageFeedback, show: showMessage, color: colorFeedback, icon: iconFeedback}}/>}
+                {messageFeedback && <CardFeedback theme={theme} object={{message: messageFeedback, show: showMessage, color: colorFeedback, icon: iconFeedback}}/>}
 
             <div
             id="container-theme"
-            className="flex flex-col gap-4 items-center mt-2 sm:gap-12 sm:flex-row"
+            className="flex flex-col gap-4 items-center mt-[20px] sm:gap-12 sm:flex-row"
             >
                 <div className="flex gap-1 items-center">
                     <Lightbulb className={`m-0 p-0 text-slate-500 font-[500] `} />

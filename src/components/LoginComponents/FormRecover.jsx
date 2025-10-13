@@ -4,7 +4,7 @@ import FormField from "./FormField";
 import { useState } from "react";
 import { Send } from 'lucide-react';
 import { maskEmail } from "../../handlings/functions"
-import { sendDatasPost } from "../../api/api";
+import { sendDatasPost } from "../../api/api.jsx";
 
 function FormRecover({validateTheme, theme, renderCardFeedback, locale}){
 

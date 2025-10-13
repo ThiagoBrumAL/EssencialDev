@@ -3,9 +3,9 @@ import ButtonMain from "./ButtonMain";
 import FormField from "./FormField";
 import { useState } from "react";
 import { maskPassword, maskEmail } from "../../handlings/functions"
-import { Ban } from 'lucide-react';
-import { sendDatasPost } from "../../api/api";
+import { sendDatasPost } from "../../api/api.jsx";
 import { useNavigate } from "react-router-dom";
+import { UserRoundCheck } from 'lucide-react';
 
 function FormSignIn({theme, validateTheme, renderCardFeedback, locale}){
 
@@ -76,7 +76,8 @@ function FormSignIn({theme, validateTheme, renderCardFeedback, locale}){
                     URL={"https://essencial-server.vercel.app/auth/sign-in"}
                     fields={fields}
                     setFields={setFields}
-                    renderCardFeedbackOk={() => renderCardFeedback(<Ban />, "bg-red-400", "Usuário não autorizado", 5000)}
+                    renderCardFeedbackOk={() => renderCardFeedback(<UserRoundCheck />, "bg-green-400", "Usuário autorizado", 5000)}
+                    renderCardFeedbackError={renderCardFeedback}
                     path={locale.pathname}
                     navigate={navigate}
                 />
