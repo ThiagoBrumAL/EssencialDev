@@ -1,6 +1,6 @@
-function ButtonMain({marginDefault, marginResponsive, name, operation, URL, fields, setFields, renderCardFeedbackOk, path, navigate, isChecked, setCheckColor, renderCardFeedbackError, isDisabled}){
+function ButtonMain({marginDefault, marginResponsive, name, operation, URL, fields, setFields, renderCardFeedbackOk, path, navigate, isChecked, setCheckColor, renderCardFeedbackError}){
     return (
-        <button disabled={isDisabled} onClick={(event) => operation(event, {
+        <button onClick={(event) => operation(event, {
             URL,
             fields,
             setFields,
