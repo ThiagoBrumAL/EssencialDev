@@ -8,6 +8,8 @@ import { sendDatasPost } from "../../api/api.jsx";
 
 function FormRecover({validateTheme, theme, renderCardFeedback, locale}){
 
+    const [isDisabled, setIsDisabled] = false;
+
     const [fields, setFields] = useState([
         { 
             name: "E-mail", 
@@ -20,6 +22,13 @@ function FormRecover({validateTheme, theme, renderCardFeedback, locale}){
             messageError: "Campo obrigatório"
         },
     ]);
+
+
+    function waitOneMinute(){
+        setTimeout(() => {
+            setIsDisabled(true)
+        }, 60000)
+    }
     
     return (
         <div className="max-w-[436px] w-full flex flex-col items-center md:mt-[100px]">
@@ -58,7 +67,9 @@ function FormRecover({validateTheme, theme, renderCardFeedback, locale}){
                     fields={fields}
                     setFields={setFields}
                     renderCardFeedbackOk={() => renderCardFeedback(<Send />, "bg-green-400", "Messagem enviada com sucesso", 5000)}
+                    renderCardFeedbackError={renderCardFeedback}
                     path={locale.pathname}
+                    isDisabled={isDisabled}
                 />
                 <MessageAfterLink
                     message1={"Lembrou sua senha?"}
