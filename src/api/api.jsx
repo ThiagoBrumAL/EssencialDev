@@ -28,7 +28,7 @@ export async function sendDatasPost(event, object){
             }
 
             if(response.status === 401){
-                object.renderCardFeedbackError(<ShieldOff/>, "bg-red-400", "Acesso não autorizado", 5000)
+                object.renderCardFeedbackError(<ShieldOff />, "bg-red-400", "Acesso não autorizado", 5000, ShieldOff)
             }
 
             if(response.ok){

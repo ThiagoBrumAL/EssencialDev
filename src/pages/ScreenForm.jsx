@@ -55,6 +55,8 @@ function ScreenForm() {
         setTimeout(() => {
             setShowMessage(false);
         }, timeout)
+
+        return component
     }
 
 
