@@ -5,7 +5,7 @@ import TextLink from "./TextLink";
 import { maskHeightWeightDate, maskFullName, maskPassword, maskEmail, } from "../../handlings/functions"
 import { sendDatasPost } from "../../api/api.jsx";
 import { useState } from "react";
-import { UserRoundCheck } from 'lucide-react';
+import { UserRoundCheck, Eye } from 'lucide-react';
 
 function FormSignUp({validateTheme, theme, renderCardFeedback, locale}){
 
@@ -71,7 +71,8 @@ function FormSignUp({validateTheme, theme, renderCardFeedback, locale}){
             id:"password",
             mask: maskPassword,
             hasErrorInField: false,
-            messageError: "Campo obrigatório"
+            messageError: "Campo obrigatório",
+            icon: Eye
         },
     ]);
 
@@ -127,6 +128,8 @@ function FormSignUp({validateTheme, theme, renderCardFeedback, locale}){
                                     functionTheme={validateTheme}
                                     bool={field.link ?? false}
                                     id={field.id}
+                                    fields={fields}
+                                    setFields={setFields}
                                 />
                             );
                         })}

@@ -68,7 +68,7 @@ function ScreenForm() {
             className={` hidden sm:block w-full min-h-full bg-gradient-to-tr ${validateTheme(
             theme,
             "from-teal-400 to-indigo-400",
-            "from-slate-950 to-slate-800"
+            "from-indigo-900 to-slate-950"
             )} py-6 px-[24px]`}
         >
             <div className="h-[50%] w-full flex justify-center items-center">

@@ -5,7 +5,7 @@ import { useState } from "react";
 import { maskPassword, maskEmail } from "../../handlings/functions"
 import { sendDatasPost } from "../../api/api.jsx";
 import { useNavigate } from "react-router-dom";
-import { UserRoundCheck } from 'lucide-react';
+import { UserRoundCheck, Eye } from 'lucide-react';
 
 function FormSignIn({theme, validateTheme, renderCardFeedback, locale}){
 
@@ -30,7 +30,8 @@ function FormSignIn({theme, validateTheme, renderCardFeedback, locale}){
             id:"password",
             mask: maskPassword,
             hasErrorInField: false,
-            messageError: "Campo obrigatório"
+            messageError: "Campo obrigatório",
+            icon: Eye
         },
     ]);
 
@@ -65,6 +66,8 @@ function FormSignIn({theme, validateTheme, renderCardFeedback, locale}){
                         functionTheme={validateTheme}
                         bool={field.link ?? false}
                         id={field.id}
+                        fields={fields}
+                        setFields={setFields}
                     />
                     );
                 })}

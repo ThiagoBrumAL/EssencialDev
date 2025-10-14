@@ -1,8 +1,9 @@
 import MessageAfterLink from "./MessageAfterLink";
 import MessageAfter from "./MessageAfter";
 import { useState } from "react";
+import { Eye, EyeClosed  } from 'lucide-react';
 
-function FormField({ object, theme, functionTheme, bool}) {
+function FormField({ object, theme, functionTheme, bool, fields, setFields}) {
 
     const [inputValue, setInputValue] = useState("");
 
@@ -60,7 +61,22 @@ function FormField({ object, theme, functionTheme, bool}) {
             />
 
             <p className="absolute left-0 bottom-[0px] text-[14px] text-red-500">{object.hasErrorInField ? object.messageError : null}</p>
+            <div className="absolute top-10 right-4">
+                <button onClick={(event) => {
+                    event.preventDefault();
+                    if(object.name === "Senha"){
+                        const newFileds = fields.map((input) => {
+                            if(input.name === "Senha" && input.type === "password") return {...input, type: "text", icon: EyeClosed}
+                            if(input.name === "Senha" && input.type === "text") return {...input, type: "password", icon: Eye}
+                            return {...input}
+                        })
 
+                        setFields(newFileds)
+                    }
+                }}>
+                    {object.icon && <object.icon color={functionTheme(theme, "#7A828A", "#EDF2F7")}/>}
+                </button>
+            </div>
             {object.name === "Senha" ? withoutLink(bool) : null}
         </div>
     );
