@@ -1,4 +1,4 @@
-import { validateInputsFields, validateCheckbox } from "../handlings/functions";
+import { validateInputsFields, validateCheckbox, UserRoundCheck  } from "../handlings/functions";
 import { ShieldOff, MailWarning  } from 'lucide-react';
 
 
@@ -57,6 +57,7 @@ export async function sendDatasPost(event, object){
 
                 if(object.path === "/sign-in" && object.navigate) return object.navigate("/home")
                 if(object.path === "/recover") return recoverEmail(object);
+                if(object.path === "/sign-up") return object.renderCardFeedbackOk(<UserRoundCheck />, "bg-green-400", "Usuário cadastrado", 5000)
 
             }else{
 
@@ -65,7 +66,7 @@ export async function sendDatasPost(event, object){
                         object.renderCardFeedbackError(<ShieldOff />, "bg-red-400", "Acesso não autorizado", 5000)
                         break
                     case 409:
-                        object.renderCardFeedbackError(<MailWarning  />, "bg-red-400", "Este e-mail já registrado", 5000)
+                        object.renderCardFeedbackError(<MailWarning  />, "bg-red-400", "E-mail já registrado", 5000)
                         break
                 }
             }

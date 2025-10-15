@@ -91,7 +91,7 @@ function ScreenForm() {
             theme,
             "bg-slate-50",
             "bg-slate-900"
-            )} w-full min-h-dvh flex items-center justify-between py-4 flex-col px-[24px] relative`}
+            )} w-full min-h-dvh flex items-center justify-between py-4 flex-col px-[24px] relative transition duration-75`}
         >
 
             <Routes>
