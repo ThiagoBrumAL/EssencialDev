@@ -1,4 +1,39 @@
-function ButtonMain({marginDefault, marginResponsive, name, operation, URL, fields, setFields, renderCardFeedbackOk, path, navigate, isChecked, setCheckColor, renderCardFeedbackError}){
+import { useEffect, useState } from "react";
+
+function ButtonMain({
+    marginDefault, 
+    marginResponsive, 
+    name, 
+    operation, 
+    URL, 
+    fields, 
+    setFields, 
+    renderCardFeedbackOk, 
+    path, 
+    navigate, 
+    isChecked, 
+    setCheckColor, 
+    renderCardFeedbackError, 
+    validateTheme, 
+    theme
+}){
+
+    const [hoverLight, setHoverLight] = useState("sm:hover:bg-indigo-400");
+    const [hoverDark, setHoverDark] = useState("sm:hover:bg-indigo-800");
+
+    useEffect(() => {
+        if(path === "/recover"){
+            if(fields[0].disabled){
+                setHoverDark("")
+                setHoverLight("")
+            }else{
+                setHoverLight("sm:hover:bg-indigo-400");
+                setHoverDark("sm:hover:bg-indigo-800");
+            }
+        }
+    }, [path, fields])
+
+
     return (
         <button onClick={(event) => operation(event, {
             URL,
@@ -9,10 +44,24 @@ function ButtonMain({marginDefault, marginResponsive, name, operation, URL, fiel
             path,
             navigate: navigate || false,
             isChecked,
-            setCheckColor: setCheckColor || false
-        })} 
-        className={`bg-indigo-500 w-full text-slate-50 py-2 rounded-full ${marginDefault} ${marginResponsive} font-[500] sm:hover:bg-indigo-600 ease-in-out transition bg-gradient-to-tr from-teal-400 to-indigo-400`}>{name}</button>
+            setCheckColor: setCheckColor || false,
+        })}
+
+        disabled={path === "/recover" ? fields[0].disabled : false}
+        className={` 
+            ${validateTheme(theme, "bg-indigo-300", "bg-indigo-700")}
+            w-full 
+            text-slate-50 
+            py-2 
+            rounded-full
+            ${marginDefault}
+            ${marginResponsive}
+            font-[500]
+            ${validateTheme(theme, `${hoverLight}`, `${hoverDark}`)}
+            ease-in-out transition`
+        }>
+            {name}
+        </button>
     )
 }
-
 export default ButtonMain;

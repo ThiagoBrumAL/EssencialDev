@@ -17,7 +17,8 @@ function FormRecover({validateTheme, theme, renderCardFeedback, locale}){
             id:"email",
             mask: maskEmail,
             hasErrorInField: false,
-            messageError: "Campo obrigatório"
+            messageError: "Campo obrigatório",
+            disabled: false
         },
     ]);
     
@@ -60,6 +61,8 @@ function FormRecover({validateTheme, theme, renderCardFeedback, locale}){
                     renderCardFeedbackOk={() => renderCardFeedback(<Send />, "bg-green-400", "Messagem enviada com sucesso", 5000)}
                     renderCardFeedbackError={renderCardFeedback}
                     path={locale.pathname}
+                    validateTheme={validateTheme}
+                    theme={theme}
                 />
                 <MessageAfterLink
                     message1={"Lembrou sua senha?"}

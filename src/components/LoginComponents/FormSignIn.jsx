@@ -83,6 +83,8 @@ function FormSignIn({theme, validateTheme, renderCardFeedback, locale}){
                     renderCardFeedbackError={renderCardFeedback}
                     path={locale.pathname}
                     navigate={navigate}
+                    validateTheme={validateTheme}
+                    theme={theme}
                 />
                 </form>
             </div>

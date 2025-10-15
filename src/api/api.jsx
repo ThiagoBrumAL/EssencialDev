@@ -1,6 +1,41 @@
 import { validateInputsFields, validateCheckbox } from "../handlings/functions";
 import { ShieldOff, MailWarning  } from 'lucide-react';
 
+
+function recoverEmail(object){
+    
+    object.renderCardFeedbackOk()
+    let counter = 60;
+
+    const field = object.fields[0];
+    object.setFields([{
+        ...field, 
+        hasErrorInField: true, 
+        disabled: true, 
+        messageError: `Aguarde ${counter}s para enviar outra solicitação`
+    }])
+
+    let interval = setInterval(() => {
+        counter--;
+        if(counter > 0){
+            object.setFields([{
+                ...field,
+                hasErrorInField: true, 
+                disabled: true, 
+                messageError: `Aguarde ${counter}s para enviar outra solicitação`
+            }])
+        }else{
+            clearInterval(interval);
+            object.setFields([{
+                ...field, 
+                hasErrorInField: false, 
+                disabled: false,
+                messageError: ""
+            }])
+        }
+    }, 1000)
+} 
+
 export async function sendDatasPost(event, object){
     event.preventDefault();
     let newData = validateInputsFields(object.fields, object.setFields);
@@ -10,11 +45,7 @@ export async function sendDatasPost(event, object){
     try {
         if(newData.isValid){
             let user = {};
-            for(let k in newData){
-                if(k !== "isValid"){
-                    user[k] = newData[k]
-                }
-            }
+            for(let k in newData) if(k !== "isValid") user[k] = newData[k]
 
             const response =  await fetch(object.URL, {
                 method: "POST",
@@ -25,7 +56,7 @@ export async function sendDatasPost(event, object){
             if(response.ok){
 
                 if(object.path === "/sign-in" && object.navigate) return object.navigate("/home")
-                object.renderCardFeedbackOk()
+                if(object.path === "/recover") return recoverEmail(object);
 
             }else{
 

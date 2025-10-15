@@ -155,6 +155,8 @@ function FormSignUp({validateTheme, theme, renderCardFeedback, locale}){
                             isChecked={isChecked}
                             setCheckColor={setCheckColor}
                             path={locale.pathname}
+                            validateTheme={validateTheme}
+                            theme={theme}
                         />
                     </div>
                 </form>
