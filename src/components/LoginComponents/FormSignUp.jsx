@@ -2,83 +2,22 @@ import MessageAfterLink from "./MessageAfterLink";
 import ButtonMain from "./ButtonMain";
 import FormField from "./FormField";
 import TextLink from "./TextLink";
-import { maskHeightWeightDate, maskFullName, maskPassword, maskEmail, } from "../../handlings/functions"
 import { sendDatasPost } from "../../api/api.jsx";
 import { useState } from "react";
-import { UserRoundCheck, Eye } from 'lucide-react';
 
-function FormSignUp({validateTheme, theme, renderCardFeedback, locale}){
+import { useContext } from "react";
+import { ScreenContext } from "../../contexts/Context";
+
+function FormSignUp({renderCardFeedback}){
 
     const [isChecked, setIsChecked] = useState();
     const [checkColor, setCheckColor] = useState("text-slate-500")
+    const { fieldsSignUp, setFieldsSignUp, locale, theme, validateTheme } = useContext(ScreenContext)
 
-    const [fields, setFields] = useState([
-        { 
-            name: "Nome Completo", 
-            type: "text", 
-            placeholder: "Insira seu nome completo", 
-            link: false, 
-            id:"name",
-            mask: maskFullName,
-            hasErrorInField: false,
-            messageError: "Campo obrigatório"
-        },
-        { 
-            name: "Altura", 
-            type: "text", 
-            placeholder: "Insira sua altura", 
-            link: false, 
-            id:"height",
-            mask: maskHeightWeightDate,
-            hasErrorInField: false,
-            messageError: "Campo obrigatório"
-        },
-        { 
-            name: "Data de Nascimento", 
-            type: "text", 
-            placeholder: "Insira sua data de nascimento", 
-            link: false, 
-            id:"birthday",
-            mask: maskHeightWeightDate,
-            hasErrorInField: false,
-            messageError: "Campo obrigatório"
-        },
-        { 
-            name: "Peso", 
-            type: "text", 
-            placeholder: "Insira seu peso", 
-            link: false, 
-            id:"weight",
-            mask: maskHeightWeightDate,
-            hasErrorInField: false,
-            messageError: "Campo obrigatório"
-        },
-        { 
-            name: "E-mail", 
-            type: "email", 
-            placeholder: "Insira seu email", 
-            link: false, 
-            id:"email",
-            mask: maskEmail,
-            hasErrorInField: false,
-            messageError: "Campo obrigatório"
-        },
-        { 
-            name: "Senha", 
-            type: "password", 
-            placeholder: "Insira sua senha", 
-            link: true, 
-            id:"password",
-            mask: maskPassword,
-            hasErrorInField: false,
-            messageError: "Campo obrigatório",
-            icon: Eye
-        },
-    ]);
 
-    const middle = Math.floor(fields.length/2);
-    const left = fields.slice(0,middle);
-    const right = fields.slice(middle);
+    const middle = Math.floor(fieldsSignUp.length/2);
+    const left = fieldsSignUp.slice(0,middle);
+    const right = fieldsSignUp.slice(middle);
 
     return (
         <div className="max-w-[694px] w-full flex flex-col items-center md:mt-[50px]">
@@ -110,7 +49,6 @@ function FormSignUp({validateTheme, theme, renderCardFeedback, locale}){
                                 <FormField
                                     key={index}
                                     object={field}
-                                    theme={theme}
                                     functionTheme={validateTheme}
                                     bool={field.link ?? false}
                                     id={field.id}
@@ -124,12 +62,11 @@ function FormSignUp({validateTheme, theme, renderCardFeedback, locale}){
                                 <FormField
                                     key={index}
                                     object={field}
-                                    theme={theme}
                                     functionTheme={validateTheme}
                                     bool={field.link ?? false}
                                     id={field.id}
-                                    fields={fields}
-                                    setFields={setFields}
+                                    fields={fieldsSignUp}
+                                    setFields={setFieldsSignUp}
                                 />
                             );
                         })}
@@ -148,15 +85,13 @@ function FormSignUp({validateTheme, theme, renderCardFeedback, locale}){
                             name={"CADASTRAR"}
                             operation={sendDatasPost}
                             URL={"https://essencial-server.vercel.app/auth/sign-up"}
-                            fields={fields}
-                            setFields={setFields}
+                            fields={fieldsSignUp}
+                            setFields={setFieldsSignUp}
                             renderCardFeedbackOk={() => renderCardFeedback(<UserRoundCheck />, "bg-green-400", "Usuário cadastrado!", 5000)}
                             renderCardFeedbackError={renderCardFeedback}
                             isChecked={isChecked}
                             setCheckColor={setCheckColor}
                             path={locale.pathname}
-                            validateTheme={validateTheme}
-                            theme={theme}
                         />
                     </div>
                 </form>

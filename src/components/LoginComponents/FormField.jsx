@@ -3,8 +3,12 @@ import MessageAfter from "./MessageAfter";
 import { useState } from "react";
 import { Eye, EyeClosed  } from 'lucide-react';
 
-function FormField({ object, theme, functionTheme, bool, fields, setFields}) {
+import { useContext } from "react";
+import { ScreenContext } from "../../contexts/Context";
 
+function FormField({ object, functionTheme, bool, fields, setFields}) {
+
+    const { theme } = useContext(ScreenContext)
     const [inputValue, setInputValue] = useState("");
 
     function withoutLink(bool){

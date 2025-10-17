@@ -1,26 +1,15 @@
 import MessageAfterLink from "./MessageAfterLink";
 import ButtonMain from "./ButtonMain";
 import FormField from "./FormField";
-import { useState } from "react";
 import { Send } from 'lucide-react';
-import { maskEmail } from "../../handlings/functions"
 import { sendDatasPost } from "../../api/api.jsx";
 
-function FormRecover({validateTheme, theme, renderCardFeedback, locale}){
+import { useContext } from "react";
+import { ScreenContext } from "../../contexts/Context";
 
-    const [fields, setFields] = useState([
-        { 
-            name: "E-mail", 
-            type: "email", 
-            placeholder: "Insira seu email", 
-            link: false, 
-            id:"email",
-            mask: maskEmail,
-            hasErrorInField: false,
-            messageError: "Campo obrigatório",
-            disabled: false
-        },
-    ]);
+function FormRecover({renderCardFeedback}){
+
+    const { fieldsRecover, setFieldsRecover, locale, theme, validateTheme } = useContext(ScreenContext)
     
     return (
         <div className="max-w-[436px] w-full flex flex-col items-center md:mt-[100px]">
@@ -43,35 +32,34 @@ function FormRecover({validateTheme, theme, renderCardFeedback, locale}){
                 className="sm:mb-[31px] w-[100%] mb-0"
                 action=""
                 >
-                <FormField
-                    key={fields[0].id}
-                    object={fields[0]}
-                    theme={theme}
-                    functionTheme={validateTheme}
-                />
-                <ButtonMain
-                    link={""}
-                    marginDefault={"mt-[20px]"}
-                    marginResponsive={"sm:mt-[20px]"}
-                    name={"ENVIAR"}
-                    operation={sendDatasPost}
-                    URL={"https://essencial-server.vercel.app/auth/forgot-password"}
-                    fields={fields}
-                    setFields={setFields}
-                    renderCardFeedbackOk={() => renderCardFeedback(<Send />, "bg-green-400", "Messagem enviada com sucesso", 5000)}
-                    renderCardFeedbackError={renderCardFeedback}
-                    path={locale.pathname}
-                    validateTheme={validateTheme}
-                    theme={theme}
-                />
-                <MessageAfterLink
-                    message1={"Lembrou sua senha?"}
-                    message2={"Retorne para fazer login"}
-                    size={"text-[16px]"}
-                    link={"/sign-in"}
-                    flexAlign={"items-center"}
-                    flexJustify={"justify-center"}
-                />
+                    <FormField
+                        key={fieldsRecover[0].id}
+                        object={fieldsRecover[0]}
+                        functionTheme={validateTheme}
+                    />
+
+                    <ButtonMain
+                        link={""}
+                        marginDefault={"mt-[20px]"}
+                        marginResponsive={"sm:mt-[20px]"}
+                        name={"ENVIAR"}
+                        operation={sendDatasPost}
+                        URL={"https://essencial-server.vercel.app/auth/forgot-password"}
+                        fields={fieldsRecover}
+                        setFields={setFieldsRecover}
+                        renderCardFeedbackOk={() => renderCardFeedback(<Send />, "bg-green-400", "Messagem enviada com sucesso", 5000)}
+                        renderCardFeedbackError={renderCardFeedback}
+                        path={locale.pathname}
+                    />
+
+                    <MessageAfterLink
+                        message1={"Lembrou sua senha?"}
+                        message2={"Retorne para fazer login"}
+                        size={"text-[16px]"}
+                        link={"/sign-in"}
+                        flexAlign={"items-center"}
+                        flexJustify={"justify-center"}
+                    />
                 </form>
             </div>
         </div>

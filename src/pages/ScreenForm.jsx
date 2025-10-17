@@ -11,11 +11,12 @@ import Title from "../components/LoginComponents/Title";
 import Welcome from "./Welcome";
 import CardFeedback from "../components/LoginComponents/CardFeedback.jsx";
 
-//My Handlings 
+import { useContext } from "react";
+import { ScreenContext } from "../contexts/Context.jsx";
 
 function ScreenForm() {
     const locale = useLocation()
-    const [theme, setTheme] = useState(true);
+    const { theme, setTheme, validateTheme } = useContext(ScreenContext)
     const [messageFeedback, setMessageFeedback] = useState("Usuario cadastrado!");
     const [showMessage, setShowMessage] = useState(false);
     const [colorFeedback, setColorFeedback] = useState("bg-indigo-300")
@@ -42,10 +43,6 @@ function ScreenForm() {
     const changeTheme = () => {
         setTheme((prev) => !prev);
     };
-
-    function validateTheme(theme, light, dark) {
-        return theme ? light : dark;
-    }
 
     function renderCardFeedback(icon, indicator, message, timeout){
         setIconFeedback(icon)
@@ -94,55 +91,48 @@ function ScreenForm() {
             )} w-full min-h-dvh flex items-center justify-between py-4 flex-col px-[24px] relative transition duration-75`}
         >
 
-            <Routes>
-                <Route 
-                    path="/sign-in" 
-                    element={
-                        <FormSignIn 
-                            theme={theme} 
-                            validateTheme={validateTheme}
-                            renderCardFeedback={renderCardFeedback}
-                            locale={locale}
-                        />
-                    }>
-                </Route>
+                <Routes>
+                    <Route 
+                        path="/sign-in" 
+                        element={
+                            <FormSignIn 
+                                validateTheme={validateTheme}
+                                renderCardFeedback={renderCardFeedback}
+                            />
+                        }>
+                    </Route>
 
-                <Route 
-                    path="/sign-up" 
-                    element={
-                        <FormSignUp 
-                            theme={theme} 
-                            validateTheme={validateTheme}
-                            renderCardFeedback={renderCardFeedback}
-                            locale={locale}
-                        />
-                    }>
-                </Route>
+                    <Route 
+                        path="/sign-up" 
+                        element={
+                            <FormSignUp 
+                                validateTheme={validateTheme}
+                                renderCardFeedback={renderCardFeedback}
+                            />
+                        }>
+                    </Route>
 
-                <Route 
-                    path="/recover" 
-                    element={
-                        <FormRecover 
-                            theme={theme} 
-                            validateTheme={validateTheme}
-                            renderCardFeedback={renderCardFeedback}
-                            locale={locale}
-                        />
-                    }>
-                </Route>
+                    <Route 
+                        path="/recover" 
+                        element={
+                            <FormRecover 
+                                validateTheme={validateTheme}
+                                renderCardFeedback={renderCardFeedback}
+                            />
+                        }>
+                    </Route>
 
-                <Route 
-                    path="/" 
-                    element={
-                        <Welcome 
-                            theme={theme} 
-                            validateTheme={validateTheme}
-                        />
-                    }>
-                </Route>
-            </Routes>
+                    <Route 
+                        path="/" 
+                        element={
+                            <Welcome 
+                                validateTheme={validateTheme}
+                            />
+                        }>
+                    </Route>
+                </Routes>
 
-                {messageFeedback && <CardFeedback theme={theme} object={{message: messageFeedback, show: showMessage, color: colorFeedback, icon: iconFeedback}}/>}
+            {messageFeedback && <CardFeedback theme={theme} object={{message: messageFeedback, show: showMessage, color: colorFeedback, icon: iconFeedback}}/>}
 
             <div
             id="container-theme"

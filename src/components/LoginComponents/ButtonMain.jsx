@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useContext } from "react";
+import { ScreenContext } from "../../contexts/Context";
 
 function ButtonMain({
     marginDefault, 
@@ -14,10 +16,10 @@ function ButtonMain({
     isChecked, 
     setCheckColor, 
     renderCardFeedbackError, 
-    validateTheme, 
-    theme
 }){
 
+
+    const { theme, validateTheme } = useContext(ScreenContext)
     const [hoverLight, setHoverLight] = useState("sm:hover:bg-indigo-400");
     const [hoverDark, setHoverDark] = useState("sm:hover:bg-indigo-800");
 

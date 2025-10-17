@@ -1,5 +1,5 @@
-import { validateInputsFields, validateCheckbox, UserRoundCheck  } from "../handlings/functions";
-import { ShieldOff, MailWarning  } from 'lucide-react';
+import { validateInputsFields, validateCheckbox  } from "../handlings/functions";
+import { ShieldOff, MailWarning, UserRoundCheck  } from 'lucide-react';
 
 
 function recoverEmail(object){
