@@ -5,13 +5,14 @@ import { sendDatasPost } from "../../api/api.jsx";
 import { useNavigate } from "react-router-dom";
 import { UserRoundCheck } from 'lucide-react';
 
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ScreenContext } from "../../contexts/Context";
 
 function FormSignIn({renderCardFeedback}){
 
     const navigate = useNavigate();
-    const { fieldsSignIn, setFieldsSignIn, locale, theme, validateTheme } = useContext(ScreenContext)
+    const { fields, locale, theme, validateTheme } = useContext(ScreenContext)
+    const [copyFields, setCopyFields] = useState(fields.filter(field => field.type === "password" || field.type === "email"))
 
     return (
         <div className="max-w-[436px] w-full flex flex-col items-center md:mt-[100px]">
@@ -35,18 +36,19 @@ function FormSignIn({renderCardFeedback}){
                 className="sm:mb-[31px] w-[100%] flex flex-col items-center"
                 action=""
                 >
-                {fieldsSignIn.map((field, index) => {
+                {
+                copyFields.map((field, index) => {
                     return (
-                    <FormField
-                        key={index}
-                        object={field}
-                        functionTheme={validateTheme}
-                        bool={field.link ?? false}
-                        id={field.id}
-                        fields={fieldsSignIn}
-                        setFields={setFieldsSignIn}
-                    />
-                    );
+                        <FormField
+                            key={index}
+                            object={field}
+                            functionTheme={validateTheme}
+                            bool={field.link ?? false}
+                            id={field.id}
+                            fields={copyFields}
+                            setFields={setCopyFields}
+                        />
+                    )
                 })}
                 <ButtonMain
                     marginDefault={"mt-[30px]"}
@@ -54,8 +56,8 @@ function FormSignIn({renderCardFeedback}){
                     name={"ENTRAR"}
                     operation={sendDatasPost}
                     URL={"https://essencial-server.vercel.app/auth/sign-in"}
-                    fields={fieldsSignIn}
-                    setFields={setFieldsSignIn}
+                    fields={copyFields}
+                    setFields={setCopyFields}
                     renderCardFeedbackOk={() => renderCardFeedback(<UserRoundCheck />, "bg-green-400", "Usuário autorizado", 5000)}
                     renderCardFeedbackError={renderCardFeedback}
                     path={locale.pathname}

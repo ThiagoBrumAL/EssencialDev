@@ -6,13 +6,17 @@ import { Eye, EyeClosed  } from 'lucide-react';
 import { useContext } from "react";
 import { ScreenContext } from "../../contexts/Context";
 
-function FormField({ object, functionTheme, bool, fields, setFields}) {
+function FormField({ 
+    object, 
+    fields, 
+    setFields
+}) {
 
-    const { theme } = useContext(ScreenContext)
+    const { validateTheme, theme } = useContext(ScreenContext)
     const [inputValue, setInputValue] = useState("");
 
-    function withoutLink(bool){
-        return bool ? <MessageAfterLink
+    function withoutLink(){
+        return object.link ? <MessageAfterLink
             message1={"Esqueceu sua senha?"}
             message2={"Clique Aqui"}
             size={"text-[13px]"}
@@ -44,7 +48,7 @@ function FormField({ object, functionTheme, bool, fields, setFields}) {
 
             <input
                 className={`py-[6px] px-[10px]
-                    ${functionTheme(
+                    ${validateTheme(
                         theme,
                         `bg-slate-200  ${object.placeholder === "Campo obrigatório" ? "placeholder:text-red-400" : "placeholder:text-slate-500"} text-slate-950`,
                         `bg-slate-900 border-[2px] ${object.placeholder === "Campo obrigatório" ? "placeholder:text-red-400" : "placeholder:text-slate-400"} text-slate-300`
@@ -65,23 +69,25 @@ function FormField({ object, functionTheme, bool, fields, setFields}) {
             />
 
             <p className="absolute left-0 bottom-[0px] text-[14px] text-red-500">{object.hasErrorInField ? object.messageError : null}</p>
+
             <div className="absolute top-10 right-4">
                 <button onClick={(event) => {
                     event.preventDefault();
                     if(object.name === "Senha"){
-                        const newFileds = fields.map((input) => {
+                        fields = fields.map((input) => {
                             if(input.name === "Senha" && input.type === "password") return {...input, type: "text", icon: EyeClosed}
                             if(input.name === "Senha" && input.type === "text") return {...input, type: "password", icon: Eye}
                             return {...input}
                         })
 
-                        setFields(newFileds)
+                        setFields(fields)
                     }
                 }}>
-                    {object.icon && <object.icon color={functionTheme(theme, "#7A828A", "#EDF2F7")}/>}
+                    {object.icon && <object.icon color={validateTheme(theme, "#7A828A", "#EDF2F7")}/>}
                 </button>
             </div>
-            {object.name === "Senha" ? withoutLink(bool) : null}
+            
+            {object.name === "Senha" ? withoutLink() : null}
         </div>
     );
 }

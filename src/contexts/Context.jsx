@@ -14,7 +14,7 @@ export function ScreenProvider({ children }){
         return theme ? light : dark;
     }
 
-    const [fieldsSignUp, setFieldsSignUp] = useState([
+    const [fields, setFields] = useState([
         { 
             name: "Nome Completo", 
             type: "text", 
@@ -63,45 +63,8 @@ export function ScreenProvider({ children }){
             id:"email",
             mask: maskEmail,
             hasErrorInField: false,
-            messageError: "Campo obrigatório"
-        },
-        { 
-            name: "Senha", 
-            type: "password", 
-            placeholder: "Insira sua senha", 
-            link: true, 
-            id:"password",
-            mask: maskPassword,
-            hasErrorInField: false,
-            messageError: "Campo obrigatório",
-            icon: Eye
-        },
-    ]);
-
-    const [fieldsRecover, setFieldsRecover] = useState([
-        { 
-            name: "E-mail", 
-            type: "email", 
-            placeholder: "Insira seu email", 
-            link: false, 
-            id:"email",
-            mask: maskEmail,
-            hasErrorInField: false,
             messageError: "Campo obrigatório",
             disabled: false
-        },
-    ]);
-
-    const [fieldsSignIn, setFieldsSignIn] = useState([
-        { 
-            name: "E-mail", 
-            type: "email", 
-            placeholder: "Insira seu email", 
-            link: false, 
-            id:"email",
-            mask: maskEmail,
-            hasErrorInField: false,
-            messageError: "Campo obrigatório"
         },
         { 
             name: "Senha", 
@@ -121,12 +84,8 @@ export function ScreenProvider({ children }){
             locale,
             theme, 
             setTheme,
-            fieldsSignUp,
-            setFieldsSignUp,
-            fieldsRecover,
-            setFieldsRecover,
-            fieldsSignIn,
-            setFieldsSignIn,
+            fields,
+            setFields,
             validateTheme
         }}>
             {children}

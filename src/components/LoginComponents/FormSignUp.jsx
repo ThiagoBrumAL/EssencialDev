@@ -10,14 +10,16 @@ import { ScreenContext } from "../../contexts/Context";
 
 function FormSignUp({renderCardFeedback}){
 
-    const [isChecked, setIsChecked] = useState();
+    const [isChecked, setIsChecked] = useState(null);
     const [checkColor, setCheckColor] = useState("text-slate-500")
-    const { fieldsSignUp, setFieldsSignUp, locale, theme, validateTheme } = useContext(ScreenContext)
 
 
-    const middle = Math.floor(fieldsSignUp.length/2);
-    const left = fieldsSignUp.slice(0,middle);
-    const right = fieldsSignUp.slice(middle);
+    const { fields, locale, theme, validateTheme } = useContext(ScreenContext)
+    const [copyFields, setCopyFields] = useState(fields)
+
+    const middle = Math.floor(copyFields.length/2);
+    const left = copyFields.slice(0,middle);
+    const right = copyFields.slice(middle);
 
     return (
         <div className="max-w-[694px] w-full flex flex-col items-center md:mt-[50px]">
@@ -49,9 +51,8 @@ function FormSignUp({renderCardFeedback}){
                                 <FormField
                                     key={index}
                                     object={field}
-                                    functionTheme={validateTheme}
-                                    bool={field.link ?? false}
-                                    id={field.id}
+                                    fields={copyFields}
+                                    setFields={setCopyFields}
                                 />
                             );
                         })}
@@ -62,11 +63,8 @@ function FormSignUp({renderCardFeedback}){
                                 <FormField
                                     key={index}
                                     object={field}
-                                    functionTheme={validateTheme}
-                                    bool={field.link ?? false}
-                                    id={field.id}
-                                    fields={fieldsSignUp}
-                                    setFields={setFieldsSignUp}
+                                    fields={copyFields}
+                                    setFields={setCopyFields}
                                 />
                             );
                         })}
@@ -85,8 +83,8 @@ function FormSignUp({renderCardFeedback}){
                             name={"CADASTRAR"}
                             operation={sendDatasPost}
                             URL={"https://essencial-server.vercel.app/auth/sign-up"}
-                            fields={fieldsSignUp}
-                            setFields={setFieldsSignUp}
+                            fields={copyFields}
+                            setFields={setCopyFields}
                             renderCardFeedbackOk={() => renderCardFeedback(<UserRoundCheck />, "bg-green-400", "Usuário cadastrado!", 5000)}
                             renderCardFeedbackError={renderCardFeedback}
                             isChecked={isChecked}
