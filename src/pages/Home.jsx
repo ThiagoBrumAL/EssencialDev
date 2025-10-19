@@ -18,6 +18,21 @@ function Home(){
         theme,
         validateTheme,
     } = useContext(GlobalContext)
+
+    const Link = ({ name, link }) => {
+        return (
+            <a 
+                href={link} 
+                className="
+                    text-slate-50 
+                    text-[16px] 
+                    font-[600]
+                    leading-[20px]
+            ">
+                { name }
+            </a>
+        )
+    }
     
     if(load){
         return (
@@ -37,12 +52,42 @@ function Home(){
     }
 
     return (
-        <section 
+        <div 
             className={`
-                ${validateTheme(theme,"bg-slate-50","bg-slate-900")}
+                w-[100%]
+                h-[100dvh]
+                ${validateTheme(theme,"bg-indigo-100","bg-slate-900")}
         `}>
-            <h1>Home Page</h1>
-        </section>
+            <header 
+                className={`
+                    ${validateTheme(theme,"from-teal-400 to-indigo-400", "from-[#01051C] to-[#051782]")}
+                    bg-gradient-to-tr
+                    h-[80px]
+                    w-[100%]
+                    sm:px-[160px]
+                    px-[24px]
+                    justify-between
+            `}>
+
+                    <div 
+                        className="
+                            flex
+                            sm:gap-[88px]
+                            h-[100%]
+                            items-center
+                    ">
+                        <Link name={"Inicio"} link={""}/>
+                        <Link name={"Blog"} link={""}/>
+                        <Link name={"Sobre nós"} link={""}/>
+                        <Link name={`Agendar Aqui`} link={""}/>
+                    </div>
+
+                    <div>
+
+                    </div>
+
+            </header>
+        </div>
     )
 }
 

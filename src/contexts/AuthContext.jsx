@@ -12,11 +12,7 @@ export function AuthProvider({ children }){
     function login(token, callback){
         setToken(token)
         localStorage.setItem("token", token)
-        if(token && callback){
-            setTimeout(() => {
-                callback()
-            }, 3000)
-        }
+        if(token && callback) callback()
     }
 
     function logout(){
