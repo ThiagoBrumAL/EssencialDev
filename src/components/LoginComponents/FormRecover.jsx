@@ -7,9 +7,15 @@ import { sendDatasPost } from "../../api/api.jsx";
 import { useContext, useState } from "react";
 import { ScreenContext } from "../../contexts/Context";
 
-function FormRecover({renderCardFeedback}){
+function FormRecover(){
 
-    const { fields, setFields, locale, theme, validateTheme } = useContext(ScreenContext)
+    const { 
+        fields,
+        theme, 
+        validateTheme, 
+        renderCardFeedback 
+    } = useContext(ScreenContext)
+
     const [copyFields, setCopyFields] = useState(fields.filter(field => field.type === "email"))
     
     return (
@@ -40,16 +46,12 @@ function FormRecover({renderCardFeedback}){
                     />
 
                     <ButtonMain
-                        marginDefault={"mt-[20px]"}
-                        marginResponsive={"sm:mt-[20px]"}
                         name={"ENVIAR"}
-                        operation={sendDatasPost}
+                        operation={{sendDatasPost}}
                         URL={"https://essencial-server.vercel.app/auth/forgot-password"}
                         fields={copyFields}
                         setFields={setCopyFields}
                         renderCardFeedbackOk={() => renderCardFeedback(<Send />, "bg-green-400", "Messagem enviada com sucesso", 5000)}
-                        renderCardFeedbackError={renderCardFeedback}
-                        path={locale.pathname}
                     />
 
                     <MessageAfterLink

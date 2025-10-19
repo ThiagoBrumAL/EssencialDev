@@ -8,13 +8,18 @@ import { useState } from "react";
 import { useContext } from "react";
 import { ScreenContext } from "../../contexts/Context";
 
-function FormSignUp({renderCardFeedback}){
+function FormSignUp(){
 
     const [isChecked, setIsChecked] = useState(null);
     const [checkColor, setCheckColor] = useState("text-slate-500")
 
+    const { 
+        fields, 
+        theme, 
+        validateTheme, 
+        renderCardFeedback 
+    } = useContext(ScreenContext)
 
-    const { fields, locale, theme, validateTheme } = useContext(ScreenContext)
     const [copyFields, setCopyFields] = useState(fields)
 
     const middle = Math.floor(copyFields.length/2);
@@ -78,18 +83,14 @@ function FormSignUp({renderCardFeedback}){
                     </div>
                     <div className="flex gap-2 items-start sm:w-[320px] w-[200px]">
                         <ButtonMain
-                            marginDefault={"mt-[30px]"}
-                            marginResponsive={"sm:mt-[90px]"}
                             name={"CADASTRAR"}
-                            operation={sendDatasPost}
+                            operation={{sendDatasPost}}
                             URL={"https://essencial-server.vercel.app/auth/sign-up"}
                             fields={copyFields}
                             setFields={setCopyFields}
                             renderCardFeedbackOk={() => renderCardFeedback(<UserRoundCheck />, "bg-green-400", "Usuário cadastrado!", 5000)}
-                            renderCardFeedbackError={renderCardFeedback}
                             isChecked={isChecked}
                             setCheckColor={setCheckColor}
-                            path={locale.pathname}
                         />
                     </div>
                 </form>

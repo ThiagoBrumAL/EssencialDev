@@ -1,155 +1,97 @@
-import { useState } from "react";
 import { Lightbulb } from "lucide-react";
-import { Routes, Route, useLocation } from "react-router-dom"
 
 // My Components
 import ButtonTheme from "../components/LoginComponents/ButtonTheme";
-import FormSignIn from "../components/LoginComponents/FormSignIn";
-import FormSignUp from "../components/LoginComponents/FormSignUp";
-import FormRecover from "../components/LoginComponents/FormRecover";
 import Title from "../components/LoginComponents/Title";
-import Welcome from "./Welcome";
 import CardFeedback from "../components/LoginComponents/CardFeedback.jsx";
+import { useLocation } from "react-router-dom";
 
 import { useContext } from "react";
 import { ScreenContext } from "../contexts/Context.jsx";
+import { AuthProvider } from "../contexts/AuthContext.jsx";
 
-function ScreenForm() {
+function ScreenForm({ children }) {
+
     const locale = useLocation()
-    const { theme, setTheme, validateTheme } = useContext(ScreenContext)
-    const [messageFeedback, setMessageFeedback] = useState("Usuario cadastrado!");
-    const [showMessage, setShowMessage] = useState(false);
-    const [colorFeedback, setColorFeedback] = useState("bg-indigo-300")
-    const [iconFeedback, setIconFeedback] = useState()
-
-    const [titles] = useState([
-        {
-            page: "/sign-in", 
-            title:"Bem vindo(a) de volta!", 
-            subTitle:"Cadastre-se e tenha sua saúde na palma da mão."
-        },
-        {
-            page: "/sign-up", 
-            title:"Estamos prontos para cuidar de você.", 
-            subTitle:"Cadastre-se e tenha sua saúde na palma da mão."
-        },
-        {
-            page: "/recover", 
-            title:"Você esqueceu sua senha", 
-            subTitle:"Não se apavore!"
-        },
-    ])
+    const { 
+        theme, 
+        setTheme, 
+        validateTheme,
+        messageFeedback,
+        showMessage,
+        colorFeedback,
+        iconFeedback,
+        titles
+    } = useContext(ScreenContext)
     
     const changeTheme = () => {
         setTheme((prev) => !prev);
     };
-
-    function renderCardFeedback(icon, indicator, message, timeout){
-        setIconFeedback(icon)
-        setColorFeedback(indicator)
-        setShowMessage(true);
-        setMessageFeedback(message);
-        setTimeout(() => {
-            setShowMessage(false);
-        }, timeout)
-    }
-
 
     return (
         <div
         id="login-screen"
         className="w-full min-h-dvh flex md:flex-row flex-col overflow-x-hidden"
         >
-        {locale.pathname === "/" ? null : <section
-            id="login-screen-section-one"
-            className={` hidden sm:block w-full min-h-full bg-gradient-to-tr ${validateTheme(
-            theme,
-            "from-teal-400 to-indigo-400",
-            "from-indigo-900 to-slate-950"
-            )} py-6 px-[24px]`}
-        >
-            <div className="h-[50%] w-full flex justify-center items-center">
-                <Title path={locale.pathname} titles={titles}/>
-            </div>
-
-            <div className="h-[50%] w-full flex justify-center ">
-            <img
-                id="logo"
-                className="max-h-[180px] max-w-[242px]"
-                src="/Vector.png"
-                alt=""
-            />
-            </div>
-        </section>}
-
-        <section
-            id="login-screen-div-two"
-            className={`${validateTheme(
-            theme,
-            "bg-slate-50",
-            "bg-slate-900"
-            )} w-full min-h-dvh flex items-center justify-between py-4 flex-col px-[24px] relative transition duration-75`}
-        >
-
-                <Routes>
-                    <Route 
-                        path="/sign-in" 
-                        element={
-                            <FormSignIn 
-                                validateTheme={validateTheme}
-                                renderCardFeedback={renderCardFeedback}
-                            />
-                        }>
-                    </Route>
-
-                    <Route 
-                        path="/sign-up" 
-                        element={
-                            <FormSignUp 
-                                validateTheme={validateTheme}
-                                renderCardFeedback={renderCardFeedback}
-                            />
-                        }>
-                    </Route>
-
-                    <Route 
-                        path="/recover" 
-                        element={
-                            <FormRecover 
-                                validateTheme={validateTheme}
-                                renderCardFeedback={renderCardFeedback}
-                            />
-                        }>
-                    </Route>
-
-                    <Route 
-                        path="/" 
-                        element={
-                            <Welcome 
-                                validateTheme={validateTheme}
-                            />
-                        }>
-                    </Route>
-                </Routes>
-
-            {messageFeedback && <CardFeedback theme={theme} object={{message: messageFeedback, show: showMessage, color: colorFeedback, icon: iconFeedback}}/>}
-
-            <div
-            id="container-theme"
-            className="flex flex-col gap-4 items-center mt-[20px] sm:gap-12 sm:flex-row"
+            <section
+                id="login-screen-section-one"
+                className={` hidden sm:block w-full min-h-full bg-gradient-to-tr ${validateTheme(
+                theme,
+                "from-teal-400 to-indigo-400",
+                "from-indigo-900 to-slate-950"
+                )} py-6 px-[24px]`}
             >
-                <div className="flex gap-1 items-center">
-                    <Lightbulb className={`m-0 p-0 text-slate-500 font-[500] `} />
+                <div className="h-[50%] w-full flex justify-center items-center">
+                    <Title path={locale.pathname} titles={titles}/>
+                </div>
 
-                    <p className="m-0 p-0 text-slate-500 font-[500]">
-                    {validateTheme(theme, "Modo escuro", "Modo claro")}
-                    </p>
+                <div className="h-[50%] w-full flex justify-center ">
+                    <img
+                        id="logo"
+                        className="max-h-[180px] max-w-[242px]"
+                        src="/Vector.png"
+                        alt=""
+                    />
                 </div>
-                <div className="flex items-center">
-                    <ButtonTheme theme={theme} changeTheme={changeTheme} />
+            </section>
+
+            <section
+                id="login-screen-div-two"
+                className={`${validateTheme(
+                theme,
+                "bg-slate-50",
+                "bg-slate-900"
+                )} w-full min-h-dvh flex items-center justify-between py-4 flex-col px-[24px] relative transition duration-75`}
+            >
+
+                <AuthProvider>
+                    { children }
+                </AuthProvider>
+
+
+                {messageFeedback && 
+                    <CardFeedback 
+                        theme={theme} 
+                        object={{message: messageFeedback, show: showMessage, color: colorFeedback, icon: iconFeedback}}
+                    />
+                }
+
+                <div
+                id="container-theme"
+                className="flex flex-col gap-4 items-center mt-[20px] sm:gap-12 sm:flex-row"
+                >
+                    <div className="flex gap-1 items-center">
+                        <Lightbulb className={`m-0 p-0 text-slate-500 font-[500] `} />
+
+                        <p className="m-0 p-0 text-slate-500 font-[500]">
+                        {validateTheme(theme, "Modo escuro", "Modo claro")}
+                        </p>
+                    </div>
+                    <div className="flex items-center">
+                        <ButtonTheme theme={theme} changeTheme={changeTheme} />
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
         </div>
     );
 }

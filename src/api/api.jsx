@@ -55,7 +55,13 @@ export async function sendDatasPost(event, object){
 
             if(response.ok){
 
-                if(object.path === "/sign-in" && object.navigate) return object.navigate("/home")
+                if(object.path === "/sign-in" && object.navigate) {
+                    const body = await response.json()
+                    const token = await body.accessToken
+
+                    object.login(token, () => object.navigate("/home"))
+                }
+
                 if(object.path === "/recover") return recoverEmail(object);
                 if(object.path === "/sign-up") return object.renderCardFeedbackOk(<UserRoundCheck />, "bg-green-400", "Usuário cadastrado", 5000)
 

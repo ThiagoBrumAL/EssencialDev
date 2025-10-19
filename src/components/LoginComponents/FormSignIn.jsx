@@ -2,16 +2,23 @@ import MessageAfterLink from "./MessageAfterLink";
 import ButtonMain from "./ButtonMain";
 import FormField from "./FormField";
 import { sendDatasPost } from "../../api/api.jsx";
-import { useNavigate } from "react-router-dom";
 import { UserRoundCheck } from 'lucide-react';
 
 import { useContext, useState } from "react";
 import { ScreenContext } from "../../contexts/Context";
+import { AuthContext } from "../../contexts/AuthContext.jsx";
 
-function FormSignIn({renderCardFeedback}){
+function FormSignIn(){
 
-    const navigate = useNavigate();
-    const { fields, locale, theme, validateTheme } = useContext(ScreenContext)
+    const { 
+        fields, 
+        theme, 
+        validateTheme, 
+        renderCardFeedback
+    } = useContext(ScreenContext)
+
+    const { login } = useContext(AuthContext)
+
     const [copyFields, setCopyFields] = useState(fields.filter(field => field.type === "password" || field.type === "email"))
 
     return (
@@ -51,17 +58,12 @@ function FormSignIn({renderCardFeedback}){
                     )
                 })}
                 <ButtonMain
-                    marginDefault={"mt-[30px]"}
-                    marginResponsive={"sm:mt-[90px]"}
                     name={"ENTRAR"}
-                    operation={sendDatasPost}
+                    operation={{sendDatasPost, login}}
                     URL={"https://essencial-server.vercel.app/auth/sign-in"}
                     fields={copyFields}
                     setFields={setCopyFields}
                     renderCardFeedbackOk={() => renderCardFeedback(<UserRoundCheck />, "bg-green-400", "Usuário autorizado", 5000)}
-                    renderCardFeedbackError={renderCardFeedback}
-                    path={locale.pathname}
-                    navigate={navigate}
                 />
                 </form>
             </div>

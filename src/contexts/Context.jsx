@@ -2,16 +2,29 @@ import { createContext, useState } from "react";
 import { maskHeightWeightDate, maskFullName, maskPassword, maskEmail, } from "../handlings/functions"
 import { Eye } from 'lucide-react';
 
-import { useLocation } from "react-router-dom";
-
 export const ScreenContext = createContext();
 
 export function ScreenProvider({ children }){
-    const locale = useLocation();
+
     const [theme, setTheme] = useState(true);
+
+    const [messageFeedback, setMessageFeedback] = useState("undefined");
+    const [showMessage, setShowMessage] = useState(false);
+    const [colorFeedback, setColorFeedback] = useState("undefined")
+    const [iconFeedback, setIconFeedback] = useState()
 
     const validateTheme = (theme, light, dark) => {
         return theme ? light : dark;
+    }
+
+    function renderCardFeedback(icon, indicator, message, timeout){
+        setIconFeedback(icon)
+        setColorFeedback(indicator)
+        setShowMessage(true);
+        setMessageFeedback(message);
+        setTimeout(() => {
+            setShowMessage(false);
+        }, timeout)
     }
 
     const [fields, setFields] = useState([
@@ -79,14 +92,37 @@ export function ScreenProvider({ children }){
         },
     ]);
 
+    const [titles] = useState([
+        {
+            page: "/sign-in", 
+            title:"Bem vindo(a) de volta!", 
+            subTitle:"Cadastre-se e tenha sua saúde na palma da mão."
+        },
+        {
+            page: "/sign-up", 
+            title:"Estamos prontos para cuidar de você.", 
+            subTitle:"Cadastre-se e tenha sua saúde na palma da mão."
+        },
+        {
+            page: "/recover", 
+            title:"Você esqueceu sua senha", 
+            subTitle:"Não se apavore!"
+        },
+    ])
+
     return (
         <ScreenContext.Provider value={{
-            locale,
             theme, 
             setTheme,
             fields,
             setFields,
-            validateTheme
+            validateTheme,
+            messageFeedback,
+            showMessage,
+            colorFeedback,
+            iconFeedback,
+            renderCardFeedback,
+            titles
         }}>
             {children}
         </ScreenContext.Provider>
