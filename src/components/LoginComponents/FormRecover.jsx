@@ -5,16 +5,20 @@ import { Send } from 'lucide-react';
 import { sendDatasPost } from "../../api/api.jsx";
 
 import { useContext, useState } from "react";
-import { ScreenContext } from "../../contexts/Context";
+import { ScreenContext } from "../../contexts/ScreenContext.jsx";
+import { GlobalContext } from "../../contexts/GlobalContext.jsx";
 
 function FormRecover(){
 
     const { 
         fields,
-        theme, 
-        validateTheme, 
         renderCardFeedback 
     } = useContext(ScreenContext)
+
+    const { 
+        theme, 
+        validateTheme,
+    } = useContext(GlobalContext)
 
     const [copyFields, setCopyFields] = useState(fields.filter(field => field.type === "email"))
     
@@ -50,6 +54,7 @@ function FormRecover(){
                         operation={{sendDatasPost}}
                         URL={"https://essencial-server.vercel.app/auth/forgot-password"}
                         fields={copyFields}
+                        marginTop={"mt-[0px]"}
                         setFields={setCopyFields}
                         renderCardFeedbackOk={() => renderCardFeedback(<Send />, "bg-green-400", "Messagem enviada com sucesso", 5000)}
                     />

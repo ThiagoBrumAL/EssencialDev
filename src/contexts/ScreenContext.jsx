@@ -6,16 +6,10 @@ export const ScreenContext = createContext();
 
 export function ScreenProvider({ children }){
 
-    const [theme, setTheme] = useState(true);
-
     const [messageFeedback, setMessageFeedback] = useState("undefined");
     const [showMessage, setShowMessage] = useState(false);
     const [colorFeedback, setColorFeedback] = useState("undefined")
     const [iconFeedback, setIconFeedback] = useState()
-
-    const validateTheme = (theme, light, dark) => {
-        return theme ? light : dark;
-    }
 
     function renderCardFeedback(icon, indicator, message, timeout){
         setIconFeedback(icon)
@@ -105,18 +99,15 @@ export function ScreenProvider({ children }){
         },
         {
             page: "/recover", 
-            title:"Você esqueceu sua senha", 
-            subTitle:"Não se apavore!"
+            title:"Redefinir acesso", 
+            subTitle:"Não se preocupe, nós te ajudamos a recuperar o acesso rapidinho."
         },
     ])
 
     return (
         <ScreenContext.Provider value={{
-            theme, 
-            setTheme,
             fields,
             setFields,
-            validateTheme,
             messageFeedback,
             showMessage,
             colorFeedback,

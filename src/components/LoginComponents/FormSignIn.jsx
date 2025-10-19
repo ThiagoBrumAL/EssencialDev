@@ -5,17 +5,21 @@ import { sendDatasPost } from "../../api/api.jsx";
 import { UserRoundCheck } from 'lucide-react';
 
 import { useContext, useState } from "react";
-import { ScreenContext } from "../../contexts/Context";
+import { ScreenContext } from "../../contexts/ScreenContext.jsx";
 import { AuthContext } from "../../contexts/AuthContext.jsx";
+import { GlobalContext } from "../../contexts/GlobalContext.jsx";
 
 function FormSignIn(){
 
     const { 
-        fields, 
-        theme, 
-        validateTheme, 
+        fields,
         renderCardFeedback
     } = useContext(ScreenContext)
+
+    const { 
+        theme, 
+        validateTheme,
+    } = useContext(GlobalContext)
 
     const { login } = useContext(AuthContext)
 
@@ -39,32 +43,38 @@ function FormSignIn(){
                     </p>
                 </div>
                 <form
-                id="form"
-                className="sm:mb-[31px] w-[100%] flex flex-col items-center"
-                action=""
+                    id="form"
+                    className="
+                    sm:mb-[31px] 
+                    w-[100%] 
+                    flex 
+                    flex-col 
+                    items-center"
+                    action=""
                 >
-                {
-                copyFields.map((field, index) => {
-                    return (
-                        <FormField
-                            key={index}
-                            object={field}
-                            functionTheme={validateTheme}
-                            bool={field.link ?? false}
-                            id={field.id}
-                            fields={copyFields}
-                            setFields={setCopyFields}
-                        />
-                    )
-                })}
-                <ButtonMain
-                    name={"ENTRAR"}
-                    operation={{sendDatasPost, login}}
-                    URL={"https://essencial-server.vercel.app/auth/sign-in"}
-                    fields={copyFields}
-                    setFields={setCopyFields}
-                    renderCardFeedbackOk={() => renderCardFeedback(<UserRoundCheck />, "bg-green-400", "Usuário autorizado", 5000)}
-                />
+
+                    {copyFields.map((field, index) => {
+                        return (
+                            <FormField
+                                key={index}
+                                object={field}
+                                functionTheme={validateTheme}
+                                bool={field.link ?? false}
+                                id={field.id}
+                                fields={copyFields}
+                                setFields={setCopyFields}
+                            />
+                        )
+                    })}
+                    <ButtonMain
+                        name={"ENTRAR"}
+                        marginTop={"mt-[90px]"}
+                        operation={{sendDatasPost, login}}
+                        URL={"https://essencial-server.vercel.app/auth/sign-in"}
+                        fields={copyFields}
+                        setFields={setCopyFields}
+                        renderCardFeedbackOk={() => renderCardFeedback(<UserRoundCheck />, "bg-green-400", "Usuário autorizado", 5000)}
+                    />
                 </form>
             </div>
 

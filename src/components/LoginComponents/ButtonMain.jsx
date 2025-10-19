@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useContext } from "react";
-import { ScreenContext } from "../../contexts/Context";
+import { ScreenContext } from "../../contexts/ScreenContext";
+import { GlobalContext } from "../../contexts/GlobalContext";
 import { useLocation, useNavigate } from "react-router-dom";
 
 function ButtonMain({
@@ -11,12 +12,17 @@ function ButtonMain({
     setFields, 
     renderCardFeedbackOk, 
     isChecked, 
-    setCheckColor, 
+    setCheckColor,
+    marginTop 
 }){
 
     const locale = useLocation()
     const navigate = useNavigate()
-    const { theme, validateTheme, renderCardFeedback } = useContext(ScreenContext)
+    const { renderCardFeedback } = useContext(ScreenContext)
+    const { 
+        theme, 
+        validateTheme,
+    } = useContext(GlobalContext)
     const [hoverLight, setHoverLight] = useState("sm:hover:bg-indigo-400");
     const [hoverDark, setHoverDark] = useState("sm:hover:bg-indigo-800");
 
@@ -50,6 +56,7 @@ function ButtonMain({
             text-slate-50 
             py-2 
             rounded-full
+            ${marginTop}
             font-[500]
             ${validateTheme(theme, `${hoverLight}`, `${hoverDark}`)}
             ease-in-out transition`

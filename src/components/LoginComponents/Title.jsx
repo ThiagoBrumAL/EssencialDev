@@ -1,7 +1,7 @@
 function Title({path, titles}){
 
     return (
-        <div id="box" className="space-y-[24px]">
+        <div id="box" className="space-y-[24px] sm:mb-[0px] mb-[32px]">
         <h1 className="text-slate-50 text-4xl text-left font-[700]">
             {titles.map((t) => {
                 return t.page === path ? t.title : null

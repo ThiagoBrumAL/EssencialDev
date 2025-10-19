@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Eye, EyeClosed  } from 'lucide-react';
 
 import { useContext } from "react";
-import { ScreenContext } from "../../contexts/Context";
+import { GlobalContext } from "../../contexts/GlobalContext";
 
 function FormField({ 
     object, 
@@ -12,7 +12,10 @@ function FormField({
     setFields
 }) {
 
-    const { validateTheme, theme } = useContext(ScreenContext)
+    const { 
+        theme, 
+        validateTheme,
+    } = useContext(GlobalContext)
     const [inputValue, setInputValue] = useState("");
 
     function withoutLink(){

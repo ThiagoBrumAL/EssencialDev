@@ -6,7 +6,8 @@ import { sendDatasPost } from "../../api/api.jsx";
 import { useState } from "react";
 
 import { useContext } from "react";
-import { ScreenContext } from "../../contexts/Context";
+import { ScreenContext } from "../../contexts/ScreenContext.jsx";
+import { GlobalContext } from "../../contexts/GlobalContext.jsx";
 
 function FormSignUp(){
 
@@ -15,10 +16,13 @@ function FormSignUp(){
 
     const { 
         fields, 
-        theme, 
-        validateTheme, 
         renderCardFeedback 
     } = useContext(ScreenContext)
+
+    const { 
+        theme, 
+        validateTheme,
+    } = useContext(GlobalContext)
 
     const [copyFields, setCopyFields] = useState(fields)
 
@@ -84,6 +88,7 @@ function FormSignUp(){
                     <div className="flex gap-2 items-start sm:w-[320px] w-[200px]">
                         <ButtonMain
                             name={"CADASTRAR"}
+                            marginTop={"mt-[90px]"}
                             operation={{sendDatasPost}}
                             URL={"https://essencial-server.vercel.app/auth/sign-up"}
                             fields={copyFields}
