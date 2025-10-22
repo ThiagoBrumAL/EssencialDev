@@ -2,9 +2,13 @@ import { useContext, useEffect, useState } from "react";
 import Loader from "../components/Loader/Loader.jsx";
 import { GlobalContext } from "../contexts/GlobalContext.jsx";
 
+import { Bell, User } from 'lucide-react';
+import { useLocation } from "react-router-dom";
+
 function Home(){
 
     const [load, setLoad] = useState(true)
+    const locale = useLocation()
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -19,16 +23,19 @@ function Home(){
         validateTheme,
     } = useContext(GlobalContext)
 
-    const Link = ({ name, link }) => {
+    const Link = ({ name, link, path}) => {
+        const isActive = locale.pathname === path ? true : false
+
         return (
             <a 
                 href={link} 
-                className="
-                    text-slate-50 
+                className={`
+                    ${isActive ? "text-slate-950" : "text-white"}
                     text-[16px] 
                     font-[600]
                     leading-[20px]
-            ">
+                    ${!isActive ? "transition duration-500 sm:hover:translate-y-[-10px]" : null}
+            `}>
                 { name }
             </a>
         )
@@ -56,36 +63,101 @@ function Home(){
             className={`
                 w-[100%]
                 h-[100dvh]
-                ${validateTheme(theme,"bg-indigo-100","bg-slate-900")}
+                ${validateTheme(theme,"bg-white","bg-slate-900")}
         `}>
             <header 
                 className={`
                     ${validateTheme(theme,"from-teal-400 to-indigo-400", "from-[#01051C] to-[#051782]")}
                     bg-gradient-to-tr
                     h-[80px]
-                    w-[100%]
-                    sm:px-[160px]
+                    w-full
                     px-[24px]
-                    justify-between
+                    justify-center
+                    flex
+                    items-center
             `}>
 
-                    <div 
-                        className="
-                            flex
-                            sm:gap-[88px]
-                            h-[100%]
-                            items-center
+                    <div className="
+                        flex
+                        justify-between
+                        xl:w-[77%]
+                        w-[100%]
                     ">
-                        <Link name={"Inicio"} link={""}/>
-                        <Link name={"Blog"} link={""}/>
-                        <Link name={"Sobre nós"} link={""}/>
-                        <Link name={`Agendar Aqui`} link={""}/>
+                        <div 
+                            className="
+                                flex
+                                sm:gap-[34px]
+                                items-center
+                                h-[40px]
+                                max-w-[680px]
+                                w-[100%]
+                            ">
+
+                            <div className="
+                                h-full
+                                flex
+                                justify-center
+                                items-center
+                                rounded-full
+                            ">
+                                <img 
+                                    src="../assets/logo.png" 
+                                    alt=""
+                                    className="
+                                        w-[12rem]
+                                        h-auto
+                                        outline-none
+                                        p-0
+                                        m-0
+                                        block
+                                    "/>
+                            </div>
+
+                            <div className="
+                                h-full
+                                w-[2px]
+                                bg-white
+                            "></div>
+
+                            <div className="
+                                flex
+                                items-center
+                                h-[40px]
+                                justify-between
+                                w-[100%]
+                            ">
+                                <Link 
+                                    path={"/home"} 
+                                    name={"Inicio"} 
+                                    link={""}
+                                />
+                                <Link 
+                                    path={"/blog"} 
+                                    name={"Blog"} 
+                                    link={""}
+                                />
+                                <Link 
+                                    path={"/about"} 
+                                    name={"Sobre nós"} 
+                                    link={""}
+                                />
+                                <Link 
+                                    path={"/scheduling"} 
+                                    name={`ChatBot`} 
+                                    link={""}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="
+                            flex
+                            gap-[90px]
+                            w-auto
+                        ">
+                            <User size={30} color="#FFFFFF"/>
+                        </div>
                     </div>
-
-                    <div>
-
-                    </div>
-
+                    
             </header>
         </div>
     )

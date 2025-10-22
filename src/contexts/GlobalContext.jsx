@@ -5,7 +5,10 @@ export const GlobalContext = createContext();
 
 export function GlobalProvider({ children }){
 
-    const [theme, setTheme] = useState(true);
+    const [theme, setTheme] = useState(() => {
+        const localTheme = localStorage.getItem("theme");
+        return localTheme
+    });
 
     const validateTheme = (theme, light, dark) => {
         return theme ? light : dark;

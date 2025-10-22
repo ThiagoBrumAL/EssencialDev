@@ -40,8 +40,45 @@ function ScreenForm({ children }) {
     }, [])
     
     const changeTheme = () => {
-        setTheme((prev) => !prev);
+        setTheme((prev) => {
+            localStorage.setItem("theme", !prev)
+            return !prev
+        });
     };
+
+    const Img = ({ path, theme }) => {
+
+        const directionTheme = theme ? "light" : "dark"
+
+        const object = {
+            "/sign-in": {
+                "light": "sign-in.png",
+                "dark": "sign-in-dark.png"
+            },
+            "/recover": {
+                "light": "recover.png",
+                "dark": "recover-dark.png"
+            },
+            "/sign-up": {
+                "light": "sign-up.png",
+                "dark": "sign-up-dark.png"
+            }
+        }
+
+        return (
+            <img
+                id="logo"
+                className="
+                    h-full
+                    w-full
+                    object-contain
+                    max-h-[500px]
+                    max-w-[500px]"
+                src={`./assets/${object[path][directionTheme]}`}
+                alt=""
+            />
+        )
+    }
 
     return (
         <div
@@ -65,7 +102,7 @@ function ScreenForm({ children }) {
                 <section
                     id="login-screen-section-one"
                     className={`  
-                        ${validateTheme(theme,"from-teal-400 to-indigo-400 ","from-indigo-900 to-slate-950")} 
+                        ${theme ? "from-teal-400 to-indigo-400 " : "from-indigo-900 to-slate-950"} 
                         block 
                         w-full 
                         min-h-full 
@@ -73,7 +110,7 @@ function ScreenForm({ children }) {
                         py-6 px-[24px]
                 `}>
                     <div className="
-                        h-[50%] 
+                        h-[30%] 
                         w-full 
                         flex 
                         justify-center 
@@ -86,16 +123,14 @@ function ScreenForm({ children }) {
                     </div>
 
                     <div className="
-                        h-[50%] 
+                        h-[70%] 
                         w-full 
                         flex 
                         justify-center"
                     >
-                        <img
-                            id="logo"
-                            className="max-h-[160px] w-auto"
-                            src="/Vector.png"
-                            alt=""
+                        <Img 
+                            path={locale.pathname} 
+                            theme={theme}
                         />
                     </div>
                 </section>
