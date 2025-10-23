@@ -90,6 +90,9 @@ function ScreenForm({ children }) {
                     id="login-screen-section-one"
                     className={`  
                         ${theme ? "from-teal-400 to-indigo-400 " : "from-indigo-900 to-slate-950"} 
+                        animate-backgroundScreenForm
+                        transition
+                        bg-[length:200%_200%]
                         block 
                         w-full 
                         min-h-full 
