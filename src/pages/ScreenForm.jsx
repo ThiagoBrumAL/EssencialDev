@@ -12,8 +12,9 @@ import { AuthProvider } from "../contexts/AuthContext.jsx";
 import { GlobalContext } from "../contexts/GlobalContext.jsx";
 import Loader from "../components/Loader/Loader.jsx";
 
-function ScreenForm({ children }) {
+import { cloudinary } from "../cloud/cloudinary.js";
 
+function ScreenForm({ children }) {
     const [load, setLoad] = useState(true)
 
     const locale = useLocation()
@@ -38,6 +39,7 @@ function ScreenForm({ children }) {
 
         return (() => clearTimeout(timer))
     }, [])
+
     
     const changeTheme = () => {
         setTheme((prev) => {
@@ -50,21 +52,6 @@ function ScreenForm({ children }) {
 
         const directionTheme = theme ? "light" : "dark"
 
-        const object = {
-            "/sign-in": {
-                "light": "sign-in.png",
-                "dark": "sign-in-dark.png"
-            },
-            "/recover": {
-                "light": "recover.png",
-                "dark": "recover-dark.png"
-            },
-            "/sign-up": {
-                "light": "sign-up.png",
-                "dark": "sign-up-dark.png"
-            }
-        }
-
         return (
             <img
                 id="logo"
@@ -74,7 +61,7 @@ function ScreenForm({ children }) {
                     object-contain
                     max-h-[500px]
                     max-w-[500px]"
-                src={`./assets/${object[path][directionTheme]}`}
+                src={cloudinary[path][directionTheme]}
                 alt=""
             />
         )
