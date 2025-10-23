@@ -1,11 +1,20 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 
 export const GlobalContext = createContext();
 
 export function GlobalProvider({ children }){
 
-    const [theme, setTheme] = useState(true);
+    const [theme, setTheme] = useState(() => {
+        const existingTheme = localStorage.getItem("theme");
+        if(existingTheme !== null){
+            return existingTheme === "true" ? true : false;
+        }else return null
+    });
+
+    useEffect(() => {
+        localStorage.setItem("theme", theme)
+    }, [theme])
 
     const validateTheme = (theme, light, dark) => {
         return theme ? light : dark;

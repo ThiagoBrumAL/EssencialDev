@@ -12,7 +12,7 @@ export function AuthProvider({ children }){
 
     function login(token, callback){
         setToken(token)
-        localStorage.setItem("token", token)
+        // localStorage.setItem("token", token)
         if(token && callback) callback()
     }
 

@@ -31,61 +31,137 @@ function FormSignUp(){
     const right = copyFields.slice(middle);
 
     return (
-        <div className="max-w-[694px] w-full flex flex-col items-center mt-[50px]">
-            <div className="flex flex-col w-full">
+        <div 
+            className="
+                max-w-[694px]
+                w-full 
+                flex 
+                flex-col 
+                items-center 
+                mt-[50px]
+            ">
+            <div 
+                className="
+                    flex 
+                    flex-col 
+                    w-full
+                ">
+
+                {/* DIV TITLE FORM */}
                 <div
-                    className={`${validateTheme(
-                        theme,
-                        "text-slate-950",
-                        "text-slate-500"
-                    )} w-[100%]`}
-                    >
-                    <h1 className="font-[700] text-[28px]">
+                    className={
+                        `${validateTheme(theme,"text-slate-950","text-slate-500")} 
+                        w-[100%]`
+                }>
+                    <h1 
+                        className="
+                            font-[700] 
+                            text-[2rem]
+                        ">
                         Faça seu login agora!
                     </h1>
-                    <p className="text-[16px] mb-[20px] md:mb-[70px]">
+                    <p 
+                        className="
+                            text-[1rem] 
+                            mb-[20px] 
+                            md:mb-[70px]
+                    ">
                         Seu cuidado começa aqui. Crie sua conta em poucos passos.
                     </p>
-
                 </div>
+
+
                 <form
-                id="form"
-                className="sm:mb-[15px] w-[100%] flex flex-col items-center"
-                action=""
+                    id="form"
+                    className="
+                        sm:mb-[15px] 
+                        w-[100%] 
+                        flex 
+                        flex-col 
+                        items-center"
+                    action=""
                 >
-                    <div id="body-form" className=" w-full flex lg:flex-row flex-col lg:gap-[40px]">
+
+                    {/* DIV BODY FORM */}
+                    <div 
+                        id="body-form" 
+                        className=" 
+                            w-full 
+                            flex 
+                            lg:flex-row 
+                            flex-col 
+                            lg:gap-[40px]
+                    ">
                         <div className="w-full">
-                        {left.map((field, index) => {
-                            return (
-                                <FormField
-                                    key={index}
-                                    object={field}
-                                    fields={copyFields}
-                                    setFields={setCopyFields}
-                                />
-                            );
-                        })}
+                            {left.map((field, index) => {
+                                return (
+                                    <FormField
+                                        key={index}
+                                        object={field}
+                                        fields={copyFields}
+                                        setFields={setCopyFields}
+                                    />
+                                );
+                            })}
                         </div>
                         <div className="w-full">
-                        {right.map((field, index) => {
-                            return (
-                                <FormField
-                                    key={index}
-                                    object={field}
-                                    fields={copyFields}
-                                    setFields={setCopyFields}
-                                />
-                            );
-                        })}
+                            {right.map((field, index) => {
+                                return (
+                                    <FormField
+                                        key={index}
+                                        object={field}
+                                        fields={copyFields}
+                                        setFields={setCopyFields}
+                                    />
+                                );
+                            })}
                         </div>
                     </div>
-                    <div className="flex gap-2 max-w-[424px] sm:mt-[50px mt-[60px] relative">
-                        <input type="checkbox" id="authorized" checked={isChecked} onChange={(event) => setIsChecked(event.target.checked)} name="authorized" className="absolute top-[5px] w-4 h-4"/>
-                        <label className={`p-0 m-0 inline-block text-[14px] ml-[24px] ${checkColor}`}> 
+
+                    {/* DIV 1 FOOTER FORM */}
+                    <div 
+                        className="
+                            flex 
+                            gap-2 
+                            max-w-[424px] 
+                            sm:mt-[50px 
+                            mt-[60px] 
+                            relative
+                    ">
+                        <input 
+                            type="checkbox" 
+                            id="authorized" 
+                            checked={isChecked} 
+                            onChange={(event) => setIsChecked(event.target.checked)} 
+                            name="authorized" 
+                            className="
+                                absolute 
+                                top-[5px] 
+                                w-4 
+                                h-4
+                        "/>
+                        <label 
+                            className={`
+                                p-0 
+                                m-0 
+                                inline-block 
+                                text-[14px] 
+                                ml-[24px] 
+                                ${checkColor}
+                        `}> 
                             Ao criar sua conta, você concorda com os <TextLink message={"Termos e Condições"} link={"https://www.gov.br/esporte/pt-br/acesso-a-informacao/lgpd"}/> e nossa <TextLink message={"Política de Privacidade."} link={"https://www.gov.br/esporte/pt-br/acesso-a-informacao/lgpd"}/>
                         </label>
                     </div>
-                    <div className="flex gap-2 items-start sm:w-[320px] w-[200px]">
+
+                    {/* DIV 2 FOOTER FORM*/}
+                    <div 
+                        className="
+                            flex 
+                            gap-2 
+                            items-start 
+                            sm:w-[320px] 
+                            w-[200px]
+                    ">
                         <ButtonMain
                             name={"CADASTRAR"}
                             marginTop={"mt-[90px]"}
@@ -98,6 +174,8 @@ function FormSignUp(){
                             setCheckColor={setCheckColor}
                         />
                     </div>
+
+
                 </form>
             </div>
 

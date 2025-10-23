@@ -1,4 +1,4 @@
-import { Lightbulb } from "lucide-react";
+import { Sun, Moon } from "lucide-react";
 
 // My Components
 import ButtonTheme from "../components/LoginComponents/ButtonTheme";
@@ -43,7 +43,6 @@ function ScreenForm({ children }) {
     
     const changeTheme = () => {
         setTheme((prev) => {
-            localStorage.setItem("theme", !prev)
             return !prev
         });
     };
@@ -68,7 +67,10 @@ function ScreenForm({ children }) {
     }
 
     if(load){
-        return <Loader theme={theme} validateTheme={validateTheme}/>
+        return <Loader 
+            theme={theme} 
+            validateTheme={validateTheme}
+        />
     }
 
     return (
@@ -167,7 +169,7 @@ function ScreenForm({ children }) {
                             gap-1 
                             items-center"
                         >
-                            <Lightbulb className={`m-0 p-0 text-slate-500 font-[500] `} />
+                            {theme ? <Moon color="#64748b"/> : <Sun color="#64748b"/>}
 
                             <p className="m-0 p-0 text-slate-500 font-[500]">
                             {validateTheme(theme, "Modo escuro", "Modo claro")}
@@ -175,9 +177,9 @@ function ScreenForm({ children }) {
                         </div>
 
                         <div className="
-                            flex 
-                            items-center"
-                        >
+                            h-[20px]
+                            w-auto
+                        ">
                             <ButtonTheme theme={theme} changeTheme={changeTheme} />
                         </div>
                         

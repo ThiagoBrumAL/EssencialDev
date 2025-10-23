@@ -1,13 +1,32 @@
 function Title({path, titles}){
 
     return (
-        <div id="box" className={`space-y-[24px] sm:mb-[0px] mb-[32px] ${path === "/sign-up" ? "mt-[50px]" : "md:mt-[100px] mt-[50px]"}`}>
-            <h1 className="text-slate-50 text-4xl text-left font-[700]">
+        <div 
+            id="box" 
+            className={`
+                space-y-[24px] 
+                sm:mb-[0px] 
+                mb-[32px] 
+                ${path === "/sign-up" ? "mt-[50px]" : "md:mt-[100px] mt-[50px]"}
+        `}>
+            <h1 
+                className="
+                    text-slate-50 
+                    text-[2rem] 
+                    text-left 
+                    font-[700]
+            ">
                 {titles.map((t) => {
                     return t.page === path ? t.title : null
                 })}
             </h1>
-            <h2 className="text-slate-50 text-left text-lg max-w-[380px]">
+            <h2 
+                className="
+                    text-slate-50 
+                    text-left 
+                    text-lg 
+                    max-w-[380px]
+            ">
                 {titles.map((t) => {
                     return t.page === path ? t.subTitle : null
                 })}

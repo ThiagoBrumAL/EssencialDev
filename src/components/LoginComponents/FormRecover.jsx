@@ -23,25 +23,51 @@ function FormRecover(){
     const [copyFields, setCopyFields] = useState(fields.filter(field => field.type === "email"))
     
     return (
-        <div className="max-w-[436px] w-full flex flex-col items-center md:mt-[100px] mt-[50px]">
-            <div className="flex justify-center flex-col w-full">
+        <div 
+            className="
+                max-w-[436px] 
+                w-full 
+                flex 
+                flex-col 
+                items-center 
+                md:mt-[100px] 
+                mt-[50px]
+        ">
+            <div 
+                className="
+                    flex 
+                    justify-center 
+                    flex-col 
+                    w-full
+            ">
                 <div
-                className={`${validateTheme(
-                    theme,
-                    "text-slate-950",
-                    "text-slate-500"
-                )} w-[100%]`}
-                >
-                <h1 className="font-[700] text-[28px]">Recupere sua conta!</h1>
-                <p className="text-[16px] mb-[20px] md:mb-[70px]">
-                    digite seu e-mail para receber um link de verificação
-                </p>
+                    className={`${
+                        validateTheme(theme,"text-slate-950","text-slate-500")} 
+                        w-[100%]`
+                    }>
+
+                    <h1 
+                        className="
+                            font-[700] 
+                            text-[2rem]
+                    ">
+                        Recupere sua conta!
+                    </h1>
+
+                    <p 
+                        className="
+                            text-[1rem] 
+                            mb-[20px] 
+                            md:mb-[70px]
+                    ">
+                        digite seu e-mail para receber um link de verificação
+                    </p>
                 </div>
 
                 <form
-                id="form"
-                className="sm:mb-[31px] w-[100%] mb-0"
-                action=""
+                    id="form"
+                    className="sm:mb-[31px] w-[100%] mb-0"
+                    action=""
                 >
                     <FormField
                         key={copyFields[0].id}
@@ -62,12 +88,13 @@ function FormRecover(){
                     <MessageAfterLink
                         message1={"Lembrou sua senha?"}
                         message2={"Retorne para fazer login"}
-                        size={"text-[16px]"}
+                        size={"text-[1rem]"}
                         link={"/sign-in"}
                         flexAlign={"items-center"}
                         flexJustify={"justify-center"}
                     />
                 </form>
+                
             </div>
         </div>
     )

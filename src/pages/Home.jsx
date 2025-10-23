@@ -43,19 +43,10 @@ function Home(){
     
     if(load){
         return (
-        <div
-            id="login-screen"
-            className={`
-                w-full 
-                min-h-dvh 
-                flex 
-                md:flex-row 
-                flex-col 
-                overflow-x-hidden
-                ${validateTheme(theme, "bg-slate-50", "bg-slate-900")}
-        `}>
-            <Loader />
-        </div>
+            <Loader 
+                validateTheme={validateTheme} 
+                theme={theme}
+            />
         )
     }
 

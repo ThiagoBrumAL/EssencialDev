@@ -8,9 +8,24 @@ function MessageAfterLink({message1, message2, link, size, flexAlign, flexJustif
     const { theme, validateTheme } = useContext(GlobalContext) 
 
     return (
-        <div className={`flex ${flexAlign} ${flexJustify} ${error ? "mt-[20px]" : "mt-[10px]"}`}>
-            <p className={`m-0 p-0 text-slate-500 font-[600] ${size}`}>
-                {message1} <Link to={link} className={`${validateTheme(theme,"text-indigo-300", "text-indigo-700")} font-[600] ${size}`}>
+        <div 
+            className={`
+                flex 
+                ${flexAlign} 
+                ${flexJustify} 
+                ${error ? "mt-[20px]" : "mt-[10px]"}
+        `}>
+            <p 
+                className={`
+                    m-0 
+                    p-0 
+                    text-slate-500 
+                    font-[600] 
+                    ${size}
+            `}>
+                {message1} 
+                &nbsp;
+                <Link to={link} className={`${validateTheme(theme,"text-indigo-300", "text-indigo-700")} font-[600] ${size}`}>
                     {message2}
                 </Link>
             </p>

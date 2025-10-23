@@ -26,19 +26,41 @@ function FormSignIn(){
     const [copyFields, setCopyFields] = useState(fields.filter(field => field.type === "password" || field.type === "email"))
 
     return (
-        <div className="max-w-[436px] w-full flex flex-col items-center md:mt-[100px] mt-[50px]">
-            <div className="flex justify-center flex-col w-full">
+        <div 
+            className="
+                max-w-[436px] 
+                w-full 
+                flex 
+                flex-col 
+                items-center 
+                md:mt-[100px] 
+                mt-[50px]
+        ">
+            <div 
+                className="
+                    flex 
+                    justify-center 
+                    flex-col 
+                    w-full
+            ">
                 <div
-                className={`${validateTheme(
-                    theme,
-                    "text-slate-950",
-                    "text-slate-500"
-                )} w-[100%]`}
-                >
-                    <h1 className="font-[700] text-[28px]">
+                    className={`
+                        ${validateTheme(theme,"text-slate-950","text-slate-500")} 
+                        w-[100%]`
+                }>
+                    <h1 
+                        className="
+                            font-[700] 
+                            text-[2rem]
+                    ">
                         Faça seu login agora!
                     </h1>
-                    <p className="text-[16px] mb-[20px] md:mb-[70px]">
+                    <p 
+                        className="
+                            text-[1rem] 
+                            mb-[20px] 
+                            md:mb-[70px]
+                    ">
                         Deixe seus exames em dia.
                     </p>
                 </div>
@@ -66,6 +88,7 @@ function FormSignIn(){
                             />
                         )
                     })}
+                    
                     <ButtonMain
                         name={"ENTRAR"}
                         marginTop={"mt-[90px]"}

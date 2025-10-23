@@ -16,48 +16,67 @@ function FormField({
         theme, 
         validateTheme,
     } = useContext(GlobalContext)
+
     const [inputValue, setInputValue] = useState("");
 
     function withoutLink(){
-        return object.link ? <MessageAfterLink
+        return object.link ? 
+        
+        <MessageAfterLink
             message1={"Esqueceu sua senha?"}
             message2={"Clique Aqui"}
-            size={"text-[13px]"}
+            size={"text-[0.80rem]"}
             link={"/recover"}
             flexAlign={"items-start"}
             flexJustify={"justify-start"}
             error={object.hasErrorInField}
-            />
-            
+        />
             : 
-            
-            <MessageAfter 
+        <MessageAfter 
             message1={"Deve conter pelo menos 8 Caracteres"}
-            size={"text-[13px]"}
+            size={"text-[0.85rem]"}
             padding={"p-0"}
             error={object.hasErrorInField}
-            />
+        />
     }
 
     return (
-        <div id="form-field" className="flex flex-col w-[100%] h-[94px] sm:mb-6 mb-3 relative">
+        <div 
+            id="form-field" 
+            className="
+                flex 
+                flex-col 
+                w-[100%] 
+                h-[94px] 
+                sm:mb-6 
+                mb-3 
+                relative
+        ">
             <label
-                className={`mb-2 
-                ${theme ? "text-slate-950" : "text-slate-500"}`}
+                className={`
+                    mb-2 
+                    ${validateTheme(theme, "text-slate-950","text-slate-500")}
+                `}
                 htmlFor={`${object.id}`}
             >
                 {object.name}
             </label>
 
             <input
-                className={`py-[6px] px-[10px]
+                className={`
+                    py-[6px] 
+                    px-[10px]
                     ${validateTheme(
                         theme,
                         `bg-slate-200  ${object.placeholder === "Campo obrigatório" ? "placeholder:text-red-400" : "placeholder:text-slate-500"} text-slate-950`,
                         `bg-slate-900 border-[2px] ${object.placeholder === "Campo obrigatório" ? "placeholder:text-red-400" : "placeholder:text-slate-400"} text-slate-300`
                     )}
-                    rounded-[6px] font-[500px] outline-none border-[2px] ${object.hasErrorInField ? "border-red-500" : "border-slate-300"}`
-                }
+                    rounded-[6px]
+                    font-[500px]
+                    outline-none 
+                    border-[2px] 
+                    ${object.hasErrorInField ? "border-red-500" : "border-slate-300"}
+                `}
                 pattern={object.regex}
                 type={`${object.type}`}
                 placeholder={object.placeholder}
