@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import Loader from "../components/Loader/Loader.jsx";
 import { GlobalContext } from "../contexts/GlobalContext.jsx";
 
-import { Bell, User } from 'lucide-react';
+import { User } from 'lucide-react';
 import { useLocation } from "react-router-dom";
 
 function Home(){
@@ -52,6 +52,7 @@ function Home(){
                 md:flex-row 
                 flex-col 
                 overflow-x-hidden
+                ${validateTheme(theme, "bg-slate-50", "bg-slate-900")}
         `}>
             <Loader />
         </div>

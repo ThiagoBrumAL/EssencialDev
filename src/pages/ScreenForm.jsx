@@ -67,14 +67,15 @@ function ScreenForm({ children }) {
         )
     }
 
+    if(load){
+        return <Loader theme={theme} validateTheme={validateTheme}/>
+    }
+
     return (
         <div
         id="login-screen"
         className={`w-full min-h-dvh flex md:flex-row flex-col overflow-x-hidden`}
         >
-
-            {load && <Loader />}
-
             <div className={`
                 flex
                 sm:flex-row
@@ -84,12 +85,11 @@ function ScreenForm({ children }) {
                 transition 
                 duration-1000
                 ease-in-out
-                ${load ? "opacity-0" : "opacity-100"}
             `}>
                 <section
                     id="login-screen-section-one"
                     className={`  
-                        ${theme ? "from-teal-400 to-indigo-400 " : "from-indigo-900 to-slate-950"} 
+                        ${validateTheme(theme, "from-teal-400 to-indigo-400 ", "from-indigo-900 to-slate-950")} 
                         animate-backgroundScreenForm
                         transition
                         bg-[length:200%_200%]
@@ -103,9 +103,8 @@ function ScreenForm({ children }) {
                         h-[30%] 
                         w-full 
                         flex 
-                        justify-center 
-                        items-center"
-                    >
+                        justify-center
+                    ">
                         <Title 
                             path={locale.pathname} 
                             titles={titles}

@@ -31,8 +31,8 @@ function FormSignUp(){
     const right = copyFields.slice(middle);
 
     return (
-        <div className="max-w-[694px] w-full flex flex-col items-center md:mt-[50px]">
-            <div className="flex justify-center flex-col w-full">
+        <div className="max-w-[694px] w-full flex flex-col items-center mt-[50px]">
+            <div className="flex flex-col w-full">
                 <div
                     className={`${validateTheme(
                         theme,

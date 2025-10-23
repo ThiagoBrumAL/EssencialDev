@@ -26,7 +26,7 @@ function FormSignIn(){
     const [copyFields, setCopyFields] = useState(fields.filter(field => field.type === "password" || field.type === "email"))
 
     return (
-        <div className="max-w-[436px] w-full flex flex-col items-center md:mt-[100px]">
+        <div className="max-w-[436px] w-full flex flex-col items-center md:mt-[100px] mt-[50px]">
             <div className="flex justify-center flex-col w-full">
                 <div
                 className={`${validateTheme(
