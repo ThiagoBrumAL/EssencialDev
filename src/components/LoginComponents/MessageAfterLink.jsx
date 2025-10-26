@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import { GlobalContext } from "../../contexts/GlobalContext"
 import { useContext } from "react"
 
-function MessageAfterLink({message1, message2, link, size, flexAlign, flexJustify,error}){
+function MessageAfterLink({message1, message2, link, size, flexAlign, flexJustify, error}){
 
     const { theme, validateTheme } = useContext(GlobalContext) 
 

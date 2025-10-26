@@ -6,14 +6,14 @@ export const GlobalContext = createContext();
 export function GlobalProvider({ children }){
 
     const [theme, setTheme] = useState(() => {
-        const existingTheme = localStorage.getItem("theme");
+        const existingTheme = localStorage.getItem("thm");
         if(existingTheme !== null){
             return existingTheme === "true" ? true : false;
         }else return null
     });
 
     useEffect(() => {
-        localStorage.setItem("theme", theme)
+        localStorage.setItem("thm", theme)
     }, [theme])
 
     const validateTheme = (theme, light, dark) => {

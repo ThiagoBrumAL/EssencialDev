@@ -61,7 +61,7 @@ function ScreenForm({ children }) {
                     max-h-[500px]
                     max-w-[500px]"
                 src={cloudinary[path][directionTheme]}
-                alt=""
+                alt="Essecial Dev Logo"
             />
         )
     }
@@ -92,9 +92,6 @@ function ScreenForm({ children }) {
                     id="login-screen-section-one"
                     className={`  
                         ${validateTheme(theme, "from-teal-400 to-indigo-400 ", "from-indigo-900 to-slate-950")} 
-                        animate-backgroundScreenForm
-                        transition
-                        bg-[length:200%_200%]
                         block 
                         w-full 
                         min-h-full 
@@ -145,14 +142,6 @@ function ScreenForm({ children }) {
                         { children }
                     </AuthProvider>
 
-
-                    {messageFeedback && 
-                        <CardFeedback 
-                            theme={theme} 
-                            object={{message: messageFeedback, show: showMessage, color: colorFeedback, icon: iconFeedback}}
-                        />
-                    }
-
                     <div
                         id="container-theme"
                         className="
@@ -185,6 +174,13 @@ function ScreenForm({ children }) {
                         
                     </div>
                 </section>
+
+                {messageFeedback && 
+                    <CardFeedback 
+                        theme={theme} 
+                        object={{message: messageFeedback, show: true, color: colorFeedback, icon: iconFeedback}}
+                    />
+                }
             </div>
         </div>
     );

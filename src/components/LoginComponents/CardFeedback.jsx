@@ -15,6 +15,7 @@ function CardFeedback({object, theme}){
                 rounded-md 
                 text-slate-50 
                 shadow-md
+                mt-[24px]
         `}>
             <div 
                 className={` 

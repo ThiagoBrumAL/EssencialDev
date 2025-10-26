@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import Loader from "../components/Loader/Loader.jsx";
 import { GlobalContext } from "../contexts/GlobalContext.jsx";
 
-import { User } from 'lucide-react';
+import { User, TextAlignJustify  } from 'lucide-react';
 import { useLocation } from "react-router-dom";
 
 function Home(){
@@ -81,7 +81,8 @@ function Home(){
                                 sm:gap-[34px]
                                 items-center
                                 h-[40px]
-                                max-w-[680px]
+                                md:max-w-[680px]
+                                max-w-[160px]
                                 w-[100%]
                             ">
 
@@ -93,15 +94,16 @@ function Home(){
                                 rounded-full
                             ">
                                 <img 
-                                    src="../assets/logo.png" 
+                                    src="https://res.cloudinary.com/essencialdev-cloudinary/image/upload/g_auto/f_auto/v1761500133/Logo_xy67v8.png" 
                                     alt=""
                                     className="
-                                        w-[12rem]
-                                        h-auto
+                                        w-[170px]
+                                        h-[30px]
                                         outline-none
                                         p-0
                                         m-0
-                                        block
+                                        md:block
+                                        hidden
                                     "/>
                             </div>
 
@@ -109,14 +111,16 @@ function Home(){
                                 h-full
                                 w-[2px]
                                 bg-white
+                                md:block
+                                hidden
                             "></div>
 
                             <div className="
-                                flex
+                                hidden
                                 items-center
-                                h-[40px]
                                 justify-between
                                 w-[100%]
+                                md:flex
                             ">
                                 <Link 
                                     path={"/home"} 
@@ -138,6 +142,13 @@ function Home(){
                                     name={`ChatBot`} 
                                     link={""}
                                 />
+                            </div>
+
+                            <div className="
+                                md:hidden
+                                block
+                            ">
+                                <TextAlignJustify color="#FFFFFF"/>
                             </div>
                         </div>
 

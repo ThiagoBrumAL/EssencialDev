@@ -24,7 +24,16 @@ function FormSignUp(){
         validateTheme,
     } = useContext(GlobalContext)
 
-    const [copyFields, setCopyFields] = useState(fields)
+    const fieldsSingnUp = fields.map((field) => {
+        if(field.type === "password"){
+            return {...field, link: false}
+        }
+
+        return {...field}
+    })
+
+    const [copyFields, setCopyFields] = useState(fieldsSingnUp)
+    console.log(fieldsSingnUp);
 
     const middle = Math.floor(copyFields.length/2);
     const left = copyFields.slice(0,middle);
@@ -47,7 +56,6 @@ function FormSignUp(){
                     w-full
                 ">
 
-                {/* DIV TITLE FORM */}
                 <div
                     className={
                         `${validateTheme(theme,"text-slate-950","text-slate-500")} 
@@ -118,7 +126,6 @@ function FormSignUp(){
                         </div>
                     </div>
 
-                    {/* DIV 1 FOOTER FORM */}
                     <div 
                         className="
                             flex 
@@ -153,7 +160,6 @@ function FormSignUp(){
                         </label>
                     </div>
 
-                    {/* DIV 2 FOOTER FORM*/}
                     <div 
                         className="
                             flex 

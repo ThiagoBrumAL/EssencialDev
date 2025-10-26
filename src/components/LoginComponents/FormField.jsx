@@ -34,7 +34,7 @@ function FormField({
             : 
         <MessageAfter 
             message1={"Deve conter pelo menos 8 Caracteres"}
-            size={"text-[0.85rem]"}
+            size={"text-[0.75rem]"}
             padding={"p-0"}
             error={object.hasErrorInField}
         />
