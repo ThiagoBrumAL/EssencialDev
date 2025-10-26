@@ -178,7 +178,7 @@ function ScreenForm({ children }) {
                 {messageFeedback && 
                     <CardFeedback 
                         theme={theme} 
-                        object={{message: messageFeedback, show: true, color: colorFeedback, icon: iconFeedback}}
+                        object={{message: messageFeedback, show: showMessage, color: colorFeedback, icon: iconFeedback}}
                     />
                 }
             </div>
