@@ -1,7 +1,6 @@
 import MessageAfterLink from "./MessageAfterLink";
 import ButtonMain from "./ButtonMain";
 import FormField from "./FormField";
-import { Send } from 'lucide-react';
 import { sendDatasPost } from "../../api/api.jsx";
 
 import { useContext, useState } from "react";
@@ -12,7 +11,6 @@ function FormRecover(){
 
     const { 
         fields,
-        renderCardFeedback 
     } = useContext(ScreenContext)
 
     const { 
@@ -49,16 +47,19 @@ function FormRecover(){
                     <h1 
                         className="
                             font-[700] 
-                            text-[2rem]
+                            text-[1.50rem]
+                            font-Inter
                     ">
                         Recupere sua conta!
                     </h1>
 
                     <p 
                         className="
-                            text-[1rem] 
+                            text-[0.95rem] 
                             mb-[20px] 
                             md:mb-[70px]
+                            mt-[10px]
+                            font-Inter
                     ">
                         digite seu e-mail para receber um link de verificação
                     </p>
@@ -82,19 +83,17 @@ function FormRecover(){
                         fields={copyFields}
                         marginTop={"mt-[0px]"}
                         setFields={setCopyFields}
-                        renderCardFeedbackOk={() => renderCardFeedback(<Send />, "bg-green-400", "Messagem enviada com sucesso", 5000)}
                     />
-
-                    <MessageAfterLink
+                </form>
+                
+                <MessageAfterLink
                         message1={"Lembrou sua senha?"}
                         message2={"Retorne para fazer login"}
-                        size={"text-[1rem]"}
+                        size={"text-[0.95rem]"}
                         link={"/sign-in"}
                         flexAlign={"items-center"}
                         flexJustify={"justify-center"}
                     />
-                </form>
-                
             </div>
         </div>
     )

@@ -2,7 +2,6 @@ import MessageAfterLink from "./MessageAfterLink";
 import ButtonMain from "./ButtonMain";
 import FormField from "./FormField";
 import { sendDatasPost } from "../../api/api.jsx";
-import { UserRoundCheck } from 'lucide-react';
 
 import { useContext, useState } from "react";
 import { ScreenContext } from "../../contexts/ScreenContext.jsx";
@@ -13,7 +12,6 @@ function FormSignIn(){
 
     const { 
         fields,
-        renderCardFeedback
     } = useContext(ScreenContext)
 
     const { 
@@ -51,15 +49,17 @@ function FormSignIn(){
                     <h1 
                         className="
                             font-[700] 
-                            text-[2rem]
+                            text-[1.50rem] 
+                            font-Inter
                     ">
                         Faça seu login agora!
                     </h1>
                     <p 
                         className="
-                            text-[1rem] 
+                            text-[0.95rem]
                             mb-[20px] 
                             md:mb-[70px]
+                            font-Inter
                     ">
                         Deixe seus exames em dia.
                     </p>
@@ -96,7 +96,6 @@ function FormSignIn(){
                         URL={"https://essencial-server.vercel.app/auth/sign-in"}
                         fields={copyFields}
                         setFields={setCopyFields}
-                        renderCardFeedbackOk={() => renderCardFeedback(<UserRoundCheck />, "bg-green-400", "Usuário autorizado", 5000)}
                     />
                 </form>
             </div>
@@ -104,7 +103,7 @@ function FormSignIn(){
             <MessageAfterLink
                 message1={"Não possui conta?"}
                 message2={"Faça o seu Cadastro"}
-                size={"text-[16px]"}
+                size={"text-[0.95rem]"}
                 link={"/sign-up"}
                 flexAlign={"items-center"}
                 flexJustify={"justify-center"}

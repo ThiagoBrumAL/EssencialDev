@@ -1,10 +1,10 @@
 import { validateInputsFields, validateCheckbox  } from "../handlings/functions";
-import { ShieldOff, MailWarning, UserRoundCheck  } from 'lucide-react';
+import { ShieldOff, MailWarning, Send, UserRoundCheck } from 'lucide-react';
 
 
 function recoverEmail(object){
     
-    object.renderCardFeedbackOk()
+    object.renderCardFeedback(<Send />, "bg-green-400", "E-mail enviado com sucesso", 5000)
     let counter = 60;
 
     const field = object.fields[0];
@@ -55,24 +55,28 @@ export async function sendDatasPost(event, object){
 
             if(response.ok){
 
-                if(object.path === "/sign-in" && object.navigate) {
-                    const body = await response.json()
-                    const token = await body.accessToken
+                const body = await response.json()
+                const token = await body.accessToken
 
-                    object.login(token, () => object.navigate("/home"))
+                switch(object.path){
+                    case "/sign-in":
+                        object.login(token, () => object.navigate("/home"))
+                        break
+                    case "/sign-up":
+                        object.renderCardFeedback(<UserRoundCheck />, "bg-green-400", "Usuário cadastrado", 5000)
+                        break
+                    case "/recover":
+                        recoverEmail(object);
+                        break
                 }
-
-                if(object.path === "/recover") return recoverEmail(object);
-                if(object.path === "/sign-up") return object.renderCardFeedbackOk(<UserRoundCheck />, "bg-green-400", "Usuário cadastrado", 5000)
-
             }else{
 
                 switch(response.status){
                     case 401:
-                        object.renderCardFeedbackError(<ShieldOff />, "bg-red-400", "Acesso não autorizado", 5000)
+                        object.renderCardFeedback(<ShieldOff />, "bg-red-400", "Acesso não autorizado", 5000)
                         break
                     case 409:
-                        object.renderCardFeedbackError(<MailWarning  />, "bg-red-400", "E-mail já registrado", 5000)
+                        object.renderCardFeedback(<MailWarning  />, "bg-red-400", "E-mail já registrado", 5000)
                         break
                 }
             }

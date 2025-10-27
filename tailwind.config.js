@@ -15,6 +15,11 @@ export default {
       animation:{
         loader: "loader 1s ease-in-out infinite",
       },
+
+      fontFamily: {
+        DmSans:["DM Sans", "sans-serif"],
+        Inter: ["Inter", "sans-serif"]
+      }
     },
     screens: {
       'xs': '480px',

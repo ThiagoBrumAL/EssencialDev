@@ -11,6 +11,7 @@ function MessageAfter({message1, size, padding, error}){
                     text-slate-500 
                     font-[600] 
                     ${size}
+                    font-Inter
             `}>
                 {message1}
             </p>

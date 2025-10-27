@@ -9,9 +9,8 @@ function ButtonMain({
     operation, 
     URL, 
     fields, 
-    setFields, 
-    renderCardFeedbackOk, 
-    isChecked, 
+    setFields,
+    isChecked,
     setCheckColor,
     marginTop 
 }){
@@ -39,8 +38,7 @@ function ButtonMain({
             URL,
             fields,
             setFields,
-            renderCardFeedbackOk,
-            renderCardFeedbackError: renderCardFeedback,
+            renderCardFeedback,
             path: locale.pathname,
             navigate: navigate,
             isChecked: isChecked || null,

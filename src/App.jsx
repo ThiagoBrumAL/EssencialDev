@@ -4,9 +4,9 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 //Components
 import ScreenForm from "./pages/ScreenForm"
 import Home from "./pages/Home"
-import FormSignIn from "./components/LoginComponents/FormSignIn"
-import FormSignUp from "./components/LoginComponents/FormSignUp"
-import FormRecover from "./components/LoginComponents/FormRecover"
+import FormSignIn from "./components/login/FormSignIn"
+import FormSignUp from "./components/login/FormSignUp"
+import FormRecover from "./components/login/FormRecover"
 
 import { ScreenProvider } from "./contexts/ScreenContext"
 import { AuthProvider } from "./contexts/AuthContext"
@@ -20,6 +20,10 @@ function PrivateRoute({ children }){
 function PublicRoute({ children }){
   const token = localStorage.getItem("token")
   return token ? <Navigate to={"/home"}/> : children
+}
+
+function RedirectSignIn({ children }){
+  return <Navigate to={"/sign-in"}/>
 }
 
 
@@ -68,9 +72,14 @@ function App() {
                 <Route 
                   path="/home" 
                   element={
-                    <PrivateRoute>
                       <Home />
-                    </PrivateRoute>
+                  }
+                />
+
+                <Route 
+                  path="/*"
+                  element={
+                    <RedirectSignIn />
                   }
                 />
 

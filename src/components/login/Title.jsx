@@ -7,6 +7,7 @@ function Title({path, titles}){
                 space-y-[24px] 
                 sm:mb-[0px] 
                 mb-[32px] 
+                max-w-[420px]
                 ${path === "/sign-up" ? "mt-[50px]" : "md:mt-[100px] mt-[50px]"}
         `}>
             <h1 
@@ -15,6 +16,7 @@ function Title({path, titles}){
                     text-[2rem] 
                     text-left 
                     font-[700]
+                    font-DmSans
             ">
                 {titles.map((t) => {
                     return t.page === path ? t.title : null
@@ -26,6 +28,8 @@ function Title({path, titles}){
                     text-left 
                     text-lg 
                     max-w-[380px]
+                    text-[1rem]
+                    font-Inter
             ">
                 {titles.map((t) => {
                     return t.page === path ? t.subTitle : null

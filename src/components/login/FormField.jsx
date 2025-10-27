@@ -56,6 +56,9 @@ function FormField({
                 className={`
                     mb-2 
                     ${validateTheme(theme, "text-slate-950","text-slate-500")}
+                    font-Inter
+                    font-normal
+                    text-[0.95rem]
                 `}
                 htmlFor={`${object.id}`}
             >
@@ -72,10 +75,11 @@ function FormField({
                         `bg-slate-900 border-[2px] ${object.placeholder === "Campo obrigatório" ? "placeholder:text-red-400" : "placeholder:text-slate-400"} text-slate-300`
                     )}
                     rounded-[6px]
-                    font-[500px]
                     outline-none 
                     border-[2px] 
-                    ${object.hasErrorInField ? "border-red-500" : "border-slate-300"}
+                    font-Inter
+                    text-[0.95rem]
+                    ${object.hasErrorInField ? "border-red-500" : "border-[#B5B5BD]"}
                 `}
                 pattern={object.regex}
                 type={`${object.type}`}
@@ -90,7 +94,7 @@ function FormField({
                 value={inputValue}
             />
 
-            <p className="absolute left-0 bottom-[0px] text-[14px] text-red-500">{object.hasErrorInField ? object.messageError : null}</p>
+            <p className={`absolute left-0 bottom-[2px] text-[0.85rem] font-Inter text-red-500`}>{object.hasErrorInField ? object.messageError : null}</p>
 
             <div className="absolute top-10 right-4">
                 <button onClick={(event) => {

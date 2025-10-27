@@ -22,10 +22,12 @@ function MessageAfterLink({message1, message2, link, size, flexAlign, flexJustif
                     text-slate-500 
                     font-[600] 
                     ${size}
+                    font-[600] 
+                    font-Inter
             `}>
                 {message1} 
                 &nbsp;
-                <Link to={link} className={`${validateTheme(theme,"text-indigo-300", "text-indigo-700")} font-[600] ${size}`}>
+                <Link to={link} className={`${validateTheme(theme,"text-indigo-300", "text-indigo-700")} ${size}`}>
                     {message2}
                 </Link>
             </p>

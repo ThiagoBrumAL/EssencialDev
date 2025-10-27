@@ -1,0 +1,192 @@
+import MessageAfterLink from "./MessageAfterLink";
+import ButtonMain from "./ButtonMain";
+import FormField from "./FormField";
+import TextLink from "./TextLink";
+import { sendDatasPost } from "../../api/api.jsx";
+import { useState } from "react";
+
+import { useContext } from "react";
+import { ScreenContext } from "../../contexts/ScreenContext.jsx";
+import { GlobalContext } from "../../contexts/GlobalContext.jsx";
+
+function FormSignUp(){
+
+    const [isChecked, setIsChecked] = useState(null);
+    const [checkColor, setCheckColor] = useState("text-slate-500")
+
+    const { 
+        fields, 
+    } = useContext(ScreenContext)
+
+    const { 
+        theme, 
+        validateTheme,
+    } = useContext(GlobalContext)
+
+    const fieldsSingnUp = fields.map((field) => {
+        if(field.type === "password"){
+            return {...field, link: false}
+        }
+
+        return {...field}
+    })
+
+    const [copyFields, setCopyFields] = useState(fieldsSingnUp)
+
+    const middle = Math.floor(copyFields.length/2);
+    const left = copyFields.slice(0,middle);
+    const right = copyFields.slice(middle);
+
+    return (
+        <div 
+            className="
+                max-w-[694px]
+                w-full 
+                flex 
+                flex-col 
+                items-center 
+                mt-[50px]
+            ">
+
+            <div
+                className={
+                    `${validateTheme(theme,"text-slate-950","text-slate-500")} 
+                    w-[100%]`
+            }>
+                <h1 
+                    className="
+                        font-[700] 
+                        text-[1.50rem]
+                        font-Inter
+                    ">
+                    Faça seu login agora!
+                </h1>
+                <p 
+                    className="
+                        text-[0.95rem] 
+                        mb-[20px] 
+                        md:mb-[70px]
+                        font-Inter
+                ">
+                    Seu cuidado começa aqui. Crie sua conta em poucos passos.
+                </p>
+            </div>
+
+
+            <form
+                id="form"
+                className="
+                    sm:mb-[15px] 
+                    w-[100%] 
+                    flex 
+                    flex-col 
+                    items-center"
+                action=""
+            >
+
+                <div 
+                    id="body-form" 
+                    className=" 
+                        w-full 
+                        flex 
+                        lg:flex-row 
+                        flex-col 
+                        lg:gap-[32px]
+                ">
+
+                    <div className="w-full">
+                        {left.map((field, index) => {
+                            return (
+                                <FormField
+                                    key={index}
+                                    object={field}
+                                    fields={copyFields}
+                                    setFields={setCopyFields}
+                                />
+                            );
+                        })}
+                    </div>
+
+                    <div className="w-full">
+                        {right.map((field, index) => {
+                            return (
+                                <FormField
+                                    key={index}
+                                    object={field}
+                                    fields={copyFields}
+                                    setFields={setCopyFields}
+                                />
+                            );
+                        })}
+                    </div>
+
+                </div>
+
+                <div 
+                    className="
+                        flex 
+                        gap-2 
+                        max-w-[450px] 
+                        sm:mt-[50px 
+                        mt-[60px] 
+                        relative
+                ">
+                    <input 
+                        type="checkbox" 
+                        id="authorized" 
+                        checked={isChecked} 
+                        onChange={(event) => setIsChecked(event.target.checked)} 
+                        name="authorized" 
+                        className="
+                            absolute 
+                            top-[5px] 
+                            w-4 
+                            h-4
+                    "/>
+                    <label 
+                        className={`
+                            p-0 
+                            m-0 
+                            inline-block 
+                            text-[14px] 
+                            ml-[24px] 
+                            ${checkColor}
+                            font-Inter
+                    `}> 
+                        Ao criar sua conta, você concorda com os <TextLink message={"Termos e Condições"} link={"https://www.gov.br/esporte/pt-br/acesso-a-informacao/lgpd"}/> e nossa <TextLink message={"Política de Privacidade."} link={"https://www.gov.br/esporte/pt-br/acesso-a-informacao/lgpd"}/>
+                    </label>
+                </div>
+
+                <div 
+                    className="
+                        flex 
+                        gap-2 
+                        items-start 
+                        sm:w-[320px] 
+                        w-[200px]
+                ">
+                    <ButtonMain
+                        name={"CADASTRAR"}
+                        marginTop={"mt-[90px]"}
+                        operation={{sendDatasPost}}
+                        URL={"https://essencial-server.vercel.app/auth/sign-up"}
+                        fields={copyFields}
+                        setFields={setCopyFields}
+                        isChecked={isChecked}
+                        setCheckColor={setCheckColor}
+                    />
+                </div>
+            </form>
+
+            <MessageAfterLink
+                message1={"Já possui conta?"}
+                message2={"Faça o seu Login"}
+                size={"text-[0.95rem]"}
+                padding={"px-6"}
+                link={"/sign-in"}
+            />
+        </div>
+    )
+}
+
+export default FormSignUp;

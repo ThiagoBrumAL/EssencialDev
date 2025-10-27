@@ -38,6 +38,8 @@ function CardFeedback({object, theme}){
                     ml-[12px] 
                     sm:text-[16px] 
                     text-[12px]
+                    font-[600] 
+                    font-Inter
             ">
                 {object.message}
             </h1>
