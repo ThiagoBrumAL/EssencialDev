@@ -22,10 +22,6 @@ function PublicRoute({ children }){
   return token ? <Navigate to={"/home"}/> : children
 }
 
-function RedirectSignIn({ children }){
-  return <Navigate to={"/sign-in"}/>
-}
-
 
 function App() {
   return (
@@ -72,14 +68,16 @@ function App() {
                 <Route 
                   path="/home" 
                   element={
+                    <PublicRoute>
                       <Home />
+                    </PublicRoute>
                   }
                 />
 
                 <Route 
                   path="/*"
                   element={
-                    <RedirectSignIn />
+                    <Navigate to={"/sign-in"}/>
                   }
                 />
 
