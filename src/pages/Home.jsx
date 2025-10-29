@@ -32,9 +32,9 @@ function Home(){
                     className={`
                         text-white
                         ${condition}
-                        text-[16px] 
+                        text-[1rem] 
                         font-[600]
-                        leading-[20px]
+                        leading-[1rem]
                         ${!isActive ? "transition duration-500 sm:hover:translate-y-[-10px]" : null}
                         text-center
                         relative
@@ -48,6 +48,7 @@ function Home(){
                         translate-x-[-50%]
                         top-[50%]
                         translate-y-[-50%]
+                        w-full
                     ">
                         { name }
                     </span>
@@ -165,7 +166,7 @@ function Home(){
 
                                 <Link 
                                     path={"/home"} 
-                                    name={"Assistente Virtual"}
+                                    name={<>Assistente <br /> Virtual</>}
                                     condition={"md:block hidden"}
                                     link={""}
                                 />
@@ -180,8 +181,48 @@ function Home(){
                             </div>
 
 
-                            <div>
-                                <User size={30} color="#FFFFFF"/>
+                            <div className="
+                                h-full
+                                w-auto
+                                flex
+                                items-center
+                            ">
+                                <button
+                                    className={`
+                                        relative
+                                        md:w-[100px]
+                                        md:h-full
+                                        h-[30px]
+                                        w-[30px]
+                                        group
+                                `}>
+                                    <span className="
+                                        absolute
+                                        left-[50%]
+                                        translate-x-[-50%]
+                                        top-[50%]
+                                        translate-y-[-50%]
+                                    ">
+                                        <User size={30} color="#FFFFFF"/>
+                                    </span>
+
+                                    <div className="
+                                        md:block
+                                        hidden
+                                        absolute
+                                        w-[100%]
+                                        h-[5px]
+                                        bg-[#E6E8EC]
+                                        bottom-0
+                                        left-0
+                                        rounded-[1px]
+                                        scale-x-0
+                                        transition-all
+                                        duration-300
+                                        group-hover:scale-x-100
+                                        origin-left
+                                    "></div>
+                                </button>
                             </div>
                         </div>
                         
