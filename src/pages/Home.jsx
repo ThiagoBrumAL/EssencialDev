@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import Loader from "../components/loader/Loader.jsx";
+import Loader from "../components/load/Loader.jsx";
 import { GlobalContext } from "../contexts/GlobalContext.jsx";
 
 import { User, TextAlignJustify  } from 'lucide-react';
