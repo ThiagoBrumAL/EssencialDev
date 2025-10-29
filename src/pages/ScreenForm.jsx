@@ -10,7 +10,7 @@ import { useContext, useEffect, useState } from "react";
 import { ScreenContext } from "../contexts/ScreenContext.jsx";
 import { AuthProvider } from "../contexts/AuthContext.jsx";
 import { GlobalContext } from "../contexts/GlobalContext.jsx";
-import Loader from "../components/load/Loader.jsx";
+import Loader from "../components/loader/Loader.jsx";
 
 import { cloudinary } from "../cloud/cloudinary.js";
 
