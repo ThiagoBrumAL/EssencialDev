@@ -73,36 +73,36 @@ function ScreenSSR({ children }) {
     // Img é um componente de função que espera 2 parametros, o tema e o caminho. Ele renderiza a imagem do site story set
     const Img = ({ path, theme }) => {
 
+        const [imageIsVisible, setImageIsVisible] = useState(false)
+
         // Se o theme for true, o valor do target será "light". Caso contrário, será "dark".
         const targetTheme = theme ? "light" : "dark"
+
+        useEffect(() => {
+
+            setImageIsVisible(false)
+            const timer = setTimeout(() => setImageIsVisible(true), 50)
+            return () => clearTimeout(timer)
+
+        }, [theme, path])
 
         return (
             <img
                 id="logo"
-                className="
+                className={`}
                     h-full
                     w-full
                     object-contain
                     max-h-[450px]
-                    max-w-[450px]"
+                    max-w-[450px]
+                    transition-opacity
+                    ease-in-out
+                    duration-700
+                    ${imageIsVisible ? "opacity-100" : "opacity-0"}
+                    `}
                 src={cloudinary[path][targetTheme]}
                 alt="Essecial Dev Logo"
             />
-        )
-    }
-
-    {/* Se o load for verdadeiro, renderize o componente. Caso contrário, tire-o */}
-    if(load){
-        return (
-            <div className="
-                h-full
-                w-full
-                flex
-                justify-center
-                items-center
-            ">
-                <Loader />
-            </div>
         )
     }
 
@@ -110,28 +110,31 @@ function ScreenSSR({ children }) {
 
         <div
         id="login-screen"
-        style={{ opacity: userOpacity }}
         className={`
-            w-full
+            w-full 
             min-h-dvh
             flex md:flex-row
             flex-col
             overflow-x-hidden
+            relative
             ${validateTheme(theme,"bg-[#FFFAFE]","bg-slate-900")}
+            z-[1]
+            ${load ? "overflow-y-hidden" : "overflow-y-scroll"}
         `}>
 
-            
+            {/* Se o load for verdadeiro, renderize o componente. Caso contrário, tire-o */}
+            {load && <Loader />}
 
-            <div className={`
+            <div 
+            style={{ opacity: userOpacity }} 
+            className={`
                 flex
                 sm:flex-row
                 flex-col
-                w-full 
-                h-full 
                 transition 
                 duration-1000
                 ease-in-out
-                ${load ? "opacity-0" : "opacity-100"}
+                ${load ? "opacity-0 h-0 w-0" : "opacity-100 w-full h-full "}
             `}>
                 <section
                     id="login-screen-section-one"

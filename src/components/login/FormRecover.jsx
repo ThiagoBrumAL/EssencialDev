@@ -16,11 +16,15 @@ function FormRecover(){
     const [userOpacity, setUserOpacity] = useState(0);
 
     useEffect(() => {
+
         if(locale.pathname === "/recover") setUserOpacity(1)
+
     }, [locale.pathname])
 
     useEffect(() => {
+
         window.scrollTo({ top: 0, behavior: "smooth" })
+        
     }, [locale.pathname])
 
     const { 
