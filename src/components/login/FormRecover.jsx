@@ -21,7 +21,7 @@ function FormRecover(){
 
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: "smooth" })
-    })
+    }, [locale.pathname])
 
     const { 
 

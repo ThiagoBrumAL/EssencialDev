@@ -26,6 +26,7 @@ function ScreenSSR({ children }) {
 
     // State para simular o comportamento de loading.
     const [load, setLoad] = useState(true)
+    const [userOpacity, setUserOpacity] = useState(0);
 
     const locale = useLocation()
 
@@ -61,12 +62,12 @@ function ScreenSSR({ children }) {
         // setTimeout está sendo utilizado para deixar o load por 3 segundos e tirá-lo após.
         const timer = setTimeout(() => {
             setLoad(false)
+            setUserOpacity(1)
         }, 3000)
 
         return (() => clearTimeout(timer))
 
     }, [])
-
 
 
     // Img é um componente de função que espera 2 parametros, o tema e o caminho. Ele renderiza a imagem do site story set
@@ -90,10 +91,26 @@ function ScreenSSR({ children }) {
         )
     }
 
+    {/* Se o load for verdadeiro, renderize o componente. Caso contrário, tire-o */}
+    if(load){
+        return (
+            <div className="
+                h-full
+                w-full
+                flex
+                justify-center
+                items-center
+            ">
+                <Loader />
+            </div>
+        )
+    }
+
     return (
 
         <div
         id="login-screen"
+        style={{ opacity: userOpacity }}
         className={`
             w-full
             min-h-dvh
@@ -103,8 +120,7 @@ function ScreenSSR({ children }) {
             ${validateTheme(theme,"bg-[#FFFAFE]","bg-slate-900")}
         `}>
 
-            {/* Se o load for verdadeiro, renderize o componente. Caso contrário, tire-o */}
-            {load && <Loader /> }
+            
 
             <div className={`
                 flex

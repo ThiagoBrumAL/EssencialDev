@@ -26,7 +26,7 @@ function PublicRoute({ children }){
 
 function App() {
   return (
-    <main className="min-h-[100dvh] w-full">
+    <main className="h-[100dvh] w-full">
       <BrowserRouter>
         <GlobalProvider>
           <AuthProvider>

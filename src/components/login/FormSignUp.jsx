@@ -33,7 +33,7 @@ function FormSignUp(){
 
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: "smooth" })
-    })
+    },  [locale.pathname])
 
     // Estado (State) criado para armazenar se os "termos e condições" está preenchido
     const [isChecked, setIsChecked] = useState(null);
