@@ -3,25 +3,45 @@ import ButtonMain from "./ButtonMain";
 import FormField from "./FormField";
 import { sendDatasPost } from "../../api/api.jsx";
 
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { ScreenContext } from "../../contexts/ScreenContext.jsx";
 import { GlobalContext } from "../../contexts/GlobalContext.jsx";
 
+import { useLocation, Link } from "react-router-dom";
+
 function FormRecover(){
 
+    const locale = useLocation()
+
+    const [userOpacity, setUserOpacity] = useState(0);
+
+    useEffect(() => {
+        if(locale.pathname === "/recover") setUserOpacity(1)
+    }, [locale.pathname])
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" })
+    })
+
     const { 
+
         fields,
+
     } = useContext(ScreenContext)
 
     const { 
+
         theme, 
+
         validateTheme,
+
     } = useContext(GlobalContext)
 
-    const [copyFields, setCopyFields] = useState(fields.filter(field => field.type === "email"))
+    const [recoverField, setRecoverField] = useState(fields.filter(field => field.type === "email"))
     
     return (
         <div 
+            style={{ opacity: userOpacity }}
             className="
                 max-w-[436px] 
                 w-full 
@@ -30,6 +50,9 @@ function FormRecover(){
                 items-center 
                 md:mt-[100px] 
                 mt-[50px]
+                transition
+                ease-in-out
+                duration-700
         ">
             <div 
                 className="
@@ -67,33 +90,44 @@ function FormRecover(){
 
                 <form
                     id="form"
-                    className="sm:mb-[31px] w-[100%] mb-0"
+                    className="w-[100%] mb-0"
                     action=""
                 >
                     <FormField
-                        key={copyFields[0].id}
-                        object={copyFields[0]}
-                        functionTheme={validateTheme}
+                        key={0}
+                        field={recoverField[0]}
+                        fields={recoverField}
+                        setFields={setRecoverField}
                     />
 
                     <ButtonMain
                         name={"ENVIAR"}
                         operation={{sendDatasPost}}
                         URL={"https://essencial-server.vercel.app/auth/forgot-password"}
-                        fields={copyFields}
+                        fields={recoverField}
                         marginTop={"mt-[0px]"}
-                        setFields={setCopyFields}
+                        setFields={setRecoverField}
                     />
                 </form>
-                
-                <MessageAfterLink
-                        message1={"Lembrou sua senha?"}
-                        message2={"Retorne para fazer login"}
-                        size={"text-[0.95rem]"}
-                        link={"/sign-in"}
-                        flexAlign={"items-center"}
-                        flexJustify={"justify-center"}
-                    />
+
+                <p 
+                    className={`
+                        m-0 
+                        p-0 
+                        text-slate-500 
+                        font-[600] 
+                        text-[0.90rem]
+                        font-Inter
+                        text-center
+                        mt-[24px]
+                        mb-[36px]
+                `}>
+                    Lembrou sua senha?
+                    &nbsp;
+                    <Link to={"/sign-in"} className={`${validateTheme(theme,"text-indigo-300", "text-indigo-700")}`}>
+                        Retorne para fazer login
+                    </Link>
+                </p>
             </div>
         </div>
     )

@@ -16,12 +16,16 @@ function ButtonMain({
 }){
 
     const locale = useLocation()
+
     const navigate = useNavigate()
+
     const { renderCardFeedback } = useContext(ScreenContext)
+
     const { 
         theme, 
         validateTheme,
     } = useContext(GlobalContext)
+    
     const [hoverLight, setHoverLight] = useState("sm:hover:bg-indigo-400");
     const [hoverDark, setHoverDark] = useState("sm:hover:bg-indigo-800");
 

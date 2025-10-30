@@ -7,38 +7,23 @@ import { useContext } from "react";
 import { GlobalContext } from "../../contexts/GlobalContext";
 
 function FormField({ 
-    object, 
-    fields, 
-    setFields
+
+    field, // field refere-se ao campo atual que está chamando o componente
+    fields, // Fields são todos os campos.
+    setFields // Função para trocar o valor do state fields
+
 }) {
 
     const { 
-        theme, 
-        validateTheme,
-    } = useContext(GlobalContext)
+
+        theme, // Estado (State) que contém qual é o tema que está sendo utilizado pelo usuário.
+
+        validateTheme, // Função que valida e troca o tema.
+
+    } = useContext(GlobalContext) // useContext é um hook utilizado para transmitir informações para outros componentes sem o uso de props. Dentro dele você deve indicar qual contexto irá ser utilizado.
+
 
     const [inputValue, setInputValue] = useState("");
-
-    function withoutLink(){
-        return object.link ? 
-        
-        <MessageAfterLink
-            message1={"Esqueceu sua senha?"}
-            message2={"Clique Aqui"}
-            size={"text-[0.80rem]"}
-            link={"/recover"}
-            flexAlign={"items-start"}
-            flexJustify={"justify-start"}
-            error={object.hasErrorInField}
-        />
-            : 
-        <MessageAfter 
-            message1={"Deve conter pelo menos 8 Caracteres"}
-            size={"text-[0.75rem]"}
-            padding={"p-0"}
-            error={object.hasErrorInField}
-        />
-    }
 
     return (
         <div 
@@ -60,9 +45,9 @@ function FormField({
                     font-normal
                     text-[0.95rem]
                 `}
-                htmlFor={`${object.id}`}
+                htmlFor={`${field.id}`}
             >
-                {object.name}
+                {field.name}
             </label>
 
             <input
@@ -71,49 +56,86 @@ function FormField({
                     px-[10px]
                     ${validateTheme(
                         theme,
-                        `bg-slate-200  ${object.placeholder === "Campo obrigatório" ? "placeholder:text-red-400" : "placeholder:text-slate-500"} text-slate-950`,
-                        `bg-slate-900 border-[2px] ${object.placeholder === "Campo obrigatório" ? "placeholder:text-red-400" : "placeholder:text-slate-400"} text-slate-300`
+                        `bg-slate-200  placeholder:text-slate-500 text-slate-950`,
+                        `bg-slate-900 border-[2px] placeholder:text-slate-400 text-slate-300`
                     )}
                     rounded-[6px]
                     outline-none 
                     border-[2px] 
                     font-Inter
                     text-[0.95rem]
-                    ${object.hasErrorInField ? "border-red-500" : "border-[#B5B5BD]"}
+                    ${field.hasErrorInField ? "border-red-500" : "border-[#B5B5BD]"}
                 `}
-                pattern={object.regex}
-                type={`${object.type}`}
-                placeholder={object.placeholder}
-                name={`${object.type}`}
-                id={`${object.id}`}
+
+                pattern={field.regex}
+
+                type={`${field.type}`}
+
+                placeholder={field.placeholder}
+
+                name={`${field.name}`}
+
+                id={`${field.id}`}
+
                 onChange={(event) => {
                     const rawValue = event.target.value;
-                    const value = object.mask(rawValue, object.id);
+                    const value = field.mask(rawValue, field.id);
                     setInputValue(value);
                 }}
+
                 value={inputValue}
             />
 
-            <p className={`absolute left-0 bottom-[2px] text-[0.85rem] font-Inter text-red-500`}>{object.hasErrorInField ? object.messageError : null}</p>
+            <p className={`
+                absolute 
+                left-0 
+                bottom-[2px] 
+                text-[0.85rem] 
+                font-Inter 
+                text-red-500
+            `}>
+                {field.hasErrorInField ? field.messageError : null}
+            </p>
 
-            <div className="absolute top-10 right-4">
+            <div className="
+                absolute 
+                top-10 
+                right-4
+            ">
+
                 <button onClick={(event) => {
-                    event.preventDefault();
-                    if(object.name === "Senha"){
-                        fields = fields.map((input) => {
-                            if(input.name === "Senha" && input.type === "password") return {...input, type: "text", icon: EyeClosed}
-                            if(input.name === "Senha" && input.type === "text") return {...input, type: "password", icon: Eye}
-                            return {...input}
-                        })
 
-                        setFields(fields)
+                    event.preventDefault();
+
+                    if(field.name === "Senha"){
+
+                        setFields(fields.map(((field) => {
+
+                            if(field.name === "Senha" && field.type === "password") return {...field, type: "text", icon: EyeClosed}
+                            
+                            if(field.name === "Senha" && field.type === "text") return {...field, type: "password", icon: Eye}
+
+                            return {...field}
+                        })))
+                        
                     }
                 }}>
-                    {object.icon && <object.icon color={validateTheme(theme, "#7A828A", "#EDF2F7")}/>}
+
+                    {field.icon && <field.icon color={validateTheme(theme, "#7A828A", "#EDF2F7")}/>}
+
                 </button>
+
             </div>
             
-            {object.name === "Senha" ? withoutLink() : null}
+            {field.name === "Senha" ? (field.link ? <MessageAfterLink
+                    message1={"Esqueceu sua senha?"}
+                    message2={"Clique Aqui"}
+                    link={"/recover"}
+                    error={field.hasErrorInField}
+                /> : <MessageAfter 
+                    message1={"Deve conter pelo menos 8 Caracteres"}
+                    error={field.hasErrorInField}
+                />) : null}
         </div>
     );
 }

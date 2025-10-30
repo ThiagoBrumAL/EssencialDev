@@ -2,11 +2,12 @@ import "./index.css"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 
 //Components
-import ScreenForm from "./pages/ScreenForm"
-import Home from "./pages/Home"
+import ScreenSSF from "./pages/StructureSSR"
+import ScreenHome from "./pages/ScreenHome"
 import FormSignIn from "./components/login/FormSignIn"
 import FormSignUp from "./components/login/FormSignUp"
 import FormRecover from "./components/login/FormRecover"
+import UserPage from "./pages/UserPage"
 
 import { ScreenProvider } from "./contexts/ScreenContext"
 import { AuthProvider } from "./contexts/AuthContext"
@@ -36,9 +37,9 @@ function App() {
                   path="/sign-in" 
                   element={
                     <PublicRoute>
-                      <ScreenForm>
+                      <ScreenSSF>
                         <FormSignIn />
-                      </ScreenForm>
+                      </ScreenSSF>
                     </PublicRoute>
                   }
                 />
@@ -47,9 +48,20 @@ function App() {
                   path="/sign-up" 
                   element={
                     <PublicRoute>
-                      <ScreenForm>
+                      <ScreenSSF>
                         <FormSignUp />
-                      </ScreenForm>
+                      </ScreenSSF>
+                    </PublicRoute>
+                  }
+                />
+
+                <Route 
+                  path="/info" 
+                  element={
+                    <PublicRoute>
+                      <ScreenSSF>
+                        <UserPage />
+                      </ScreenSSF>
                     </PublicRoute>
                   }
                 />
@@ -58,9 +70,9 @@ function App() {
                   path="/recover" 
                   element={
                     <PublicRoute>
-                      <ScreenForm>
+                      <ScreenSSF>
                         <FormRecover />
-                      </ScreenForm>
+                      </ScreenSSF>
                     </PublicRoute>
                   }
                 />
@@ -69,7 +81,7 @@ function App() {
                   path="/home" 
                   element={
                     <PublicRoute>
-                      <Home />
+                      <ScreenHome />
                     </PublicRoute>
                   }
                 />

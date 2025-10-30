@@ -25,6 +25,7 @@ export function ScreenProvider({ children }){
         { 
             name: "Nome Completo", 
             type: "text", 
+            regex: "^[A-Za-z]+$",
             placeholder: "Insira seu nome completo", 
             link: false, 
             id:"name",
@@ -35,6 +36,7 @@ export function ScreenProvider({ children }){
         { 
             name: "Altura", 
             type: "text", 
+            regex: "^[0-2]\\.[0-9]{2}$",
             placeholder: "Insira sua altura", 
             link: false, 
             id:"height",
@@ -45,6 +47,7 @@ export function ScreenProvider({ children }){
         { 
             name: "Data de Nascimento", 
             type: "text", 
+            regex: "^(?:(?:31\\/(?:0?[13578]|1[02]))|(?:29|30\\/(?:0?[13-9]|1[0-2]))|(?:0?[1-9]|1\\d|2[0-8]\\/(?:0?[1-9]|1[0-2])))\\/(?:19|20)\\d{2}$|^(29\\/02\\/(?:19|20)(?:[02468][048]|[13579][26]))$",
             placeholder: "Insira sua data de nascimento", 
             link: false, 
             id:"birthday",
@@ -54,7 +57,8 @@ export function ScreenProvider({ children }){
         },
         { 
             name: "Peso", 
-            type: "text", 
+            type: "text",
+            regex: "^[0-9]{3}\\.[0-9]{2}$",
             placeholder: "Insira seu peso", 
             link: false, 
             id:"weight",
@@ -64,7 +68,8 @@ export function ScreenProvider({ children }){
         },
         { 
             name: "E-mail", 
-            type: "email", 
+            type: "email",
+            regex: "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,63}",
             placeholder: "Insira seu email", 
             link: false, 
             id:"email",
@@ -75,7 +80,8 @@ export function ScreenProvider({ children }){
         },
         { 
             name: "Senha", 
-            type: "password", 
+            type: "password",
+            regex: "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{5,20}$",
             placeholder: "Insira sua senha", 
             link: true, 
             id:"password",

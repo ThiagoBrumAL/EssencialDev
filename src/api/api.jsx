@@ -36,21 +36,25 @@ function recoverEmail(object){
     }, 1000)
 } 
 
-export async function sendDatasPost(event, object){
-    event.preventDefault();
-    let newData = validateInputsFields(object.fields, object.setFields);
+export async function sendDatasPost(event, user){
 
-    if(object.path === "/sign-up") newData = validateCheckbox(newData, object.isChecked, object.setCheckColor);
+    // Evitar o envio do formulário
+    event.preventDefault();
+
+    
+    let newData = validateInputsFields(user.fields, user.setFields);
+
+    if(user.path === "/sign-up") newData = validateCheckbox(newData, user.isChecked, user.setCheckColor);
 
     try {
         if(newData.isValid){
-            let user = {};
+            let userForSend = {};
             for(let k in newData) if(k !== "isValid") user[k] = newData[k]
 
-            const response =  await fetch(object.URL, {
+            const response =  await fetch(user.URL, {
                 method: "POST",
                 headers: {"Content-type": "application/json"},
-                body: JSON.stringify(user)
+                body: JSON.stringify(userForSend)
             })
 
             if(response.ok){
@@ -58,25 +62,25 @@ export async function sendDatasPost(event, object){
                 const body = await response.json()
                 const token = await body.accessToken
 
-                switch(object.path){
+                switch(user.path){
                     case "/sign-in":
-                        object.login(token, () => object.navigate("/home"))
+                        user.login(token, () => user.navigate("/home"))
                         break
                     case "/sign-up":
-                        object.renderCardFeedback(<UserRoundCheck />, "bg-green-400", "Usuário cadastrado", 5000)
+                        user.renderCardFeedback(<UserRoundCheck />, "bg-green-400", "Usuário cadastrado", 5000)
                         break
                     case "/recover":
-                        recoverEmail(object);
+                        recoverEmail(user);
                         break
                 }
             }else{
 
                 switch(response.status){
                     case 401:
-                        object.renderCardFeedback(<ShieldOff />, "bg-red-400", "Acesso não autorizado", 5000)
+                        user.renderCardFeedback(<ShieldOff />, "bg-red-400", "Acesso não autorizado", 5000)
                         break
                     case 409:
-                        object.renderCardFeedback(<MailWarning  />, "bg-red-400", "E-mail já registrado", 5000)
+                        user.renderCardFeedback(<MailWarning  />, "bg-red-400", "E-mail já registrado", 5000)
                         break
                 }
             }

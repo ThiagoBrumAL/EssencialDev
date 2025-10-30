@@ -1,30 +1,60 @@
-import MessageAfterLink from "./MessageAfterLink";
+
+// Components
 import ButtonMain from "./ButtonMain";
 import FormField from "./FormField";
+
+// Função para enviar os dados
 import { sendDatasPost } from "../../api/api.jsx";
 
-import { useContext, useState } from "react";
+// Hooks
+import { useContext, useEffect, useState } from "react";
+import { useLocation, Link } from "react-router-dom";
+
+// Contexts
 import { ScreenContext } from "../../contexts/ScreenContext.jsx";
 import { AuthContext } from "../../contexts/AuthContext.jsx";
 import { GlobalContext } from "../../contexts/GlobalContext.jsx";
 
+
 function FormSignIn(){
 
-    const { 
-        fields,
-    } = useContext(ScreenContext)
+    const locale = useLocation()
+
+     // Estado (State) criado para executar um transição suave entre alternância de formulário.
+    const [userOpacity, setUserOpacity] = useState(0);
+
+    // useEffect criado para monitorar o path atual. Caso ele seja igual ao path pertencente ao formulário, eu renderizo ele.
+    useEffect(() => {
+
+        if(locale.pathname === "/sign-in") setUserOpacity(1)
+
+    }, [locale.pathname])
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" })
+    })
 
     const { 
-        theme, 
-        validateTheme,
-    } = useContext(GlobalContext)
+
+        fields, // Fields é um estado (state) que guarda todos os valores dos campos input. Ele é um array de objetos, onde cada objeto representa um campo.
+
+    } = useContext(ScreenContext) // useContext é um hook utilizado para transmitir informações para outros componentes sem o uso de props. Dentro dele você deve indicar qual contexto irá ser utilizado.
+
+    const { 
+
+        theme, // Estado (State) que contém qual é o tema que está sendo utilizado pelo usuário.
+
+        validateTheme, // Função que valida e troca o tema.
+
+    } = useContext(GlobalContext) // useContext é um hook utilizado para transmitir informações para outros componentes sem o uso de props. Dentro dele você deve indicar qual contexto irá ser utilizado.
 
     const { login } = useContext(AuthContext)
 
-    const [copyFields, setCopyFields] = useState(fields.filter(field => field.type === "password" || field.type === "email"))
+    const [signInFields, setSignInFields] = useState(fields.filter(field => field.type === "password" || field.type === "email"))
 
     return (
         <div 
+            style={{ opacity: userOpacity }}
             className="
                 max-w-[436px] 
                 w-full 
@@ -33,6 +63,9 @@ function FormSignIn(){
                 items-center 
                 md:mt-[100px] 
                 mt-[50px]
+                transition
+                ease-in-out
+                duration-700
         ">
             <div 
                 className="
@@ -49,7 +82,7 @@ function FormSignIn(){
                     <h1 
                         className="
                             font-[700] 
-                            text-[1.50rem] 
+                            text-[1.50rem]
                             font-Inter
                     ">
                         Faça seu login agora!
@@ -67,7 +100,6 @@ function FormSignIn(){
                 <form
                     id="form"
                     className="
-                    sm:mb-[31px] 
                     w-[100%] 
                     flex 
                     flex-col 
@@ -75,16 +107,13 @@ function FormSignIn(){
                     action=""
                 >
 
-                    {copyFields.map((field, index) => {
+                    {signInFields.map((field, index) => {
                         return (
                             <FormField
                                 key={index}
-                                object={field}
-                                functionTheme={validateTheme}
-                                bool={field.link ?? false}
-                                id={field.id}
-                                fields={copyFields}
-                                setFields={setCopyFields}
+                                field={field}
+                                fields={signInFields}
+                                setFields={setSignInFields}
                             />
                         )
                     })}
@@ -92,22 +121,31 @@ function FormSignIn(){
                     <ButtonMain
                         name={"ENTRAR"}
                         marginTop={"mt-[90px]"}
-                        operation={{sendDatasPost, login}}
+                        operation={{ sendDatasPost, login }}
                         URL={"https://essencial-server.vercel.app/auth/sign-in"}
-                        fields={copyFields}
-                        setFields={setCopyFields}
+                        fields={signInFields}
+                        setFields={setSignInFields}
                     />
                 </form>
             </div>
 
-            <MessageAfterLink
-                message1={"Não possui conta?"}
-                message2={"Faça o seu Cadastro"}
-                size={"text-[0.95rem]"}
-                link={"/sign-up"}
-                flexAlign={"items-center"}
-                flexJustify={"justify-center"}
-            />
+            <p 
+                className={`
+                    m-0 
+                    p-0 
+                    text-slate-500 
+                    font-[600] 
+                    text-[0.90rem]
+                    font-Inter
+                    mt-[24px]
+                    mb-[36px]
+            `}>
+                Não possui conta?
+                &nbsp;
+                <Link to={"/sign-up"} className={`${validateTheme(theme,"text-indigo-300", "text-indigo-700")}`}>
+                    Faça o seu Cadastro
+                </Link>
+            </p>
         </div>
     )
 }

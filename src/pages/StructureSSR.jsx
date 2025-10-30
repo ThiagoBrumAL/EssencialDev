@@ -1,55 +1,79 @@
-import { Sun, Moon } from "lucide-react";
 
-// My Components
+// Components.
 import ButtonTheme from "../components/login/ButtonTheme.jsx";
 import Title from "../components/login/Title.jsx";
 import CardFeedback from "../components/login/CardFeedback.jsx";
-import { useLocation } from "react-router-dom";
+import { Sun, Moon } from "lucide-react";
 
+// Hooks.
+import { useLocation } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
+
+
+// Contexts.
 import { ScreenContext } from "../contexts/ScreenContext.jsx";
 import { AuthProvider } from "../contexts/AuthContext.jsx";
 import { GlobalContext } from "../contexts/GlobalContext.jsx";
 import Loader from "../components/loader/Loader.jsx";
 
+
+// Cloud for images.
 import { cloudinary } from "../cloud/cloudinary.js";
 
-function ScreenForm({ children }) {
+
+// SSF - Sign-in / Sign-up / Recover.
+function ScreenSSR({ children }) {
+
+    // State para simular o comportamento de loading.
     const [load, setLoad] = useState(true)
 
     const locale = useLocation()
+
+    // Variáveis criadas no contexto, e utilizada para renderizar a mensagem de feedback para o usuário.
     const {
-        messageFeedback,
-        showMessage,
-        colorFeedback,
-        iconFeedback,
-        titles
-    } = useContext(ScreenContext)
+
+        messageFeedback, // messageFeedback = Estado (State) que irá exibir qual é a mensagem correspondente para a determinada ação.
+
+        colorFeedback, // colorFeedback = Estado (State) que armazena a cor do elemento a ser exibido.
+
+        iconFeedback, // iconFeedback = Estado (State) que armazena qual ícone deve ser mostrado para o usuário.
+
+        titles, // titles = Este estado (State) é um array de objetos que guarda o titulo correspondente para cada página.
+
+        showMessage
+
+    } = useContext(ScreenContext) // useContext é um hook utilizado para transmitir informações para outros componentes sem o uso de props. Dentro dele você deve indicar qual contexto irá ser utilizado.
+
 
     const { 
-        theme, 
-        setTheme,
-        validateTheme,
-    } = useContext(GlobalContext)
+        theme, // Estado (State) que contém qual é o tema que está sendo utilizado pelo usuário.
 
+        changeTheme, // Função que iverte o tema.
+
+        validateTheme, // Função que valida e troca o tema.
+
+    } = useContext(GlobalContext) // useContext é um hook utilizado para transmitir informações para outros componentes sem o uso de props. Dentro dele você deve indicar qual contexto irá ser utilizado.
+
+
+    // useEffect é um hook utilizado para ser executado toda vez que o parametro [param] passado sofrer alteração. Nesta situação foi passado um array vazio, sem parametro, isso significa que ele irá executar está função a **primeira** vez que a tela ser renderizada.
     useEffect(() => {
+
+        // setTimeout está sendo utilizado para deixar o load por 3 segundos e tirá-lo após.
         const timer = setTimeout(() => {
             setLoad(false)
         }, 3000)
 
         return (() => clearTimeout(timer))
+
     }, [])
 
-    
-    const changeTheme = () => {
-        setTheme((prev) => {
-            return !prev
-        });
-    };
 
+
+    // Img é um componente de função que espera 2 parametros, o tema e o caminho. Ele renderiza a imagem do site story set
     const Img = ({ path, theme }) => {
 
-        const directionTheme = theme ? "light" : "dark"
+        // Se o theme for true, o valor do target será "light". Caso contrário, será "dark".
+        const targetTheme = theme ? "light" : "dark"
 
         return (
             <img
@@ -60,24 +84,28 @@ function ScreenForm({ children }) {
                     object-contain
                     max-h-[450px]
                     max-w-[450px]"
-                src={cloudinary[path][directionTheme]}
+                src={cloudinary[path][targetTheme]}
                 alt="Essecial Dev Logo"
             />
         )
     }
 
-    if(load){
-        return <Loader 
-            theme={theme} 
-            validateTheme={validateTheme}
-        />
-    }
-
     return (
+
         <div
         id="login-screen"
-        className={`w-full min-h-dvh flex md:flex-row flex-col overflow-x-hidden`}
-        >
+        className={`
+            w-full
+            min-h-dvh
+            flex md:flex-row
+            flex-col
+            overflow-x-hidden
+            ${validateTheme(theme,"bg-[#FFFAFE]","bg-slate-900")}
+        `}>
+
+            {/* Se o load for verdadeiro, renderize o componente. Caso contrário, tire-o */}
+            {load && <Loader /> }
+
             <div className={`
                 flex
                 sm:flex-row
@@ -87,6 +115,7 @@ function ScreenForm({ children }) {
                 transition 
                 duration-1000
                 ease-in-out
+                ${load ? "opacity-0" : "opacity-100"}
             `}>
                 <section
                     id="login-screen-section-one"
@@ -108,6 +137,7 @@ function ScreenForm({ children }) {
                             w-full 
                             flex 
                             justify-center
+                            relative
                         ">
                             <Title 
                                 path={locale.pathname} 
@@ -131,7 +161,7 @@ function ScreenForm({ children }) {
                 <section
                     id="login-screen-div-two"
                     className={`
-                        ${validateTheme(theme,"bg-slate-50","bg-slate-900")} 
+                        ${validateTheme(theme,"bg-[#FFFAFE]","bg-slate-900")} 
                         w-full 
                         min-h-dvh 
                         flex 
@@ -153,8 +183,7 @@ function ScreenForm({ children }) {
                         flex 
                         flex-col 
                         gap-4 
-                        items-center 
-                        mt-[40px] 
+                        items-center
                         sm:gap-12 
                         sm:flex-row"
                     >
@@ -191,4 +220,4 @@ function ScreenForm({ children }) {
     );
 }
 
-export default ScreenForm;
+export default ScreenSSR;

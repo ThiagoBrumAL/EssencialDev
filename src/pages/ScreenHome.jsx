@@ -1,3 +1,4 @@
+
 import { useContext, useEffect, useState } from "react";
 import Loader from "../components/loader/Loader.jsx";
 import { GlobalContext } from "../contexts/GlobalContext.jsx";
@@ -5,7 +6,7 @@ import { GlobalContext } from "../contexts/GlobalContext.jsx";
 import { User, TextAlignJustify  } from 'lucide-react';
 import { useLocation } from "react-router-dom";
 
-function Home(){
+function ScreenHome({ children }){
 
     const [load, setLoad] = useState(true)
     const locale = useLocation()
@@ -23,60 +24,46 @@ function Home(){
         validateTheme,
     } = useContext(GlobalContext)
 
-    const Link = ({ name, link, path, condition}) => {
+    const Link = ({ name, path, condition}) => {
         const isActive = locale.pathname === path ? true : false
 
         return (
                 <a 
-                    href={link} 
+                    href={path} 
                     className={`
                         text-white
                         ${condition}
                         text-[1rem] 
                         font-[600]
                         leading-[1rem]
-                        ${!isActive ? "transition duration-500 sm:hover:translate-y-[-10px]" : null}
                         text-center
                         relative
                         h-full
-                        w-[20%]
+                        ${path === "/info" ? "w-full" : "w-[20%]"}
                         group
+                        font-Inter
                 `}>
-                    <span className="
-                        absolute
-                        left-[50%]
-                        translate-x-[-50%]
-                        top-[50%]
-                        translate-y-[-50%]
+                    <div className="
+                        flex
+                        justify-center
+                        items-center
+                        h-full
                         w-full
                     ">
                         { name }
-                    </span>
+                    </div>
 
-                    <div className="
+                    <div className={`
                         absolute
                         w-[100%]
                         h-[5px]
-                        bg-[#E6E8EC]
+                        ${isActive ? "bg-[#e0eafe]" : "bg-[#E6E8EC]"}
                         bottom-0
                         left-0
                         rounded-[1px]
-                        scale-x-0
-                        transition-all
-                        duration-300
-                        group-hover:scale-x-100
-                        origin-left
-                    "></div>
+                        ${isActive ? "" : "scale-x-0 transition-all duration-300 group-hover:scale-x-100 origin-left"}
+                    `}></div>
                 </a>
-        )
-    }
-    
-    if(load){
-        return (
-            <Loader 
-                validateTheme={validateTheme} 
-                theme={theme}
-            />
         )
     }
 
@@ -85,23 +72,31 @@ function Home(){
             className={`
                 w-[100%]
                 h-[100dvh]
-                ${validateTheme(theme,"bg-white","bg-slate-900")}
+                ${validateTheme(theme,"bg-[#FFFAFE]","bg-slate-900")}
         `}>
+
+            {load && <Loader /> }
+
             <header 
                 className={`
                     ${validateTheme(theme,"from-teal-400 to-indigo-400", "from-[#01051C] to-[#051782]")}
                     bg-gradient-to-tr
-                    h-[80px]
+                    h-[76px]
                     w-full
                     px-[32px]
                     justify-center
                     flex
                     items-center
+                    transition 
+                    duration-1000
+                    ease-in-out
+                    ${load ? "opacity-0" : "opacity-100"}
             `}>
 
                     <div className="
                         flex
                         justify-center
+                        h-full
                         w-[90%]
                     ">
                         <div 
@@ -109,7 +104,7 @@ function Home(){
                                 flex
                                 items-center
                                 justify-between
-                                h-[80px]
+                                h-full
                                 w-[100%]
                             ">
 
@@ -118,7 +113,7 @@ function Home(){
                                 alt=""
                                 className="
                                     w-[186px]
-                                    h-[46px]
+                                    h-[43px]
                                     outline-none
                                     p-0
                                     m-0
@@ -128,7 +123,7 @@ function Home(){
 
                             <div className="
                                 w-[2px]
-                                bg-white
+                                bg-[#FFFAFE]
                                 md:block
                                 hidden
                                 h-[40px]
@@ -147,28 +142,24 @@ function Home(){
                                     path={"/home"} 
                                     name={"Inicio"}
                                     condition={"md:block hidden"}
-                                    link={""}
                                 />
 
                                 <Link 
-                                    path={"/home"} 
+                                    path={"/blog"} 
                                     name={"Blog"}
                                     condition={"md:block hidden"}
-                                    link={""}
                                 />
                                 
                                 <Link 
-                                    path={"/home"} 
+                                    path={"/about"} 
                                     name={"Sobre Nós"}
                                     condition={"md:block hidden"}
-                                    link={""}
                                 />
 
                                 <Link 
-                                    path={"/home"} 
+                                    path={"/chat"} 
                                     name={<>Assistente <br /> Virtual</>}
                                     condition={"md:block hidden"}
-                                    link={""}
                                 />
                                 
                             </nav>
@@ -180,56 +171,38 @@ function Home(){
                                 <TextAlignJustify color="#FFFFFF"/>
                             </div>
 
-
                             <div className="
-                                h-full
-                                w-auto
                                 flex
+                                justify-center
                                 items-center
+                                md:w-[100px]
+                                md:h-full
+                                h-[30px]
+                                w-[30px]
                             ">
-                                <button
-                                    className={`
-                                        relative
-                                        md:w-[100px]
-                                        md:h-full
-                                        h-[30px]
-                                        w-[30px]
-                                        group
-                                `}>
-                                    <span className="
-                                        absolute
-                                        left-[50%]
-                                        translate-x-[-50%]
-                                        top-[50%]
-                                        translate-y-[-50%]
-                                    ">
-                                        <User size={30} color="#FFFFFF"/>
-                                    </span>
-
-                                    <div className="
-                                        md:block
-                                        hidden
-                                        absolute
-                                        w-[100%]
-                                        h-[5px]
-                                        bg-[#E6E8EC]
-                                        bottom-0
-                                        left-0
-                                        rounded-[1px]
-                                        scale-x-0
-                                        transition-all
-                                        duration-300
-                                        group-hover:scale-x-100
-                                        origin-left
-                                    "></div>
-                                </button>
+                                <Link 
+                                    path={"/info"} 
+                                    name={<User size={30} color="#FFFFFF"/>}
+                                    condition={""}
+                                />
                             </div>
                         </div>
                         
                     </div>
             </header>
+
+            <main className={`
+                h-auto
+                w-full
+                transition 
+                duration-1000
+                ease-in-out
+                ${load ? "opacity-0" : "opacity-100"}
+            `}>
+                { children }
+            </main>
         </div>
     )
 }
 
-export default Home;
+export default ScreenHome;

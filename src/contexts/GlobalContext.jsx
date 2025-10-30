@@ -12,6 +12,12 @@ export function GlobalProvider({ children }){
         }else return null
     });
 
+    const changeTheme = () => {
+        setTheme((prev) => {
+            return !prev
+        });
+    };
+
     useEffect(() => {
         localStorage.setItem("thm", theme)
     }, [theme])
@@ -24,7 +30,8 @@ export function GlobalProvider({ children }){
         <GlobalContext.Provider value={{ 
             theme, 
             setTheme,
-            validateTheme
+            validateTheme,
+            changeTheme
         }}>
             { children }
         </GlobalContext.Provider>

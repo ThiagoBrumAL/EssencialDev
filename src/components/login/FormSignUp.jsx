@@ -1,44 +1,72 @@
-import MessageAfterLink from "./MessageAfterLink";
+
+// Components
 import ButtonMain from "./ButtonMain";
 import FormField from "./FormField";
 import TextLink from "./TextLink";
-import { sendDatasPost } from "../../api/api.jsx";
-import { useState } from "react";
 
-import { useContext } from "react";
+// Função para enviar os dados
+import { sendDatasPost } from "../../api/api.jsx";
+
+// Hooks
+import { useState, useEffect, useContext } from "react";
+import { useLocation, Link } from "react-router-dom";
+
+// Contexts
 import { ScreenContext } from "../../contexts/ScreenContext.jsx";
 import { GlobalContext } from "../../contexts/GlobalContext.jsx";
 
+
+
+
+
 function FormSignUp(){
 
-    const [isChecked, setIsChecked] = useState(null);
-    const [checkColor, setCheckColor] = useState("text-slate-500")
+    const locale = useLocation()
 
-    const { 
-        fields, 
-    } = useContext(ScreenContext)
+    // Estado (State) criado para executar um transição suave entre alternância de formulário.
+    const [userOpacity, setUserOpacity] = useState(0);
 
-    const { 
-        theme, 
-        validateTheme,
-    } = useContext(GlobalContext)
+    // useEffect criado para monitorar o path atual. Caso ele seja igual ao path pertencente ao formulário, eu renderizo ele.
+    useEffect(() => {
+        if(locale.pathname === "/sign-up") setUserOpacity(1)
+    }, [locale.pathname])
 
-    const fieldsSingnUp = fields.map((field) => {
-        if(field.type === "password"){
-            return {...field, link: false}
-        }
-
-        return {...field}
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" })
     })
 
-    const [copyFields, setCopyFields] = useState(fieldsSingnUp)
+    // Estado (State) criado para armazenar se os "termos e condições" está preenchido
+    const [isChecked, setIsChecked] = useState(null);
 
-    const middle = Math.floor(copyFields.length/2);
-    const left = copyFields.slice(0,middle);
-    const right = copyFields.slice(middle);
+    // Estado (State) criado para armazenar a cor dos "termos e condições". Se ele tiver erro, essa cor irá mudar.
+    const [checkColor, setCheckColor] = useState("text-slate-500")
+
+
+    const { 
+
+        fields, // Fields é um estado (state) que guarda todos os valores dos campos input. Ele é um array de objetos, onde cada objeto representa um campo.
+
+    } = useContext(ScreenContext) // useContext é um hook utilizado para transmitir informações para outros componentes sem o uso de props. Dentro dele você deve indicar qual contexto irá ser utilizado.
+
+
+    const { 
+
+        theme, // Estado (State) que contém qual é o tema que está sendo utilizado pelo usuário.
+
+        validateTheme, // Função que valida e troca o tema.
+
+    } = useContext(GlobalContext) // useContext é um hook utilizado para transmitir informações para outros componentes sem o uso de props. Dentro dele você deve indicar qual contexto irá ser utilizado.
+
+    const [signUpFields, setSignUpFields] = useState(fields.map(field => field.type === "password" ? {...field, link: false} : field ))
+
+    const leftFields = signUpFields.slice(0, (signUpFields.length/2));
+
+    const rightFields = signUpFields.slice(signUpFields.length/2);
 
     return (
+
         <div 
+            style={{ opacity: userOpacity }}
             className="
                 max-w-[694px]
                 w-full 
@@ -46,6 +74,9 @@ function FormSignUp(){
                 flex-col 
                 items-center 
                 mt-[50px]
+                transition
+                ease-in-out
+                duration-700
             ">
 
             <div
@@ -76,7 +107,6 @@ function FormSignUp(){
             <form
                 id="form"
                 className="
-                    sm:mb-[15px] 
                     w-[100%] 
                     flex 
                     flex-col 
@@ -95,28 +125,32 @@ function FormSignUp(){
                 ">
 
                     <div className="w-full">
-                        {left.map((field, index) => {
+                        {leftFields.map((field, index) => {
+
                             return (
                                 <FormField
                                     key={index}
-                                    object={field}
-                                    fields={copyFields}
-                                    setFields={setCopyFields}
+                                    field={field}
+                                    fields={signUpFields}
+                                    setFields={setSignUpFields}
                                 />
                             );
+
                         })}
                     </div>
 
                     <div className="w-full">
-                        {right.map((field, index) => {
+                        {rightFields.map((field, index) => {
+
                             return (
                                 <FormField
                                     key={index}
-                                    object={field}
-                                    fields={copyFields}
-                                    setFields={setCopyFields}
+                                    field={field}
+                                    fields={signUpFields}
+                                    setFields={setSignUpFields}
                                 />
                             );
+
                         })}
                     </div>
 
@@ -135,7 +169,7 @@ function FormSignUp(){
                         type="checkbox" 
                         id="authorized" 
                         checked={isChecked} 
-                        onChange={(event) => setIsChecked(event.target.checked)} 
+                        onChange={(event) => setIsChecked(event.target.checked)} // A cada mudança o valor do state isChecked é alterado
                         name="authorized" 
                         className="
                             absolute 
@@ -170,21 +204,31 @@ function FormSignUp(){
                         marginTop={"mt-[90px]"}
                         operation={{sendDatasPost}}
                         URL={"https://essencial-server.vercel.app/auth/sign-up"}
-                        fields={copyFields}
-                        setFields={setCopyFields}
+                        fields={signUpFields}
+                        setFields={setSignUpFields}
                         isChecked={isChecked}
                         setCheckColor={setCheckColor}
                     />
                 </div>
             </form>
 
-            <MessageAfterLink
-                message1={"Já possui conta?"}
-                message2={"Faça o seu Login"}
-                size={"text-[0.95rem]"}
-                padding={"px-6"}
-                link={"/sign-in"}
-            />
+            <p 
+                className={`
+                    m-0 
+                    p-0 
+                    text-slate-500 
+                    font-[600] 
+                    text-[0.90rem]
+                    font-Inter
+                    mt-[24px]
+                    mb-[36px]
+            `}>
+                Já possui conta?
+                &nbsp;
+                <Link to={"/sign-in"} className={`${validateTheme(theme,"text-indigo-300", "text-indigo-700")}`}>
+                    Faça o seu Login
+                </Link>
+            </p>
         </div>
     )
 }

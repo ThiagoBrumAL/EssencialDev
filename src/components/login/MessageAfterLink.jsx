@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import { GlobalContext } from "../../contexts/GlobalContext"
 import { useContext } from "react"
 
-function MessageAfterLink({message1, message2, link, size, flexAlign, flexJustify, error}){
+function MessageAfterLink({ message1, message2, link, error }){
 
     const { theme, validateTheme } = useContext(GlobalContext) 
 
@@ -11,8 +11,9 @@ function MessageAfterLink({message1, message2, link, size, flexAlign, flexJustif
         <div 
             className={`
                 flex 
-                ${flexAlign} 
-                ${flexJustify} 
+                items-start
+                justify-center
+                w-full
                 ${error ? "mt-[20px]" : "mt-[10px]"}
         `}>
             <p 
@@ -21,13 +22,13 @@ function MessageAfterLink({message1, message2, link, size, flexAlign, flexJustif
                     p-0 
                     text-slate-500 
                     font-[600] 
-                    ${size}
-                    font-[600] 
+                    text-[0.80rem]
                     font-Inter
+                    w-full
             `}>
                 {message1} 
                 &nbsp;
-                <Link to={link} className={`${validateTheme(theme,"text-indigo-300", "text-indigo-700")} ${size}`}>
+                <Link to={link} className={`${validateTheme(theme,"text-indigo-300", "text-indigo-700")}`}>
                     {message2}
                 </Link>
             </p>

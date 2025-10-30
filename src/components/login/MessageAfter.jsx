@@ -1,7 +1,7 @@
-function MessageAfter({message1, size, padding, error}){
+function MessageAfter({ message1, error }){
     return (
         <div className={`
-            ${padding}
+            p-0
             ${error ? "mt-[20px]" : "mt-[10px]"}
         `}>
             <p 
@@ -10,7 +10,7 @@ function MessageAfter({message1, size, padding, error}){
                     p-0 
                     text-slate-500 
                     font-[600] 
-                    ${size}
+                    text-[0.80rem]
                     font-Inter
             `}>
                 {message1}
