@@ -105,11 +105,10 @@ function FormRecover(){
                     />
 
                     <ButtonMain
-                        name={"ENVIAR"}
-                        operation={{sendDatasPost}}
+                        name={"ENVIARRR"}
+                        operation={{ sendDatasPost }}
                         URL={"https://essencial-server.vercel.app/auth/forgot-password"}
                         fields={recoverField}
-                        marginTop={"mt-[0px]"}
                         setFields={setRecoverField}
                     />
                 </form>
