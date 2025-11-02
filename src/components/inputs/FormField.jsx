@@ -62,6 +62,7 @@ function FormField({
                     border-[2px] 
                     font-Inter
                     text-[0.95rem]
+                    mb-[5px]
                     ${field.hasErrorInField ? "border-red-500" : "border-[#B5B5BD]"}
                 `}
 
@@ -89,9 +90,7 @@ function FormField({
             ">
                 <p className={`
                     absolute 
-                    top-[100%]
                     left-0
-                    bottom-[2px] 
                     text-[0.875rem] 
                     font-Inter 
                     text-red-500
