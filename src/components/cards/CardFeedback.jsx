@@ -1,4 +1,4 @@
-function CardFeedback({object, theme}){
+function CardFeedback({ object, theme }){
     
     return (
         <div 
@@ -20,15 +20,13 @@ function CardFeedback({object, theme}){
             <div 
                 className={` 
                     ${object.color} 
-                    sm:h-[50px] 
-                    h-[40px] 
-                    sm:w-[40px] 
-                    w-[28px] 
                     rounded-tl-[4px] 
                     rounded-bl-[4px] 
                     flex 
                     items-center 
-                    justify-center 
+                    justify-center
+                    px-[6px]
+                    py-[12px]
             `}>
                 {object.icon}
             </div>

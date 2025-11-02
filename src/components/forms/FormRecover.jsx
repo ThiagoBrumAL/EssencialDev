@@ -44,6 +44,7 @@ function FormRecover(){
                 id: "email",
                 name: "E-mail", 
                 type: "email",
+                value: "",
                 regex: "",
                 link: false, 
                 mask: maskEmail,

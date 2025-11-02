@@ -1,8 +1,8 @@
-export function validateWeight(fieldValue, currentField){
+export function handlingWeight(fieldValue, currentField){
 
     const array = [];
     for(let pos in fieldValue) array.push(fieldValue.charAt(pos));
     
     if(array.length <= 4) return {...currentField, hasErrorInField: true, messageError: "Formato inválido"}
-    return {...currentField, hasErrorInField: false}
+    return {...currentField, hasErrorInField: false, messageError: ""}
 }

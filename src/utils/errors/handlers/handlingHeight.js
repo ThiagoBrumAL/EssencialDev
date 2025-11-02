@@ -1,4 +1,4 @@
-export function validadeHeight(fieldValue, currentField){
+export function handlingHeight(fieldValue, currentField){
 
     const array = [];
     for(let pos in fieldValue) array.push(fieldValue.charAt(pos));

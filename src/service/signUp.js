@@ -1,5 +1,5 @@
-import { validateInput } from '../utils/errors/handlers/handlingInput'
-import { validateCheckbox } from '../utils/errors/handlers/handlingAuthorized';
+import { handlingAnalyzeDatas } from '../utils/errors/handlers/handlingAnalyzeDatas'
+import { handlingAuthorized } from '../utils/errors/handlers/handlingAuthorized';
 
 import { useSsr } from '../contexts/ssr/useSsr';
 
@@ -12,8 +12,10 @@ export const useSignUp = () => {
 
     const signUp = async (body, axios) => {
 
-        let data = validateInput(body.fields, body.setFields);
-        data = validateCheckbox(data, body.isChecked, body.setCheckColor);
+        console.log(body.fields);
+
+        let data = handlingAnalyzeDatas(body.fields, body.setFields);
+        data = handlingAuthorized(data, body.isChecked, body.setCheckColor);
         if (!data.isValid) throw new Error("Invalid operation")
 
         try {

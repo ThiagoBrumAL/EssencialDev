@@ -1,4 +1,4 @@
-import { validateInput } from '../utils/errors/handlers/handlingInput'
+import { handlingAnalyzeDatas } from '../utils/errors/handlers/handlingAnalyzeDatas'
 import { useSsr } from '../contexts/ssr/useSsr';
 
 import { badFeedback } from '../utils/helpers/feedback/Failure';
@@ -9,7 +9,7 @@ export const useSignIn = () => {
 
     const signIn = async (body, axios) => {
 
-        let data = validateInput(body.fields, body.setFields);
+        let data = handlingAnalyzeDatas(body.fields, body.setFields);
         if (!data.isValid) throw new Error("Invalid operation");
 
         try {

@@ -1,4 +1,4 @@
-export function validateCheckbox(newData, isChecked, setCheckColor){
+export function handlingAuthorized(newData, isChecked, setCheckColor){
     if(!isChecked){
         setCheckColor("text-red-500")
         return newData.isValid = false 

@@ -1,9 +1,9 @@
 import MessageAfterLink from "../inputs/MessageAfterLink";
 import MessageAfter from "../inputs/MessageAfter";
-import { useState } from "react";
 import { Eye, EyeClosed  } from 'lucide-react';
 
 import { useTheme } from "../../contexts/theme/useTheme";
+import { handlingInput } from '../../utils/errors/handlers/handlingInput'
 
 function FormField({ 
 
@@ -22,8 +22,6 @@ function FormField({
     } = useTheme() // useContext é um hook utilizado para transmitir informações para outros componentes sem o uso de props. Dentro dele você deve indicar qual contexto irá ser utilizado.
 
 
-    const [inputValue, setInputValue] = useState("");
-
     return (
         <div 
             id="form-field" 
@@ -32,7 +30,7 @@ function FormField({
                 flex-col 
                 w-[100%] 
                 h-[94px]
-                mb-[18px]
+                mb-[24px]
                 relative
         ">
             <label
@@ -62,12 +60,12 @@ function FormField({
                     border-[2px] 
                     font-Inter
                     text-[0.95rem]
-                    mb-[5px]
+                    ${field.hasErrorInField ? "mb-[3px]" : "mb-[0px]"}
                     ${field.hasErrorInField ? "border-red-500" : "border-[#B5B5BD]"}
                 `}
 
                 pattern={field.regex}
-
+                
                 type={`${field.type}`}
 
                 placeholder={field.placeholder}
@@ -76,24 +74,30 @@ function FormField({
 
                 id={`${field.id}`}
 
-                onChange={(event) => {
-                    const rawValue = event.target.value;
-                    const value = field.mask(rawValue, field.id);
-                    setInputValue(value);
-                }}
+                value={fields.find(f => f.id === field.id)?.value || ""}
 
-                value={inputValue}
+                onChange={(e) => {
+                    const rawValue = e.target.value;
+                    const maskedValue = field.mask(rawValue, field.id);
+
+                    const updatedFields = fields.map(f => f.id === field.id ? { ...f, value: maskedValue } : f)
+                    const validatedFields = handlingInput(updatedFields)
+
+                    setFields(validatedFields)
+                }}
             />
 
-            <div className="
+            <div className={`
                 relative
-            ">
+            `}>
                 <p className={`
-                    absolute 
+                    block 
                     left-0
-                    text-[0.875rem] 
+                    text-[0.825rem] 
                     font-Inter 
                     text-red-500
+                    top-full
+                    ${field.hasErrorInField ? "opacity-100" : "opacity-0"}
                 `}>
                     {field.hasErrorInField ? field.messageError : null}
                 </p>

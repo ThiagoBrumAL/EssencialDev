@@ -46,7 +46,8 @@ function ButtonMain({
             text-slate-50 
             py-2 
             rounded-full
-            mt-[40px]
+            md:mt-[40px]
+            mt-[50px]
             font-[500]
             ${validateTheme(theme, `${hoverLight}`, `${hoverDark}`)}
             ease-in-out transition`

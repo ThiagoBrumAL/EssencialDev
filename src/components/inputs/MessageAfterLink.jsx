@@ -13,7 +13,7 @@ function MessageAfterLink({ message1, message2, link, error }){
                 items-start
                 justify-center
                 w-full
-                ${error ? "mt-[20px]" : "mt-[10px]"}
+                ${!error ? "mt-[8px]" : "mt-[3px]"}
         `}>
             <p 
                 className={`

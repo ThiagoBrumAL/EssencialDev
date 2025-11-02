@@ -1,4 +1,4 @@
-export function validatePassword(fieldValue, currentField){
+export function handlingPassword(fieldValue, currentField){
 
     const ruleUpper = /^(?=.*[A-Z]).*$/
     const ruleLower = /^(?=.*[a-z]).*$/
@@ -16,5 +16,5 @@ export function validatePassword(fieldValue, currentField){
 
     if(!(ruleSymbolCharacter.test(fieldValue))) return {...currentField, hasErrorInField: true, messageError: "A senha precisa ter ao menos um caracter especial"}
 
-    return {...currentField, hasErrorInField: false}
+    return {...currentField, hasErrorInField: false, messageError: ""}
 }

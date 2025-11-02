@@ -1,4 +1,4 @@
-export function validateBornDate(fieldValue, currentField){
+export function handlingBornDate(fieldValue, currentField){
 
     const date = new Date();
 
@@ -28,5 +28,5 @@ export function validateBornDate(fieldValue, currentField){
 
     if(!validateAge(userBornMonth, userBornYear)) return {...currentField, hasErrorInField: true, messageError: "A idade miníma é de 18 anos"}
 
-    return {...currentField, hasErrorInField: false}
+    return {...currentField, hasErrorInField: false, messageError: ""}
 }

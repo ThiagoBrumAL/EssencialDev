@@ -1,4 +1,4 @@
-export function validateEmail(fieldValue, currentField){
+export function handlingEmail(fieldValue, currentField){
 
     const providers = [
         "@gmail.com",
@@ -22,5 +22,5 @@ export function validateEmail(fieldValue, currentField){
 
     if(!providers.includes(currentProvider)) return {...currentField, hasErrorInField: true, messageError: "Provedor inválido"};
 
-    return {...currentField, hasErrorInField: false}
+    return {...currentField, hasErrorInField: false, messageError: ""}
 }

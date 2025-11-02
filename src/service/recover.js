@@ -1,11 +1,11 @@
-import { validateInput } from '../utils/errors/handlers/handlingInput'
+import { handlingAnalyzeDatas } from '../utils/errors/handlers/handlingAnalyzeDatas'
 
 import { useSsr } from '../contexts/ssr/useSsr';
 
 import { badFeedback } from '../utils/helpers/feedback/Failure';
 import { goodFeedback } from '../utils/helpers/feedback/Success';
 
-import { showMessageRecoverEmail } from '../utils/errors/handlers/hadlingRecoverEmail';
+import { handlingRecoverEmail } from '../utils/errors/handlers/hadlingRecoverEmail';
 
 export const useRecoverEmail = () => {
 
@@ -13,7 +13,7 @@ export const useRecoverEmail = () => {
 
     const recoverEmail = async (body, axios) => {
 
-        let data = validateInput(body.fields, body.setFields);
+        let data = handlingAnalyzeDatas(body.fields, body.setFields);
         if (!data.isValid) throw new Error("Invalid operation")
 
         try {
@@ -23,7 +23,7 @@ export const useRecoverEmail = () => {
 
             const status = response.status;
             
-            showMessageRecoverEmail(body.fields, body.setFields, body.waitSendEmail, body.setWaitSendEmail)
+            handlingRecoverEmail(body.fields, body.setFields, body.waitSendEmail, body.setWaitSendEmail)
             goodFeedback(status, renderCardFeedback, "/recover")
 
         } catch (error){

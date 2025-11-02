@@ -1,4 +1,4 @@
-export function showMessageRecoverEmail(fields, setFields){
+export function handlingRecoverEmail(fields, setFields){
 
     const field = fields[0];
     let time = 60

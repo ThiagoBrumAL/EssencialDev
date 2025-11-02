@@ -56,6 +56,7 @@ function FormSignUp(){
             id: "name",
             name: "Nome Completo", 
             type: "text",
+            value: "",
             regex: "",
             link: false, 
             mask: maskFullName,
@@ -73,6 +74,7 @@ function FormSignUp(){
             id: "height",
             name:  "Altura",
             type: "text",
+            value: "",
             regex: "",
             link: false, 
             mask: maskHeight,
@@ -90,6 +92,7 @@ function FormSignUp(){
             id: "birthday",
             name: "Data de Nascimento",
             type: "text",
+            value: "",
             regex: "",
             link: false, 
             mask: maskDate,
@@ -107,6 +110,7 @@ function FormSignUp(){
             id: "weight",
             name: "Peso", 
             type: "text",
+            value: "",
             regex: "",
             link: false, 
             mask: maskWeight,
@@ -124,6 +128,7 @@ function FormSignUp(){
             id: "email",
             name: "E-mail", 
             type: "email",
+            value: "",
             regex: "",
             link: false, 
             mask: maskEmail,
@@ -141,8 +146,9 @@ function FormSignUp(){
             id: "password",
             name: "Senha",
             type: "password",
+            value: "",
             regex: "",
-            link: true,
+            link: false,
             mask: maskPassword,
             icon: Eye,
             disabled: false,
@@ -254,29 +260,26 @@ function FormSignUp(){
                         flex 
                         gap-2 
                         max-w-[450px] 
-                        sm:mt-[50px 
+                        sm:mt-[50px]
                         mt-[60px] 
-                        relative
                 ">
                     <input 
                         type="checkbox" 
                         id="authorizedTerms" 
                         checked={isChecked} 
-                        onChange={(event) => setIsChecked(event.target.checked)} // A cada mudança o valor do state isChecked é alterado
+                        onChange={(event) => setIsChecked(event.target.checked)}
                         name="authorizedTerms" 
                         className="
-                            absolute 
-                            top-[5px] 
-                            w-4 
-                            h-4
+                            justify-self-end
+                            w-6
+                            h-6
                     "/>
                     <label 
                         className={`
+                            block
                             p-0 
-                            m-0 
-                            inline-block 
+                            m-0
                             text-[14px] 
-                            ml-[24px] 
                             ${checkColor}
                             font-Inter
                     `}> 
@@ -284,14 +287,11 @@ function FormSignUp(){
                     </label>
                 </div>
 
-                <div 
-                    className="
-                        flex 
-                        gap-2 
-                        items-start 
-                        sm:w-[320px] 
-                        w-[200px]
+                <div className="
+                    max-w-[320px]
+                    w-full
                 ">
+                    
                     <ButtonMain
                         name={ "CADASTRAR" }
                         operation={ { api } }
@@ -310,6 +310,7 @@ function FormSignUp(){
                         }}
                     />
                 </div>
+                    
             </form>
 
             <p 

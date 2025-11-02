@@ -2,7 +2,7 @@ function MessageAfter({ message1, error }){
     return (
         <div className={`
             p-0
-            ${error ? "mt-[20px]" : "mt-[10px]"}
+            ${!error ? "mt-[8px]" : "mt-[3px]"}
         `}>
             <p 
                 className={`
