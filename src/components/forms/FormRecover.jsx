@@ -1,47 +1,61 @@
-import MessageAfterLink from "./MessageAfterLink";
-import ButtonMain from "./ButtonMain";
-import FormField from "./FormField";
-import { sendDatasPost } from "../../api/api.jsx";
+//Components
+import ButtonMain from "../buttons/ButtonMain.jsx";
+import FormField from "../inputs/FormField.jsx";
 
-import { useContext, useState, useEffect } from "react";
-import { ScreenContext } from "../../contexts/ScreenContext.jsx";
-import { GlobalContext } from "../../contexts/GlobalContext.jsx";
-
+//Hooks
+import { useState, useEffect } from "react";
 import { useLocation, Link } from "react-router-dom";
+
+//Context
+import { useTheme } from "../../contexts/Theme/useTheme.js";
+
+//Masks
+import { maskEmail } from "../../utils/masks/maskEmail.js";
+
+//Api
+import { useApi } from "../../api/api.jsx";
+
 
 function FormRecover(){
 
     const locale = useLocation()
+    const api = useApi();
 
     const [userOpacity, setUserOpacity] = useState(0);
 
     useEffect(() => {
-
         if(locale.pathname === "/recover") setUserOpacity(1)
-
     }, [locale.pathname])
 
     useEffect(() => {
-
         window.scrollTo({ top: 0, behavior: "smooth" })
-        
     }, [locale.pathname])
 
     const { 
-
-        fields,
-
-    } = useContext(ScreenContext)
-
-    const { 
-
         theme, 
-
         validateTheme,
+    } = useTheme()
 
-    } = useContext(GlobalContext)
+    const [fields, setFields] = useState([
 
-    const [recoverField, setRecoverField] = useState(fields.filter(field => field.type === "email"))
+            //E-mail
+            { 
+    
+                id: "email",
+                name: "E-mail", 
+                type: "email",
+                regex: "",
+                link: false, 
+                mask: maskEmail,
+                icon: null,
+                disabled: false,
+                placeholder: "Insira seu email", 
+                hasErrorInField: false,
+                messageError: "Campo obrigatório",
+    
+            },
+
+        ]);
     
     return (
         <div 
@@ -99,18 +113,21 @@ function FormRecover(){
                 >
                     <FormField
                         key={0}
-                        field={recoverField[0]}
-                        fields={recoverField}
-                        setFields={setRecoverField}
+                        field={fields[0]}
+                        fields={fields}
+                        setFields={setFields}
                     />
 
                     <ButtonMain
-                        name={"ENVIAR"}
-                        operation={{sendDatasPost}}
-                        URL={"https://essencial-server.vercel.app/auth/forgot-password"}
-                        fields={recoverField}
-                        marginTop={"mt-[0px]"}
-                        setFields={setRecoverField}
+                        name={ "ENVIAR" }
+                        operation={ { api } }
+                        where={ locale.pathname }
+                        method={ "post" }
+
+                        body={{ 
+                            fields, 
+                            setFields,
+                        }}
                     />
                 </form>
 

@@ -2,16 +2,16 @@ import "./index.css"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 
 //Components
-import ScreenSSF from "./pages/StructureSSR"
+import ScreenSSR from "./pages/StructureSSR"
 import ScreenHome from "./pages/ScreenHome"
-import FormSignIn from "./components/login/FormSignIn"
-import FormSignUp from "./components/login/FormSignUp"
-import FormRecover from "./components/login/FormRecover"
+import FormSignIn from "./components/forms/FormSignIn"
+import FormSignUp from "./components/forms/FormSignUp"
+import FormRecover from "./components/forms/FormRecover"
 import UserPage from "./pages/UserPage"
 
-import { ScreenProvider } from "./contexts/ScreenContext"
-import { AuthProvider } from "./contexts/AuthContext"
-import { GlobalProvider } from "./contexts/GlobalContext"
+import { SsrProvider } from "./contexts/ssr/SsrProvider"
+import { AuthProvider } from "./contexts/Auth/AuthProvider"
+import { ThemeProvider } from "./contexts/Theme/ThemeProvider"
 
 function PrivateRoute({ children }){
   const token = localStorage.getItem("token")
@@ -27,62 +27,51 @@ function PublicRoute({ children }){
 function App() {
   return (
     <main className="h-[100dvh] w-full">
+
       <BrowserRouter>
-        <GlobalProvider>
+
+        <ThemeProvider>
+
           <AuthProvider>
-            <ScreenProvider>
+
               <Routes>
 
                 <Route 
                   path="/sign-in" 
                   element={
-                    <PublicRoute>
-                      <ScreenSSF>
-                        <FormSignIn />
-                      </ScreenSSF>
-                    </PublicRoute>
+                    <SsrProvider>
+                      <PublicRoute>
+                        <ScreenSSR>
+                          <FormSignIn />
+                        </ScreenSSR>
+                      </PublicRoute>
+                    </SsrProvider>
                   }
                 />
 
                 <Route 
                   path="/sign-up" 
                   element={
-                    <PublicRoute>
-                      <ScreenSSF>
-                        <FormSignUp />
-                      </ScreenSSF>
-                    </PublicRoute>
-                  }
-                />
-
-                <Route 
-                  path="/info" 
-                  element={
-                    <PublicRoute>
-                      <ScreenSSF>
-                        <UserPage />
-                      </ScreenSSF>
-                    </PublicRoute>
+                    <SsrProvider>
+                      <PublicRoute>
+                        <ScreenSSR>
+                          <FormSignUp />
+                        </ScreenSSR>
+                      </PublicRoute>
+                    </SsrProvider>
                   }
                 />
 
                 <Route 
                   path="/recover" 
                   element={
-                    <PublicRoute>
-                      <ScreenSSF>
-                        <FormRecover />
-                      </ScreenSSF>
-                    </PublicRoute>
-                  }
-                />
-
-                <Route 
-                  path="/home" 
-                  element={
-                    <PublicRoute>
-                      <ScreenHome />
-                    </PublicRoute>
+                    <SsrProvider>
+                      <PublicRoute>
+                        <ScreenSSR>
+                          <FormRecover />
+                        </ScreenSSR>
+                      </PublicRoute>
+                    </SsrProvider>
                   }
                 />
 
@@ -93,10 +82,32 @@ function App() {
                   }
                 />
 
+                <Route 
+                    path="/home" 
+                    element={
+                      <PublicRoute>
+                        <ScreenHome />
+                      </PublicRoute>
+                    }
+                  />
+
+                  <Route 
+                    path="/info" 
+                    element={
+                      <PublicRoute>
+                        <ScreenHome>
+                          <UserPage />
+                        </ScreenHome>
+                      </PublicRoute>
+                    }
+                  />
+
               </Routes>
-            </ScreenProvider>
+
           </AuthProvider>
-        </GlobalProvider>
+
+        </ThemeProvider>
+
       </BrowserRouter>
     </main>
   )

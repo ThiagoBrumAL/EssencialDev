@@ -1,6 +1,8 @@
-import { createContext, useState } from "react";
+//Hooks
+import { useState } from "react";
 
-export const AuthContext = createContext();
+//Context
+import { AuthContext } from "./AuthContext";
 
 export function AuthProvider({ children }){
     const [token, setToken] = useState(() => {

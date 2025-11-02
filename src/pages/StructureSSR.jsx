@@ -1,20 +1,20 @@
 
 // Components.
-import ButtonTheme from "../components/login/ButtonTheme.jsx";
-import Title from "../components/login/Title.jsx";
-import CardFeedback from "../components/login/CardFeedback.jsx";
+import ButtonTheme from '../components/buttons/ButtonTheme.jsx'
+import Title from "../components/titles/Title.jsx";
+import CardFeedback from "../components/cards/CardFeedback.jsx";
+import Loader from "../components/loaders/Loader.jsx";
 import { Sun, Moon } from "lucide-react";
+
 
 // Hooks.
 import { useLocation } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 
 // Contexts.
-import { ScreenContext } from "../contexts/ScreenContext.jsx";
-import { AuthProvider } from "../contexts/AuthContext.jsx";
-import { GlobalContext } from "../contexts/GlobalContext.jsx";
-import Loader from "../components/loader/Loader.jsx";
+import { useTheme } from "../contexts/Theme/useTheme.js";
+import { useSsr } from "../contexts/ssr/useSsr.js";
 
 
 // Cloud for images.
@@ -24,42 +24,33 @@ import { cloudinary } from "../cloud/cloudinary.js";
 // SSF - Sign-in / Sign-up / Recover.
 function ScreenSSR({ children }) {
 
-    // State para simular o comportamento de loading.
     const [load, setLoad] = useState(true)
     const [userOpacity, setUserOpacity] = useState(0);
 
     const locale = useLocation()
 
-    // Variáveis criadas no contexto, e utilizada para renderizar a mensagem de feedback para o usuário.
     const {
 
-        messageFeedback, // messageFeedback = Estado (State) que irá exibir qual é a mensagem correspondente para a determinada ação.
-
-        colorFeedback, // colorFeedback = Estado (State) que armazena a cor do elemento a ser exibido.
-
-        iconFeedback, // iconFeedback = Estado (State) que armazena qual ícone deve ser mostrado para o usuário.
-
-        titles, // titles = Este estado (State) é um array de objetos que guarda o titulo correspondente para cada página.
-
+        messageFeedback,
+        colorFeedback,
+        iconFeedback,
+        titles,
         showMessage
 
-    } = useContext(ScreenContext) // useContext é um hook utilizado para transmitir informações para outros componentes sem o uso de props. Dentro dele você deve indicar qual contexto irá ser utilizado.
+    } = useSsr();
 
 
     const { 
-        theme, // Estado (State) que contém qual é o tema que está sendo utilizado pelo usuário.
 
-        changeTheme, // Função que iverte o tema.
+        theme,
+        changeTheme,
+        validateTheme, 
 
-        validateTheme, // Função que valida e troca o tema.
-
-    } = useContext(GlobalContext) // useContext é um hook utilizado para transmitir informações para outros componentes sem o uso de props. Dentro dele você deve indicar qual contexto irá ser utilizado.
+    } = useTheme();
 
 
-    // useEffect é um hook utilizado para ser executado toda vez que o parametro [param] passado sofrer alteração. Nesta situação foi passado um array vazio, sem parametro, isso significa que ele irá executar está função a **primeira** vez que a tela ser renderizada.
     useEffect(() => {
 
-        // setTimeout está sendo utilizado para deixar o load por 3 segundos e tirá-lo após.
         const timer = setTimeout(() => {
             setLoad(false)
             setUserOpacity(1)
@@ -70,12 +61,9 @@ function ScreenSSR({ children }) {
     }, [])
 
 
-    // Img é um componente de função que espera 2 parametros, o tema e o caminho. Ele renderiza a imagem do site story set
     const Img = ({ path, theme }) => {
 
         const [imageIsVisible, setImageIsVisible] = useState(false)
-
-        // Se o theme for true, o valor do target será "light". Caso contrário, será "dark".
         const targetTheme = theme ? "light" : "dark"
 
         useEffect(() => {
@@ -89,7 +77,7 @@ function ScreenSSR({ children }) {
         return (
             <img
                 id="logo"
-                className={`}
+                className={`
                     h-full
                     w-full
                     object-contain
@@ -99,7 +87,7 @@ function ScreenSSR({ children }) {
                     ease-in-out
                     duration-700
                     ${imageIsVisible ? "opacity-100" : "opacity-0"}
-                    `}
+                `}
                 src={cloudinary[path][targetTheme]}
                 alt="Essecial Dev Logo"
             />
@@ -119,7 +107,7 @@ function ScreenSSR({ children }) {
             relative
             ${validateTheme(theme,"bg-[#FFFAFE]","bg-slate-900")}
             z-[1]
-            ${load ? "overflow-y-hidden" : "overflow-y-scroll"}
+            ${load ? "overflow-y-hidden" : null}
         `}>
 
             {/* Se o load for verdadeiro, renderize o componente. Caso contrário, tire-o */}
@@ -192,9 +180,7 @@ function ScreenSSR({ children }) {
                         relative
                     `}>
 
-                    <AuthProvider>
-                        { children }
-                    </AuthProvider>
+                    { children }
 
                     <div
                         id="container-theme"

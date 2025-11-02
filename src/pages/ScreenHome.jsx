@@ -1,7 +1,7 @@
+import { useEffect, useState } from "react";
+import Loader from "../components/loaders/Loader.jsx";
 
-import { useContext, useEffect, useState } from "react";
-import Loader from "../components/loader/Loader.jsx";
-import { GlobalContext } from "../contexts/GlobalContext.jsx";
+import { useTheme } from "../contexts/Theme/useTheme.js";
 
 import { User, TextAlignJustify  } from 'lucide-react';
 import { useLocation } from "react-router-dom";
@@ -22,7 +22,7 @@ function ScreenHome({ children }){
     const { 
         theme,
         validateTheme,
-    } = useContext(GlobalContext)
+    } = useTheme()
 
     const Link = ({ name, path, condition}) => {
         const isActive = locale.pathname === path ? true : false

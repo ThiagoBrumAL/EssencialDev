@@ -1,58 +1,86 @@
 
 // Components
-import ButtonMain from "./ButtonMain";
-import FormField from "./FormField";
-
-// Função para enviar os dados
-import { sendDatasPost } from "../../api/api.jsx";
+import ButtonMain from '../buttons/ButtonMain.jsx'
+import FormField from "../inputs/FormField.jsx";
 
 // Hooks
-import { useContext, useEffect, useState } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 
 // Contexts
-import { ScreenContext } from "../../contexts/ScreenContext.jsx";
-import { AuthContext } from "../../contexts/AuthContext.jsx";
-import { GlobalContext } from "../../contexts/GlobalContext.jsx";
+import { useTheme } from "../../contexts/Theme/useTheme.js";
+import { useAuth } from "../../contexts/Auth/useAuth.js";
+
+//Masks
+import { maskEmail } from "../../utils/masks/maskEmail.js";
+import { maskPassword } from "../../utils/masks/maskPassword.js";
+
+//Icons
+import { Eye } from "lucide-react";
+
+//Api
+import { useApi } from "../../api/api.jsx";
 
 
 function FormSignIn(){
 
+    const navigate = useNavigate();
     const locale = useLocation()
+    const api = useApi();
 
-     // Estado (State) criado para executar um transição suave entre alternância de formulário.
     const [userOpacity, setUserOpacity] = useState(0);
 
-    // useEffect criado para monitorar o path atual. Caso ele seja igual ao path pertencente ao formulário, eu renderizo ele.
     useEffect(() => {
-
         if(locale.pathname === "/sign-in") setUserOpacity(1)
-
     }, [locale.pathname])
 
     useEffect(() => {
-        
         window.scrollTo({ top: 0, behavior: "smooth" })
-
     },  [locale.pathname])
 
     const { 
+        theme,
+        validateTheme,
+    } = useTheme()
 
-        fields, // Fields é um estado (state) que guarda todos os valores dos campos input. Ele é um array de objetos, onde cada objeto representa um campo.
+    const { login } = useAuth();
 
-    } = useContext(ScreenContext) // useContext é um hook utilizado para transmitir informações para outros componentes sem o uso de props. Dentro dele você deve indicar qual contexto irá ser utilizado.
+    const [fields, setFields] = useState([
 
-    const { 
-
-        theme, // Estado (State) que contém qual é o tema que está sendo utilizado pelo usuário.
-
-        validateTheme, // Função que valida e troca o tema.
-
-    } = useContext(GlobalContext) // useContext é um hook utilizado para transmitir informações para outros componentes sem o uso de props. Dentro dele você deve indicar qual contexto irá ser utilizado.
-
-    const { login } = useContext(AuthContext)
-
-    const [signInFields, setSignInFields] = useState(fields.filter(field => field.type === "password" || field.type === "email"))
+            //E-mail
+            { 
+    
+                id: "email",
+                name: "E-mail", 
+                type: "email",
+                regex: "",
+                link: false, 
+                mask: maskEmail,
+                icon: null,
+                disabled: false,
+                placeholder: "Insira seu email", 
+                hasErrorInField: false,
+                messageError: "Campo obrigatório",
+    
+            },
+    
+            //Password
+            { 
+    
+                id: "password",
+                name: "Senha",
+                type: "password",
+                regex: "",
+                link: true,
+                mask: maskPassword,
+                icon: Eye,
+                disabled: false,
+                placeholder: "Insira sua senha", 
+                hasErrorInField: false,
+                messageError: "Campo obrigatório",
+    
+            },
+        ]);
 
     return (
         <div 
@@ -109,24 +137,28 @@ function FormSignIn(){
                     action=""
                 >
 
-                    {signInFields.map((field, index) => {
+                    {fields.map((field, index) => {
                         return (
                             <FormField
                                 key={index}
                                 field={field}
-                                fields={signInFields}
-                                setFields={setSignInFields}
+                                fields={fields}
+                                setFields={setFields}
                             />
                         )
                     })}
                     
                     <ButtonMain
                         name={"ENTRAR"}
-                        marginTop={"mt-[90px]"}
-                        operation={{ sendDatasPost, login }}
-                        URL={"https://essencial-server.vercel.app/auth/sign-in"}
-                        fields={signInFields}
-                        setFields={setSignInFields}
+                        operation={ { api, login } }
+                        where={ locale.pathname }
+                        method={ "post" }
+
+                        body={{ 
+                            fields, 
+                            setFields, 
+                            navigate 
+                        }}
                     />
                 </form>
             </div>

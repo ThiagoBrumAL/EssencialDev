@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom"
 
-import { GlobalContext } from "../../contexts/GlobalContext"
-import { useContext } from "react"
+import { useTheme } from "../../contexts/Theme/useTheme";
 
 function MessageAfterLink({ message1, message2, link, error }){
 
-    const { theme, validateTheme } = useContext(GlobalContext) 
+    const { theme, validateTheme } = useTheme()
 
     return (
         <div 

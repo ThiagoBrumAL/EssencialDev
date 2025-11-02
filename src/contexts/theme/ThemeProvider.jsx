@@ -1,9 +1,10 @@
-import { createContext, useEffect, useState } from "react";
+//Hooks
+import { useState, useEffect } from "react";
 
+//Conetext
+import { ThemeContext } from "./ThemeContext";
 
-export const GlobalContext = createContext();
-
-export function GlobalProvider({ children }){
+export function ThemeProvider({ children }){
 
     const [theme, setTheme] = useState(() => {
         const existingTheme = localStorage.getItem("thm");
@@ -27,13 +28,14 @@ export function GlobalProvider({ children }){
     }
 
     return (
-        <GlobalContext.Provider value={{ 
+        <ThemeContext.Provider value={{ 
             theme, 
             setTheme,
             validateTheme,
             changeTheme
         }}>
             { children }
-        </GlobalContext.Provider>
+        </ThemeContext.Provider>
     )
-} 
+
+}

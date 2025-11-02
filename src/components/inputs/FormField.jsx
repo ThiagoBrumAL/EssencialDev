@@ -1,10 +1,9 @@
-import MessageAfterLink from "./MessageAfterLink";
-import MessageAfter from "./MessageAfter";
+import MessageAfterLink from "../inputs/MessageAfterLink";
+import MessageAfter from "../inputs/MessageAfter";
 import { useState } from "react";
 import { Eye, EyeClosed  } from 'lucide-react';
 
-import { useContext } from "react";
-import { GlobalContext } from "../../contexts/GlobalContext";
+import { useTheme } from "../../contexts/Theme/useTheme";
 
 function FormField({ 
 
@@ -20,7 +19,7 @@ function FormField({
 
         validateTheme, // Função que valida e troca o tema.
 
-    } = useContext(GlobalContext) // useContext é um hook utilizado para transmitir informações para outros componentes sem o uso de props. Dentro dele você deve indicar qual contexto irá ser utilizado.
+    } = useTheme() // useContext é um hook utilizado para transmitir informações para outros componentes sem o uso de props. Dentro dele você deve indicar qual contexto irá ser utilizado.
 
 
     const [inputValue, setInputValue] = useState("");
@@ -32,9 +31,8 @@ function FormField({
                 flex 
                 flex-col 
                 w-[100%] 
-                h-[94px] 
-                sm:mb-6 
-                mb-3 
+                h-[94px]
+                mb-[18px]
                 relative
         ">
             <label
@@ -86,16 +84,21 @@ function FormField({
                 value={inputValue}
             />
 
-            <p className={`
-                absolute 
-                left-0 
-                bottom-[2px] 
-                text-[0.85rem] 
-                font-Inter 
-                text-red-500
-            `}>
-                {field.hasErrorInField ? field.messageError : null}
-            </p>
+            <div className="
+                relative
+            ">
+                <p className={`
+                    absolute 
+                    top-[100%]
+                    left-0
+                    bottom-[2px] 
+                    text-[0.875rem] 
+                    font-Inter 
+                    text-red-500
+                `}>
+                    {field.hasErrorInField ? field.messageError : null}
+                </p>
+            </div>
 
             <div className="
                 absolute 

@@ -1,32 +1,37 @@
-
 // Components
-import ButtonMain from "./ButtonMain";
-import FormField from "./FormField";
-import TextLink from "./TextLink";
-
-// Função para enviar os dados
-import { sendDatasPost } from "../../api/api.jsx";
+import ButtonMain from "../buttons/ButtonMain.jsx";
+import FormField from "../inputs/FormField.jsx";
+import TextLink from "../texts/TextLink.jsx";
 
 // Hooks
-import { useState, useEffect, useContext } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 
 // Contexts
-import { ScreenContext } from "../../contexts/ScreenContext.jsx";
-import { GlobalContext } from "../../contexts/GlobalContext.jsx";
+import { useTheme } from "../../contexts/Theme/useTheme.js";
 
+//Masks
+import { maskDate } from "../../utils/masks/maskDate.js";
+import { maskEmail } from "../../utils/masks/maskEmail.js";
+import { maskFullName } from "../../utils/masks/maskFullName.js";
+import { maskHeight } from "../../utils/masks/maskHeight.js";
+import { maskWeight } from "../../utils/masks/maskWeight.js";
+import { maskPassword } from "../../utils/masks/maskPassword.js";
 
+//Icons
+import { Eye } from "lucide-react";
 
-
+//Api
+import { useApi } from "../../api/api.jsx";
 
 function FormSignUp(){
 
+    const navigate = useNavigate();
     const locale = useLocation()
+    const api = useApi();
 
-    // Estado (State) criado para executar um transição suave entre alternância de formulário.
     const [userOpacity, setUserOpacity] = useState(0);
 
-    // useEffect criado para monitorar o path atual. Caso ele seja igual ao path pertencente ao formulário, eu renderizo ele.
     useEffect(() => {
         if(locale.pathname === "/sign-up") setUserOpacity(1)
     }, [locale.pathname])
@@ -35,33 +40,121 @@ function FormSignUp(){
         window.scrollTo({ top: 0, behavior: "smooth" })
     },  [locale.pathname])
 
-    // Estado (State) criado para armazenar se os "termos e condições" está preenchido
     const [isChecked, setIsChecked] = useState(null);
-
-    // Estado (State) criado para armazenar a cor dos "termos e condições". Se ele tiver erro, essa cor irá mudar.
     const [checkColor, setCheckColor] = useState("text-slate-500")
 
-
     const { 
+        theme, 
+        validateTheme,
+    } = useTheme() 
 
-        fields, // Fields é um estado (state) que guarda todos os valores dos campos input. Ele é um array de objetos, onde cada objeto representa um campo.
+    const [fields, setFields] = useState([
 
-    } = useContext(ScreenContext) // useContext é um hook utilizado para transmitir informações para outros componentes sem o uso de props. Dentro dele você deve indicar qual contexto irá ser utilizado.
+        //Full Name
+        { 
+            
+            id: "name",
+            name: "Nome Completo", 
+            type: "text",
+            regex: "",
+            link: false, 
+            mask: maskFullName,
+            icon: null,
+            disabled: false,
+            placeholder: "Insira seu nome completo",
+            hasErrorInField: false,
+            messageError: "Campo obrigatório",
 
+        },
 
-    const { 
+        //Height
+        { 
 
-        theme, // Estado (State) que contém qual é o tema que está sendo utilizado pelo usuário.
+            id: "height",
+            name:  "Altura",
+            type: "text",
+            regex: "",
+            link: false, 
+            mask: maskHeight,
+            icon: null,
+            disabled: false,
+            placeholder: "Insira sua altura", 
+            hasErrorInField: false,
+            messageError: "Campo obrigatório",
 
-        validateTheme, // Função que valida e troca o tema.
+        },
 
-    } = useContext(GlobalContext) // useContext é um hook utilizado para transmitir informações para outros componentes sem o uso de props. Dentro dele você deve indicar qual contexto irá ser utilizado.
+        //Born Date
+        { 
 
-    const [signUpFields, setSignUpFields] = useState(fields.map(field => field.type === "password" ? {...field, link: false} : field ))
+            id: "birthday",
+            name: "Data de Nascimento",
+            type: "text",
+            regex: "",
+            link: false, 
+            mask: maskDate,
+            icon: null,
+            disabled: false,
+            placeholder: "Insira sua data de nascimento",
+            hasErrorInField: false,
+            messageError: "Campo obrigatório",
 
-    const leftFields = signUpFields.slice(0, (signUpFields.length/2));
+        },
 
-    const rightFields = signUpFields.slice(signUpFields.length/2);
+        //Weight
+        { 
+
+            id: "weight",
+            name: "Peso", 
+            type: "text",
+            regex: "",
+            link: false, 
+            mask: maskWeight,
+            icon: null,
+            disabled: false,
+            placeholder: "Insira seu peso",
+            hasErrorInField: false,
+            messageError: "Campo obrigatório",
+
+        },
+
+        //E-mail
+        { 
+
+            id: "email",
+            name: "E-mail", 
+            type: "email",
+            regex: "",
+            link: false, 
+            mask: maskEmail,
+            icon: null,
+            disabled: false,
+            placeholder: "Insira seu email", 
+            hasErrorInField: false,
+            messageError: "Campo obrigatório",
+
+        },
+
+        //Password
+        { 
+
+            id: "password",
+            name: "Senha",
+            type: "password",
+            regex: "",
+            link: true,
+            mask: maskPassword,
+            icon: Eye,
+            disabled: false,
+            placeholder: "Insira sua senha", 
+            hasErrorInField: false,
+            messageError: "Campo obrigatório",
+
+        },
+    ]);
+    
+    const leftFields = fields.slice(0, (fields.length/2));
+    const rightFields = fields.slice(fields.length/2);
 
     return (
 
@@ -131,8 +224,8 @@ function FormSignUp(){
                                 <FormField
                                     key={index}
                                     field={field}
-                                    fields={signUpFields}
-                                    setFields={setSignUpFields}
+                                    fields={fields}
+                                    setFields={setFields}
                                 />
                             );
 
@@ -146,8 +239,8 @@ function FormSignUp(){
                                 <FormField
                                     key={index}
                                     field={field}
-                                    fields={signUpFields}
-                                    setFields={setSignUpFields}
+                                    fields={fields}
+                                    setFields={setFields}
                                 />
                             );
 
@@ -167,10 +260,10 @@ function FormSignUp(){
                 ">
                     <input 
                         type="checkbox" 
-                        id="authorized" 
+                        id="authorizedTerms" 
                         checked={isChecked} 
                         onChange={(event) => setIsChecked(event.target.checked)} // A cada mudança o valor do state isChecked é alterado
-                        name="authorized" 
+                        name="authorizedTerms" 
                         className="
                             absolute 
                             top-[5px] 
@@ -200,14 +293,21 @@ function FormSignUp(){
                         w-[200px]
                 ">
                     <ButtonMain
-                        name={"CADASTRAR"}
-                        marginTop={"mt-[90px]"}
-                        operation={{sendDatasPost}}
-                        URL={"https://essencial-server.vercel.app/auth/sign-up"}
-                        fields={signUpFields}
-                        setFields={setSignUpFields}
-                        isChecked={isChecked}
-                        setCheckColor={setCheckColor}
+                        name={ "CADASTRAR" }
+                        operation={ { api } }
+                        where={ locale.pathname }
+                        method={ "post" }
+                        
+                        body={{ 
+
+                            fields, 
+                            setFields, 
+                            isChecked, 
+                            setCheckColor, 
+                            path: locale.pathname,
+                            navigate
+                            
+                        }}
                     />
                 </div>
             </form>
