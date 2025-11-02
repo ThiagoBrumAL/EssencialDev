@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Loader from "../components/loaders/Loader.jsx";
 
-import { useTheme } from "../contexts/Theme/useTheme.js";
+import { useTheme } from "../contexts/themeContext/useTheme.js";
 
 import { User, TextAlignJustify  } from 'lucide-react';
 import { useLocation } from "react-router-dom";

@@ -9,9 +9,9 @@ import FormSignUp from "./components/forms/FormSignUp"
 import FormRecover from "./components/forms/FormRecover"
 import UserPage from "./pages/UserPage"
 
-import { SsrProvider } from "./contexts/ssr/SsrProvider"
-import { AuthProvider } from "./contexts/auth/AuthProvider"
-import { ThemeProvider } from "./contexts/theme/ThemeProvider"
+import { SsrProvider } from "./contexts/ssrContext/SsrProvider"
+import { AuthProvider } from "./contexts/authContext/AuthProvider"
+import { ThemeProvider } from "./contexts/themeContext/ThemeProvider"
 
 function PrivateRoute({ children }){
   const token = localStorage.getItem("token")

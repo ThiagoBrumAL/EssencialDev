@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { useTheme } from "../../contexts/Theme/useTheme";
+import { useTheme } from "../../contexts/themeContext/useTheme";
 import { useLocation } from "react-router-dom";
 
 function ButtonMain({

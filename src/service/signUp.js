@@ -1,7 +1,7 @@
 import { validateInput } from '../utils/errors/handlers/handlingInput'
 import { validateCheckbox } from '../utils/errors/handlers/handlingAuthorized';
 
-import { useSsr } from '../contexts/ssr/useSsr';
+import { useSsr } from '../contexts/ssrContext/useSsr';
 
 import { goodFeedback } from '../utils/helpers/feedback/Success';
 import { badFeedback } from '../utils/helpers/feedback/Failure';

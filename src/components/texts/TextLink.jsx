@@ -1,4 +1,4 @@
-import { useTheme } from "../../contexts/Theme/useTheme";
+import { useTheme } from "../../contexts/themeContext/useTheme";
 
 function TextLink({message, link}){
 

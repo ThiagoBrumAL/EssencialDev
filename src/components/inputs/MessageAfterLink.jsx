@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 
-import { useTheme } from "../../contexts/Theme/useTheme";
+import { useTheme } from "../../contexts/themeContext/useTheme";
 
 function MessageAfterLink({ message1, message2, link, error }){
 

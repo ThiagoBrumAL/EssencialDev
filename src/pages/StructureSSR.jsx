@@ -13,8 +13,8 @@ import { useEffect, useState } from "react";
 
 
 // Contexts.
-import { useTheme } from "../contexts/Theme/useTheme.js";
-import { useSsr } from "../contexts/ssr/useSsr.js";
+import { useTheme } from "../contexts/themeContext/useTheme.js";
+import { useSsr } from "../contexts/ssrContext/useSsr.js";
 
 
 // Cloud for images.

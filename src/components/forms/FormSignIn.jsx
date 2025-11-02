@@ -8,8 +8,8 @@ import { useEffect, useState } from "react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 
 // Contexts
-import { useTheme } from "../../contexts/Theme/useTheme.js";
-import { useAuth } from "../../contexts/Auth/useAuth.js";
+import { useTheme } from "../../contexts/themeContext/useTheme.js";
+import { useAuth } from "../../contexts/authContext/useAuth.js";
 
 //Masks
 import { maskEmail } from "../../utils/masks/maskEmail.js";
