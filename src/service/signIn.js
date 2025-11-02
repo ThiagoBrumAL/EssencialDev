@@ -1,5 +1,5 @@
 import { validateInput } from '../utils/errors/handlers/handlingInput'
-import { useSsr } from '../contexts/ssrContext/useSsr';
+import { useSsr } from '../contexts/ssr/useSsr';
 
 import { badFeedback } from '../utils/helpers/feedback/Failure';
 

@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 
 // Contexts
-import { useTheme } from "../../contexts/themeContext/useTheme.js";
+import { useTheme } from "../../contexts/theme/useTheme.js";
 
 //Masks
 import { maskDate } from "../../utils/masks/maskDate.js";

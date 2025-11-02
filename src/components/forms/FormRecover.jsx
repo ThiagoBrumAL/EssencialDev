@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import { useLocation, Link } from "react-router-dom";
 
 //Context
-import { useTheme } from "../../contexts/themeContext/useTheme.js";
+import { useTheme } from "../../contexts/theme/useTheme.js";
 
 //Masks
 import { maskEmail } from "../../utils/masks/maskEmail.js";
