@@ -19,12 +19,15 @@ export const useRecoverEmail = () => {
         try {
 
             const { isValid: _isValid, role: _role, ...rest } = data
+
             const response = await axios.post("https://essencial-server.vercel.app/auth/forgot-password", rest)
 
             const status = response.status;
             
             handlingRecoverEmail(body.fields, body.setFields, body.waitSendEmail, body.setWaitSendEmail)
             goodFeedback(status, renderCardFeedback, "/recover")
+            console.log(body);
+            body.setReqStatus(status)
 
         } catch (error){
 

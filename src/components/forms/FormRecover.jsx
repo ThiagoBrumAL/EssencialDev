@@ -1,6 +1,10 @@
+//Icons
+import { Eye } from 'lucide-react'
+
 //Components
 import ButtonMain from "../buttons/ButtonMain.jsx";
 import FormField from "../inputs/FormField.jsx";
+import { motion, AnimatePresence } from 'framer-motion'
 
 //Hooks
 import { useState, useEffect } from "react";
@@ -11,6 +15,7 @@ import { useTheme } from "../../contexts/theme/useTheme.js";
 
 //Masks
 import { maskEmail } from "../../utils/masks/maskEmail.js";
+import { maskPassword } from "../../utils/masks/maskPassword.js";
 
 //Api
 import { useApi } from "../../api/api.jsx";
@@ -22,6 +27,7 @@ function FormRecover(){
     const api = useApi();
 
     const [userOpacity, setUserOpacity] = useState(0);
+    const [reqStatus, setReqStatus] = useState(400)
 
     useEffect(() => {
         if(locale.pathname === "/recover") setUserOpacity(1)
@@ -36,7 +42,7 @@ function FormRecover(){
         validateTheme,
     } = useTheme()
 
-    const [fields, setFields] = useState([
+    const [emailField, setEmailField] = useState([
 
             //E-mail
             { 
@@ -57,7 +63,126 @@ function FormRecover(){
             },
 
         ]);
+
+    const [confirmCodeFields, setConfirmCodesFields] = useState([
+
+            { 
     
+                id: "confirm-password",
+                name: "Digite o código", 
+                type: "text",
+                value: "",
+                regex: "",
+                link: false, 
+                mask: null,
+                icon: null,
+                disabled: false,
+                placeholder: "Insira o código", 
+                hasErrorInField: false,
+                messageError: "Campo obrigatório",
+    
+            },
+
+            { 
+
+                id: "password",
+                name: "Senha",
+                type: "password",
+                value: "",
+                regex: "",
+                link: false,
+                mask: maskPassword,
+                icon: Eye,
+                disabled: false,
+                placeholder: "Insira sua senha", 
+                hasErrorInField: false,
+                messageError: "Campo obrigatório",
+
+            },
+
+        ]);
+
+    const renderConfirmCodeFields = () => {
+        return (
+            confirmCodeFields.map((field, index) => {
+                return (
+                    <FormField
+                        key={index}
+                        field={field}
+                        fields={confirmCodeFields}
+                        setFields={setConfirmCodesFields}
+                    />
+                )
+            })
+        )
+    }
+
+    const renderDefaultFields = () => {
+        return (
+            <FormField
+                key={0}
+                field={emailField[0]}
+                fields={emailField}
+                setFields={setEmailField}
+            />
+        )
+    }
+
+    const renderlinkAfterButton = () => {
+        return (
+            <p 
+                className={`
+                    m-0 
+                    p-0 
+                    text-slate-500 
+                    font-[600] 
+                    text-[0.90rem]
+                    font-Inter
+                    text-center
+                    mt-[24px]
+                    mb-[36px]
+            `}>
+                Lembrou sua senha?
+                &nbsp;
+                <Link to={"/sign-in"} className={`${validateTheme(theme,"text-indigo-300", "text-indigo-700")}`}>
+                    Retorne para fazer login
+                </Link>
+            </p>
+        )
+    }
+
+    const renderlinkAfterButtonConfirmCode = () => {
+        return (
+            <p 
+                className={`
+                    m-0 
+                    p-0 
+                    text-slate-500 
+                    font-[600] 
+                    text-[0.90rem]
+                    font-Inter
+                    text-center
+                    mt-[24px]
+                    mb-[36px]
+            `}>
+                
+                Caso não tenha recebido o código <button 
+                onClick={() => setReqStatus(400)}
+                    className={`
+                        ${validateTheme(theme,"text-indigo-300", "text-indigo-700")}
+                        p-0
+                        m-0
+                        bg-none
+                        inline-block
+                    `}
+                >
+                    clique aqui para reenviá-lo
+                </button>
+            </p>
+        )
+    }
+
+
     return (
         <div 
             style={{ opacity: userOpacity }}
@@ -109,15 +234,15 @@ function FormRecover(){
 
                 <form
                     id="form"
-                    className="w-[100%] mb-0"
+                    className="
+                        w-[100%] 
+                        mb-0
+                    "
                     action=""
                 >
-                    <FormField
-                        key={0}
-                        field={fields[0]}
-                        fields={fields}
-                        setFields={setFields}
-                    />
+                    {reqStatus === 200 ? renderConfirmCodeFields() : renderDefaultFields()}
+                    
+                    
 
                     <ButtonMain
                         name={ "ENVIAR" }
@@ -126,30 +251,14 @@ function FormRecover(){
                         method={ "post" }
 
                         body={{ 
-                            fields, 
-                            setFields,
+                            fields: reqStatus === 200 ? confirmCodeFields : emailField, 
+                            setFields: reqStatus === 200 ? setConfirmCodesFields : setEmailField,
+                            setReqStatus
                         }}
                     />
                 </form>
 
-                <p 
-                    className={`
-                        m-0 
-                        p-0 
-                        text-slate-500 
-                        font-[600] 
-                        text-[0.90rem]
-                        font-Inter
-                        text-center
-                        mt-[24px]
-                        mb-[36px]
-                `}>
-                    Lembrou sua senha?
-                    &nbsp;
-                    <Link to={"/sign-in"} className={`${validateTheme(theme,"text-indigo-300", "text-indigo-700")}`}>
-                        Retorne para fazer login
-                    </Link>
-                </p>
+                {reqStatus === 200 ? renderlinkAfterButtonConfirmCode() : renderlinkAfterButton()}
             </div>
         </div>
     )
