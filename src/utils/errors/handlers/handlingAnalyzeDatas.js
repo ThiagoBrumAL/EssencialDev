@@ -14,7 +14,7 @@ export function handlingAnalyzeDatas(fields, setFields){
             defaultFields.isValid = false;
             return {...currentField, hasErrorInField: true};
         }else{
-            const validatedObject = validatorHandlersFinal(currentField.value, currentField, defaultFields);
+            const validatedObject = validatorHandlersFinal(currentField.value, currentField, defaultFields, fields);
             defaultFields = validatedObject.data;
             return validatedObject.object;
         }

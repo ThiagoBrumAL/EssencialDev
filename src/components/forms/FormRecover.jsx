@@ -16,6 +16,7 @@ import { useTheme } from "../../contexts/theme/useTheme.js";
 //Masks
 import { maskEmail } from "../../utils/masks/maskEmail.js";
 import { maskPassword } from "../../utils/masks/maskPassword.js";
+import { maskConfirmCode } from '../../utils/masks/maskConfirmCode.js'
 
 //Api
 import { useApi } from "../../api/api.jsx";
@@ -24,6 +25,7 @@ import { useApi } from "../../api/api.jsx";
 function FormRecover(){
 
     const locale = useLocation()
+    const [currentLocale, setCurrentLocale] = useState(locale.pathname)
     const api = useApi();
 
     const [userOpacity, setUserOpacity] = useState(0);
@@ -50,6 +52,7 @@ function FormRecover(){
                 id: "email",
                 name: "E-mail", 
                 type: "email",
+                originType: "text",
                 value: "",
                 regex: "",
                 link: false, 
@@ -68,13 +71,14 @@ function FormRecover(){
 
             { 
     
-                id: "confirm-password",
+                id: "confirmationCode",
                 name: "Digite o código", 
                 type: "text",
+                originType: "text",
                 value: "",
                 regex: "",
                 link: false, 
-                mask: null,
+                mask: maskConfirmCode,
                 icon: null,
                 disabled: false,
                 placeholder: "Insira o código", 
@@ -86,8 +90,9 @@ function FormRecover(){
             { 
 
                 id: "password",
-                name: "Senha",
+                name: "Digite sua nova senha",
                 type: "password",
+                originType: "password",
                 value: "",
                 regex: "",
                 link: false,
@@ -100,6 +105,23 @@ function FormRecover(){
 
             },
 
+            { 
+
+                id: "newPassword",
+                name: "Confirme sua nova senha",
+                type: "password",
+                originType: "password",
+                value: "",
+                regex: "",
+                link: false,
+                mask: maskPassword,
+                icon: Eye,
+                disabled: false,
+                placeholder: "Insira sua senha", 
+                hasErrorInField: false,
+                messageError: "Campo obrigatório",
+            }
+
         ]);
 
     const renderConfirmCodeFields = () => {
@@ -108,9 +130,11 @@ function FormRecover(){
                 return (
                     <FormField
                         key={index}
-                        field={field}
-                        fields={confirmCodeFields}
-                        setFields={setConfirmCodesFields}
+                        body={{
+                            field,
+                            fields: confirmCodeFields,
+                            setFields: setConfirmCodesFields
+                        }}
                     />
                 )
             })
@@ -121,9 +145,11 @@ function FormRecover(){
         return (
             <FormField
                 key={0}
-                field={emailField[0]}
-                fields={emailField}
-                setFields={setEmailField}
+                body={{
+                    field: emailField[0],
+                    fields: emailField,
+                    setFields: setEmailField
+                }}
             />
         )
     }
@@ -247,13 +273,14 @@ function FormRecover(){
                     <ButtonMain
                         name={ "ENVIAR" }
                         operation={ { api } }
-                        where={ locale.pathname }
+                        where={ currentLocale }
                         method={ "post" }
 
                         body={{ 
                             fields: reqStatus === 200 ? confirmCodeFields : emailField, 
                             setFields: reqStatus === 200 ? setConfirmCodesFields : setEmailField,
-                            setReqStatus
+                            setReqStatus,
+                            setCurrentLocale
                         }}
                     />
                 </form>

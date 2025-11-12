@@ -6,13 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useTheme } from "../../contexts/theme/useTheme";
 import { handlingInput } from '../../utils/errors/handlers/handlingInput'
 
-function FormField({ 
-
-    field, // field refere-se ao campo atual que está chamando o componente
-    fields, // Fields são todos os campos.
-    setFields // Função para trocar o valor do state fields
-
-}) {
+function FormField({ body }) {
 
     const { 
 
@@ -26,9 +20,9 @@ function FormField({
     return (
         <AnimatePresence mode="wait">
             <motion.div
-                initial={{ opacity: 0, y: 14, scale: 0.9 }}
+                initial={{ opacity: 0, y: 8, scale: 0.9 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 14, scale: 0.9 }}
+                exit={{ opacity: 0, y: 8, scale: 0.9 }}
                 transition={{ duration: 0.4 }}
                 className="w-full"
             >
@@ -50,9 +44,9 @@ function FormField({
                             font-normal
                             text-[0.95rem]
                         `}
-                        htmlFor={`${field.id}`}
+                        htmlFor={body["field"].id}
                     >
-                        {field.name}
+                        {body["field"].name}
                     </label>
 
                     <input
@@ -69,30 +63,30 @@ function FormField({
                             border-[2px] 
                             font-Inter
                             text-[0.95rem]
-                            ${field.hasErrorInField ? "mb-[3px]" : "mb-[0px]"}
-                            ${field.hasErrorInField ? "border-red-500" : "border-[#B5B5BD]"}
+                            ${body["field"].hasErrorInField ? "mb-[3px]" : "mb-[0px]"}
+                            ${body["field"].hasErrorInField ? "border-red-500" : "border-[#B5B5BD]"}
                         `}
 
-                        pattern={field.regex}
+                        pattern={body["field"].regex}
                         
-                        type={`${field.type}`}
+                        type={body["field"].type}
 
-                        placeholder={field.placeholder}
+                        placeholder={body["field"].placeholder}
 
-                        name={`${field.name}`}
+                        name={body["field"].name}
 
-                        id={`${field.id}`}
+                        id={body["field"].id}
 
-                        value={fields.find(f => f.id === field.id)?.value || ""}
+                        value={body["fields"].find(f => f.id === body["field"].id)?.value || ""}
 
                         onChange={(e) => {
                             const rawValue = e.target.value;
-                            const maskedValue = field.mask(rawValue, field.id);
+                            const maskedValue = body["field"].mask(rawValue, body["field"].id);
 
-                            const updatedFields = fields.map(f => f.id === field.id ? { ...f, value: maskedValue } : f)
+                            const updatedFields = body["fields"].map(f => f.id === body["field"].id ? { ...f, value: maskedValue } : f)
                             const validatedFields = handlingInput(updatedFields)
 
-                            setFields(validatedFields)
+                            body["setFields"](validatedFields)
                         }}
                     />
 
@@ -106,9 +100,9 @@ function FormField({
                             font-Inter 
                             text-red-500
                             top-full
-                            ${field.hasErrorInField ? "opacity-100" : "opacity-0"}
+                            ${body["field"].hasErrorInField ? "opacity-100" : "opacity-0"}
                         `}>
-                            {field.hasErrorInField ? field.messageError : null}
+                            {body["field"].hasErrorInField ? body["field"].messageError : null}
                         </p>
                     </div>
 
@@ -122,34 +116,38 @@ function FormField({
 
                             event.preventDefault();
 
-                            if(field.name === "Senha"){
+                            if(body["field"].originType === "password"){
 
-                                setFields(fields.map(((field) => {
+                                body["setFields"](body["fields"].map(((field) => {
 
-                                    if(field.name === "Senha" && field.type === "password") return {...field, type: "text", icon: EyeClosed}
+                                    if(field.id === body["field"].id){
+
+                                        if(body["field"].originType === "password" && field.type === "password") return {...field, type: "text", icon: EyeClosed}
                                     
-                                    if(field.name === "Senha" && field.type === "text") return {...field, type: "password", icon: Eye}
+                                        if(body["field"].originType === "password" && field.type === "text") return {...field, type: "password", icon: Eye}
 
-                                    return {...field}
+                                    }
+
+                                    return field
                                 })))
                                 
                             }
                         }}>
 
-                            {field.icon && <field.icon color={validateTheme(theme, "#7A828A", "#EDF2F7")}/>}
+                            {body["field"].icon && <body.field.icon color={validateTheme(theme, "#7A828A", "#EDF2F7")}/>}
 
                         </button>
 
                     </div>
                     
-                    {field.name === "Senha" ? (field.link ? <MessageAfterLink
+                    {body["field"].name === "Senha" ? (body["field"].link ? <MessageAfterLink
                             message1={"Esqueceu sua senha?"}
                             message2={"Clique Aqui"}
                             link={"/recover"}
-                            error={field.hasErrorInField}
+                            error={body["field"].hasErrorInField}
                         /> : <MessageAfter 
                             message1={"Deve conter pelo menos 8 Caracteres"}
-                            error={field.hasErrorInField}
+                            error={body["field"].hasErrorInField}
                         />) : null}
                 </div>
             </motion.div>

@@ -16,6 +16,15 @@ export const goodFeedback = (status, renderCardFeedback, path) => {
             },
         },
 
+        "/recover/confirm-password":{
+            200: {
+                icon: <Send />, 
+                color: "bg-green-400",
+                message: "Senha alterada com sucesso",
+                timeout: 5000
+            },
+        },
+
         "/sign-in":{
             200: {
                 icon: <ShieldOff />, 

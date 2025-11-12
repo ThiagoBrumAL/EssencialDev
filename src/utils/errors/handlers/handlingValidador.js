@@ -5,9 +5,10 @@ import { handlingBornDate } from './handlingBornDate'
 import { handlingEmail } from './handlingEmail'
 import { handlingHeight } from './handlingHeight'
 import { handlingConfirmCode } from './handlingConfirmCode'
+import { handlingConfirmPassword } from './handlingConfirmPassword'
 
 
-export function validatorHandlers(fieldValue, currentField){
+export function validatorHandlers(fieldValue, currentField, fields){
 
     const dynamicsFunctions = {
         "email": handlingEmail,
@@ -16,8 +17,9 @@ export function validatorHandlers(fieldValue, currentField){
         "height": handlingHeight,
         "weight": handlingWeight,
         "name": handlingFullName,
-        "confirm-password": handlingConfirmCode
+        "confirmationCode": handlingConfirmCode,
+        "newPassword": handlingConfirmPassword
     }
 
-    return dynamicsFunctions[currentField.id](fieldValue, currentField)
+    return dynamicsFunctions[currentField.id](fieldValue, currentField, fields)
 }

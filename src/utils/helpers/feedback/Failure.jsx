@@ -2,11 +2,24 @@ import { ShieldOff } from "lucide-react"
 
 export const badFeedback = (status, renderCardFeedback, path) => {
 
-    console.log(status);
-
     const messages = {
 
         "/recover":{
+            400: {
+                icon: <ShieldOff />, 
+                color: "bg-red-400",
+                message:"",
+                timeout: 5000
+            },
+            500: {
+                icon: <ShieldOff />, 
+                color: "bg-red-400",
+                message:"Erro no servidor",
+                timeout: 5000
+            }
+        },
+
+        "/recover/confirm-password":{
             400: {
                 icon: <ShieldOff />, 
                 color: "bg-red-400",

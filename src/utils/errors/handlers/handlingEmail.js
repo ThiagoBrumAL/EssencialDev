@@ -1,4 +1,4 @@
-export function handlingEmail(fieldValue, currentField){
+export function handlingEmail(fieldValue, currentField, fields = null){
 
     const providers = [
         "@gmail.com",

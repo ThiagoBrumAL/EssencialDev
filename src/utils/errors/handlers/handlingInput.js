@@ -5,7 +5,7 @@ export function handlingInput(fields){
         if(!currentField.value.trim()){
             return {...currentField, hasErroInField: true};
         }else{
-            return validatorHandlers(currentField.value, currentField)
+            return validatorHandlers(currentField.value, currentField, fields)
         }
     })
 }

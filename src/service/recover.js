@@ -26,8 +26,13 @@ export const useRecoverEmail = () => {
             
             handlingRecoverEmail(body.fields, body.setFields, body.waitSendEmail, body.setWaitSendEmail)
             goodFeedback(status, renderCardFeedback, "/recover")
-            console.log(body);
+
+
             body.setReqStatus(status)
+
+
+            window.history.pushState({}, "", "recover/confirm-password")
+            body.setCurrentLocale("/recover/confirm-password");
 
         } catch (error){
 

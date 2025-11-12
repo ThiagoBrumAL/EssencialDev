@@ -1,4 +1,7 @@
-export function handlingPassword(fieldValue, currentField, fields = null){
+export function handlingConfirmPassword(fieldValue, currentField, fields = null){
+
+    const pastPasswordValue = fields.find((field) => field.id === "password").value
+
 
     const ruleUpper = /^(?=.*[A-Z]).*$/
     const ruleLower = /^(?=.*[a-z]).*$/
@@ -16,5 +19,9 @@ export function handlingPassword(fieldValue, currentField, fields = null){
 
     if(!(ruleSymbolCharacter.test(fieldValue))) return {...currentField, hasErrorInField: true, messageError: "A senha precisa ter ao menos um caracter especial"}
 
+    if(pastPasswordValue !== fieldValue) return {...currentField, hasErrorInField: true, messageError: "As senhas não se coincidem"}
+
     return {...currentField, hasErrorInField: false, messageError: ""}
+
+
 }

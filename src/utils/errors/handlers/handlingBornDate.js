@@ -1,4 +1,4 @@
-export function handlingBornDate(fieldValue, currentField){
+export function handlingBornDate(fieldValue, currentField, fields = null){
 
     const date = new Date();
 

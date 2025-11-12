@@ -53,6 +53,7 @@ function FormSignIn(){
                 id: "email",
                 name: "E-mail", 
                 type: "email",
+                originType: "email",
                 value: "",
                 regex: "",
                 link: false, 
@@ -71,6 +72,7 @@ function FormSignIn(){
                 id: "password",
                 name: "Senha",
                 type: "password",
+                originType: "password",
                 value: "",
                 regex: "",
                 link: true,
@@ -143,9 +145,11 @@ function FormSignIn(){
                         return (
                             <FormField
                                 key={index}
-                                field={field}
-                                fields={fields}
-                                setFields={setFields}
+                                body={{
+                                    field,
+                                    fields,
+                                    setFields
+                                }}
                             />
                         )
                     })}

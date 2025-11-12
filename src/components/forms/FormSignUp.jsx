@@ -56,6 +56,7 @@ function FormSignUp(){
             id: "name",
             name: "Nome Completo", 
             type: "text",
+            originType: "text",
             value: "",
             regex: "",
             link: false, 
@@ -74,6 +75,7 @@ function FormSignUp(){
             id: "height",
             name:  "Altura",
             type: "text",
+            originType: "text",
             value: "",
             regex: "",
             link: false, 
@@ -92,6 +94,7 @@ function FormSignUp(){
             id: "birthday",
             name: "Data de Nascimento",
             type: "text",
+            originType: "text",
             value: "",
             regex: "",
             link: false, 
@@ -110,6 +113,7 @@ function FormSignUp(){
             id: "weight",
             name: "Peso", 
             type: "text",
+            originType: "text",
             value: "",
             regex: "",
             link: false, 
@@ -128,6 +132,7 @@ function FormSignUp(){
             id: "email",
             name: "E-mail", 
             type: "email",
+            originType: "email",
             value: "",
             regex: "",
             link: false, 
@@ -146,6 +151,7 @@ function FormSignUp(){
             id: "password",
             name: "Senha",
             type: "password",
+            originType: "password",
             value: "",
             regex: "",
             link: false,
@@ -229,9 +235,11 @@ function FormSignUp(){
                             return (
                                 <FormField
                                     key={index}
-                                    field={field}
-                                    fields={fields}
-                                    setFields={setFields}
+                                    body={{
+                                        field,
+                                        fields,
+                                        setFields
+                                    }}
                                 />
                             );
 
@@ -244,9 +252,11 @@ function FormSignUp(){
                             return (
                                 <FormField
                                     key={index}
-                                    field={field}
-                                    fields={fields}
-                                    setFields={setFields}
+                                    body={{
+                                        field,
+                                        fields,
+                                        setFields
+                                    }}
                                 />
                             );
 

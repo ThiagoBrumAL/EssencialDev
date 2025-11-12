@@ -4,9 +4,11 @@ import { handlingWeight } from './handlingWeight'
 import { handlingBornDate } from './handlingBornDate'
 import { handlingEmail } from './handlingEmail'
 import { handlingHeight } from './handlingHeight'
+import { handlingConfirmCode } from './handlingConfirmCode'
+import { handlingConfirmPassword } from './handlingConfirmPassword'
 
 
-export function validatorHandlersFinal(fieldValue, currentField, defaultFields){
+export function validatorHandlersFinal(fieldValue, currentField, defaultFields, fields){
 
     const dynamicsFunctions = {
         "email": handlingEmail,
@@ -14,10 +16,12 @@ export function validatorHandlersFinal(fieldValue, currentField, defaultFields){
         "birthday": handlingBornDate,
         "height": handlingHeight,
         "weight": handlingWeight,
-        "name": handlingFullName
+        "name": handlingFullName,
+        "confirmationCode": handlingConfirmCode,
+        "newPassword": handlingConfirmPassword
     }
 
-    const result = dynamicsFunctions[currentField.id](fieldValue, currentField)
+    const result = dynamicsFunctions[currentField.id](fieldValue, currentField, fields)
 
     const returnStructure = {
         data: defaultFields,

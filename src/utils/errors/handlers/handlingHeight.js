@@ -1,4 +1,4 @@
-export function handlingHeight(fieldValue, currentField){
+export function handlingHeight(fieldValue, currentField, fields = null){
 
     const array = [];
     for(let pos in fieldValue) array.push(fieldValue.charAt(pos));

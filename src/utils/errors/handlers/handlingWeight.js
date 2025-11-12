@@ -1,4 +1,4 @@
-export function handlingWeight(fieldValue, currentField){
+export function handlingWeight(fieldValue, currentField, fields = null){
 
     const array = [];
     for(let pos in fieldValue) array.push(fieldValue.charAt(pos));
