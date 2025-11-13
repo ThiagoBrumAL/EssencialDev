@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 //Hooks
 import { useState, useEffect } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 
 //Context
 import { useTheme } from "../../contexts/theme/useTheme.js";
@@ -25,6 +25,7 @@ import { useApi } from "../../api/api.jsx";
 function FormRecover(){
 
     const locale = useLocation()
+    const navigate = useNavigate()
     const [currentLocale, setCurrentLocale] = useState(locale.pathname)
     const api = useApi();
 
@@ -43,6 +44,7 @@ function FormRecover(){
         theme, 
         validateTheme,
     } = useTheme()
+
 
     const [emailField, setEmailField] = useState([
 
@@ -133,7 +135,7 @@ function FormRecover(){
                         body={{
                             field,
                             fields: confirmCodeFields,
-                            setFields: setConfirmCodesFields
+                            setFields: setConfirmCodesFields,
                         }}
                     />
                 )
@@ -280,7 +282,9 @@ function FormRecover(){
                             fields: reqStatus === 200 ? confirmCodeFields : emailField, 
                             setFields: reqStatus === 200 ? setConfirmCodesFields : setEmailField,
                             setReqStatus,
-                            setCurrentLocale
+                            setCurrentLocale,
+                            emailFieldValue: emailField[0].value,
+                            navigate
                         }}
                     />
                 </form>

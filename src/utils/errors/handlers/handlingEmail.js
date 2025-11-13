@@ -14,7 +14,8 @@ export function handlingEmail(fieldValue, currentField, fields = null){
         "@yandex.com",
         "@mail.com",
         "@fastmail.com",
-        "@tutanota.com"
+        "@tutanota.com",
+        "@a.fecaf.com.br"
     ]
 
     let symbolCharacter = fieldValue.indexOf("@");

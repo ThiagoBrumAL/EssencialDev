@@ -14,12 +14,10 @@ export const useConfirmPassword = () => {
         let data = handlingAnalyzeDatas(body.fields, body.setFields);
         if (!data.isValid) throw new Error("Invalid operation")
 
-            
-
         try {
 
             const { isValid: _isValid, role: _role, password:_password, ...rest } = data
-            console.log(rest);
+            rest.email = body.emailFieldValue;
 
             const response = await axios.post("https://essencial-server.vercel.app/auth/confirm-forgot-password", rest)
 
@@ -27,6 +25,8 @@ export const useConfirmPassword = () => {
             
             goodFeedback(status, renderCardFeedback, "/recover/confirm-password")
             body.setReqStatus(status)
+
+            if(status === 200) return setTimeout(() => body.navigate("/sign-in"), 2000)
 
         } catch (error){
 

@@ -35,6 +35,7 @@ function ButtonMain({
 
             event.preventDefault();
             operation.api(method, where, body)
+            console.log(body);
             
         }}
 

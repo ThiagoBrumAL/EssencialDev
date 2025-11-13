@@ -29,7 +29,7 @@ export const badFeedback = (status, renderCardFeedback, path) => {
             500: {
                 icon: <ShieldOff />, 
                 color: "bg-red-400",
-                message:"Erro no servidor",
+                message:"Código inválido",
                 timeout: 5000
             }
         },
