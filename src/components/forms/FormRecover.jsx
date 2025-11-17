@@ -83,7 +83,7 @@ function FormRecover(){
                 mask: maskConfirmCode,
                 icon: null,
                 disabled: false,
-                placeholder: "Insira o código", 
+                placeholder: "000000", 
                 hasErrorInField: false,
                 messageError: "Campo obrigatório",
     

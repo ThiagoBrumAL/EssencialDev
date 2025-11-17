@@ -1,5 +1,6 @@
 import "./index.css"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import Cookies from "js-cookie"
 
 //Components
 import ScreenSSR from "./pages/StructureSSR"
@@ -12,15 +13,18 @@ import UserPage from "./pages/UserPage"
 import { SsrProvider } from "./contexts/ssr/SsrProvider"
 import { AuthProvider } from "./contexts/auth/AuthProvider"
 import { ThemeProvider } from "./contexts/theme/ThemeProvider"
+import { useContext, useEffect } from "react"
+import { AuthContext } from "./contexts/auth/AuthContext"
 
 function PrivateRoute({ children }){
-  const token = localStorage.getItem("token")
-  return token ? children : <Navigate to={"/sign-in"}/>
+  const { token } = useContext(AuthContext)
+
+  if(token === null) return <Navigate to={"/sign-in"}/>
+  return children
 }
 
 function PublicRoute({ children }){
-  const token = localStorage.getItem("token")
-  return token ? <Navigate to={"/home"}/> : children
+  return children
 }
 
 
@@ -85,9 +89,9 @@ function App() {
                 <Route 
                     path="/home" 
                     element={
-                      <PublicRoute>
+                      <PrivateRoute>
                         <ScreenHome />
-                      </PublicRoute>
+                      </PrivateRoute>
                     }
                   />
 

@@ -16,12 +16,20 @@ export const useSignIn = () => {
             const { isValid: _isValid, role: _role, ...rest } = data
             const response = await axios.post("https://essencial-server.vercel.app/auth/sign-in", rest)
 
-            const body = await response.data
-            const token = await body.accessToken
-            return body.login(token, () => body.navigate("/home"))
+            const returnFromApi = await response.data
+
+            const token = await returnFromApi.user.accessToken
+            const dateExpiration = await returnFromApi.user.expiresAt
+
+            const tokenDatas = { token, dateExpiration }
+
+            return body.login(token, () => {
+                if(token) return body.login(tokenDatas, () => setTimeout(() => body.navigate("/home"), 1000))
+            })
 
         } catch (error){
 
+            console.log(error);
             const status = error.response?.status
             badFeedback(status, renderCardFeedback, "/sign-in")
             throw new Error(error)

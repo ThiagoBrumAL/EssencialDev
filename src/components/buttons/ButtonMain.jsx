@@ -32,11 +32,8 @@ function ButtonMain({
     return (
 
         <button onClick={(event) => {
-
             event.preventDefault();
             operation.api(method, where, body)
-            console.log(body);
-            
         }}
 
         disabled={locale.pathname === "/recover" ? body.fields[0].disabled : false}

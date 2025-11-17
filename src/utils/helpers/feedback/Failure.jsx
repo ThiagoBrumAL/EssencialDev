@@ -66,7 +66,7 @@ export const badFeedback = (status, renderCardFeedback, path) => {
         
     }
 
-    const code = messages[path][status]
+    const code = messages[path][status]    
 
     return renderCardFeedback(code.icon, code.color, code.message, code.timeout)
 }

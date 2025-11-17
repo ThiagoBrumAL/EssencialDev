@@ -30,6 +30,7 @@ function FormSignIn(){
 
     const [userOpacity, setUserOpacity] = useState(0);
 
+
     useEffect(() => {
         if(locale.pathname === "/sign-in") setUserOpacity(1)
     }, [locale.pathname])
@@ -156,14 +157,15 @@ function FormSignIn(){
                     
                     <ButtonMain
                         name={"ENTRAR"}
-                        operation={ { api, login } }
+                        operation={ { api } }
                         where={ locale.pathname }
                         method={ "post" }
 
                         body={{ 
                             fields, 
                             setFields, 
-                            navigate 
+                            navigate,
+                            login
                         }}
                     />
                 </form>
