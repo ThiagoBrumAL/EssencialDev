@@ -13,6 +13,8 @@ import UserPage from "./pages/UserPage"
 import { SsrProvider } from "./contexts/ssr/SsrProvider"
 import { AuthProvider } from "./contexts/auth/AuthProvider"
 import { ThemeProvider } from "./contexts/theme/ThemeProvider"
+import { OsProvider } from "./contexts/os/OsProvider"
+
 import { useContext, useEffect } from "react"
 import { AuthContext } from "./contexts/auth/AuthContext"
 import HomePage from "./pages/HomePage"
@@ -38,6 +40,8 @@ function App() {
         <ThemeProvider>
 
           <AuthProvider>
+
+            <OsProvider>
 
               <Routes>
 
@@ -110,6 +114,8 @@ function App() {
                   />
 
               </Routes>
+              
+            </OsProvider>
 
           </AuthProvider>
 
