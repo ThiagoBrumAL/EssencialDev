@@ -83,8 +83,8 @@ function ScreenHome({ children }){
                 className={`
                     ${validateTheme(theme,"from-teal-400 to-indigo-400", "from-[#01051C] to-[#051782]")}
                     bg-gradient-to-tr
-                    ${isWindows ? "h-[67px]" : "h-[76px]"}
-                    md:h-[90px]
+                    ${isWindows ? "md:h-[74px]" : "md:h-[90px]"}
+                    ${isWindows ? "h-[70px]" : "h-[86px]"}
                     w-full
                     px-[32px]
                     justify-center
