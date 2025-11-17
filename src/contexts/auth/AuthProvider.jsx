@@ -21,15 +21,14 @@ export function AuthProvider({ children }){
         return null
     })
 
-    const [keepSessionUser, setKeepSessionUser] = useState(true)
+    const [keepSessionUser, setKeepSessionUser] = useState(false) // ------
     const [expiresAt, setExpiresAt] = useState(null)
     const timer = useRef(null)
 
     function login(tokenDatas, callback){
 
         setToken(tokenDatas.token)
-        //Number(tokenDatas.dateExpiration)
-        setExpiresAt(Date.now() + 7000);
+        setExpiresAt(Number(tokenDatas.dateExpiration));
         Cookies.set("tk", tokenDatas.token);
 
         if(callback) return callback()

@@ -10,5 +10,8 @@ export const cloudinary = {
     "/sign-up": {
         "light": "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/g_auto/f_auto/v1761218862/sign-up_lmyp5s.png",
         "dark": "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/g_auto/f_auto/v1761218862/sign-up-dark_ag7bpy.png"
+    },
+    "/home":{
+        "light": "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763382138/Cardiologist-bro_1_ezmc76.png"
     }
 }

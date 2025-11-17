@@ -15,6 +15,7 @@ import { AuthProvider } from "./contexts/auth/AuthProvider"
 import { ThemeProvider } from "./contexts/theme/ThemeProvider"
 import { useContext, useEffect } from "react"
 import { AuthContext } from "./contexts/auth/AuthContext"
+import HomePage from "./pages/HomePage"
 
 function PrivateRoute({ children }){
   const { token } = useContext(AuthContext)
@@ -90,7 +91,9 @@ function App() {
                     path="/home" 
                     element={
                       <PrivateRoute>
-                        <ScreenHome />
+                        <ScreenHome>
+                          <HomePage />
+                        </ScreenHome>
                       </PrivateRoute>
                     }
                   />

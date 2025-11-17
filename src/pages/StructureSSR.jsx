@@ -4,6 +4,7 @@ import ButtonTheme from '../components/buttons/ButtonTheme.jsx'
 import Title from "../components/titles/Title.jsx";
 import CardFeedback from "../components/cards/CardFeedback.jsx";
 import Loader from "../components/loaders/Loader.jsx";
+import Img from '../components/img/Img.jsx';
 import { Sun, Moon } from "lucide-react";
 
 
@@ -59,40 +60,6 @@ function ScreenSSR({ children }) {
         return (() => clearTimeout(timer))
 
     }, [])
-
-
-    const Img = ({ path, theme }) => {
-
-        const [imageIsVisible, setImageIsVisible] = useState(false)
-        const targetTheme = theme ? "light" : "dark"
-
-        useEffect(() => {
-
-            setImageIsVisible(false)
-            const timer = setTimeout(() => setImageIsVisible(true), 50)
-            return () => clearTimeout(timer)
-
-        }, [theme, path])
-
-        return (
-            <img
-                id="logo"
-                className={`
-                    h-full
-                    w-full
-                    object-contain
-                    max-h-[450px]
-                    max-w-[450px]
-                    transition-opacity
-                    ease-in-out
-                    duration-700
-                    ${imageIsVisible ? "opacity-100" : "opacity-0"}
-                `}
-                src={cloudinary[path][targetTheme]}
-                alt="Essecial Dev Logo"
-            />
-        )
-    }
 
     return (
 

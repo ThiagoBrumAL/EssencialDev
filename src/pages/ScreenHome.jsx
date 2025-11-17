@@ -82,6 +82,7 @@ function ScreenHome({ children }){
                     ${validateTheme(theme,"from-teal-400 to-indigo-400", "from-[#01051C] to-[#051782]")}
                     bg-gradient-to-tr
                     h-[76px]
+                    md:h-[90px]
                     w-full
                     px-[32px]
                     justify-center
@@ -199,7 +200,7 @@ function ScreenHome({ children }){
                 ease-in-out
                 ${load ? "opacity-0" : "opacity-100"}
             `}>
-                { children }
+                { load ? null : children }
             </main>
         </div>
     )
