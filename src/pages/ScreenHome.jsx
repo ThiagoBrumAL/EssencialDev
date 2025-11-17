@@ -5,11 +5,13 @@ import { useTheme } from "../contexts/theme/useTheme.js";
 
 import { User, TextAlignJustify  } from 'lucide-react';
 import { useLocation } from "react-router-dom";
+import { useOs } from "../contexts/os/useOs.js";
 
 function ScreenHome({ children }){
 
     const [load, setLoad] = useState(true)
     const locale = useLocation()
+    const { isWindows } = useOs()
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -81,7 +83,7 @@ function ScreenHome({ children }){
                 className={`
                     ${validateTheme(theme,"from-teal-400 to-indigo-400", "from-[#01051C] to-[#051782]")}
                     bg-gradient-to-tr
-                    h-[76px]
+                    ${isWindows ? "h-[67px]" : "h-[76px]"}
                     md:h-[90px]
                     w-full
                     px-[32px]
