@@ -283,7 +283,6 @@ function HomePage(){
                         text-[#404040]
                         font-bold
                         font-DmSans
-                        
                     ">
                         Encaixes Disponíveis
                     </p>
@@ -337,6 +336,9 @@ function HomePage(){
                             snap-x
                             snap-mandatory
                             scrollbar-none
+                            rounded-[20px]
+                            touch-none
+                            select-none
                     ">  
                         {renderDoctors()}
                     </div>
