@@ -339,7 +339,7 @@ function HomePage(){
                     <div
                         style={{ scrollbarWidth: "none" }}
                         ref={scrollRef}
-                        className="
+                        className={`
                             flex
                             w-full
                             overflow-x-auto
@@ -349,9 +349,9 @@ function HomePage(){
                             snap-mandatory
                             scrollbar-none
                             rounded-[20px]
-                            touch-none
-                            select-none
-                    ">  
+                            md:touch-none
+                            md:select-none
+                    `}>  
                         {renderDoctors()}
                     </div>
                 </div>
