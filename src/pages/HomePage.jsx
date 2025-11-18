@@ -367,7 +367,34 @@ function HomePage(){
                         {renderDoctors()}
                     </div>
                 </div>
-                
+                <div className="
+                    w-auto
+                    h-auto
+                    px-[24px]
+                    text-center
+                    mt-[70px]
+                    mb-[20px]
+                ">
+                    <p className="
+                        text-[1.275rem]
+                        leading-normal
+                        text-[#404040]
+                        font-normal
+                        font-DmSans
+                        mb-[18px]
+                    ">
+                        Mais Serviços  
+                    </p>
+                    <p className="
+                        text-[1.475rem]
+                        leading-normal
+                        text-[#404040]
+                        font-bold
+                        font-DmSans
+                    ">
+                        Veja abaixo com quais especialidades trabalhamos
+                    </p>
+                </div>
             </section>
         </div>
     )
