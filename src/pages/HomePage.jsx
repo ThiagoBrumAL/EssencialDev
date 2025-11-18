@@ -14,6 +14,7 @@ function HomePage(){
     const [doctors, setDoctors] = useState(null);
     const cardRef = useRef();
     const scrollRef = useRef();
+    const didRun = useRef(false);
     const width = useWindowWidth();
 
     const [touch, setTouch] = useState(0);
@@ -108,17 +109,56 @@ function HomePage(){
         });
     }
 
-    const renderDoctors = () => {
-        if(!doctors){
-            return <p>Carregando...</p>
-        }else{
-            return doctors.slice(0,10).map((doc, i) => <CardDoctor key={i} ref={i === 0 ? cardRef : null} width={width} specialty={doc.specialty} desc={doctorsDesc[i].desc}/>)
-        }
+    const renderButtonArrows = () => {
+        return (
+            <div 
+                className="
+                    w-full
+                    flex
+                    items-center
+                    justify-end
+                    px-[24px]
+                    gap-[12px]
+                    mb-[24px]
+            ">
+                <button 
+                    onClick={scrollLeft}
+                    className={`
+                        ${touch === 0 ? "border-none" : "border-[1px]"}
+                        border-[#E6E8EC]
+                        rounded-full
+                        p-1
+                `}>
+                    <ArrowLeft width={24} color={touch === 0 ? "#9fa5b4" : "#777E90"}/>
+                </button>
+                <button 
+                    onClick={scrollRight}
+                    className={`
+                        ${touch === howManyClicks ? "border-none disabled" : "border-[1px]"}
+                        border-[#E6E8EC]
+                        rounded-full
+                        p-1
+                `}>
+                    <ArrowRight width={24} color={touch === howManyClicks ? "#9fa5b4" : "#777E90"}/>
+                </button>
+            </div>
+        )
     }
+
+    const renderDoctors = () => {
+        if (!doctors) return <p>Carregando...</p>;
+        return doctors.slice(0,10).map((doc, i) => (
+            <CardDoctor key={i} ref={i === 0 ? cardRef : null} width={width} specialty={doc.specialty} desc={doctorsDesc[i].desc}/>
+        ));
+    };
 
     
 
     useEffect(() => {
+
+        if(didRun.current) return;
+        didRun.current = true;
+
         const getDoctors =  async() => {
             const response = await axios.get("https://essencial-server.vercel.app/doctors");
             
@@ -293,37 +333,9 @@ function HomePage(){
                         ${width >= 1158 ? "max-w-[1120px]" : (width >= 775 ? "max-w-[740px]" : (width >= 407 ? "max-w-[352px]" : "max-w-[300px]"))} 
                         mb-[32px]
                 `}>
-                    <div 
-                        className="
-                            w-full
-                            flex
-                            items-center
-                            justify-end
-                            px-[24px]
-                            gap-[12px]
-                            mb-[24px]
-                    ">
-                        <button 
-                            onClick={scrollLeft}
-                            className={`
-                                ${touch === 0 ? "border-none" : "border-[1px]"}
-                                border-[#E6E8EC]
-                                rounded-full
-                                p-1
-                        `}>
-                            <ArrowLeft width={24} color={touch === 0 ? "#9fa5b4" : "#777E90"}/>
-                        </button>
-                        <button 
-                            onClick={scrollRight}
-                            className={`
-                                ${touch === howManyClicks ? "border-none disabled" : "border-[1px]"}
-                                border-[#E6E8EC]
-                                rounded-full
-                                p-1
-                        `}>
-                            <ArrowRight width={24} color={touch === howManyClicks ? "#9fa5b4" : "#777E90"}/>
-                        </button>
-                    </div>
+
+                    {width <= 775 ? null : renderButtonArrows()}
+                    
                     <div
                         style={{ scrollbarWidth: "none" }}
                         ref={scrollRef}
