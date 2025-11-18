@@ -1,10 +1,23 @@
-import { useLocation } from "react-router-dom";
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useTheme } from "../contexts/theme/useTheme";
+import { useWindowWidth } from '../hooks/WindowWidth'
+
+import axios from "axios";
+
+import { ArrowLeft } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import CardDoctor from "../components/cards/CardDoctor";
+
 
 function HomePage(){
 
-    const locale = useLocation()
+    const [doctors, setDoctors] = useState(null);
+    const cardRef = useRef();
+    const scrollRef = useRef();
+    const width = useWindowWidth();
+
+    const [touch, setTouch] = useState(0);
+    const [howManyClicks, setHowManyClicks] = useState()
 
     const { 
     
@@ -13,39 +26,116 @@ function HomePage(){
         validateTheme, 
 
     } = useTheme();
+
+    const doctorsDesc = [
+        { department: "Cardiologia", desc: "Cuide do seu coração com especialistas dedicados."},
+        { department: "Cardiologia", desc: "Cuide do seu coração com especialistas dedicados."},
+        { department: "Cardiologia", desc: "Cuide do seu coração com especialistas dedicados."},
+        { department: "Cardiologia", desc: "Cuide do seu coração com especialistas dedicados."},
+        { department: "Cardiologia", desc: "Cuide do seu coração com especialistas dedicados."},
+        { department: "Cardiologia", desc: "Cuide do seu coração com especialistas dedicados."},
+        { department: "Cardiologia", desc: "Cuide do seu coração com especialistas dedicados."},
+        { department: "Cardiologia", desc: "Cuide do seu coração com especialistas dedicados."},
+        { department: "Cardiologia", desc: "Cuide do seu coração com especialistas dedicados."},
+        { department: "Cardiologia", desc: "Cuide do seu coração com especialistas dedicados."},
+    ]
    
-   function Img({ light, dark, theme }){
-   
-       const [imageIsVisible, setImageIsVisible] = useState(false)
-       const targetTheme = theme ? "light" : "dark"
-   
-       useEffect(() => {
-   
-           setImageIsVisible(false)
-           const timer = setTimeout(() => setImageIsVisible(true), 50)
-           return () => clearTimeout(timer)
-   
-       }, [theme])
-   
-       return (
-           <img
-               id="logo"
-               className={`
-                   h-full
-                   w-full
-                   object-contain
-                   max-h-[450px]
-                   max-w-[450px]
-                   transition-opacity
-                   ease-in-out
-                   duration-700
-                   ${imageIsVisible ? "opacity-100" : "opacity-0"}
-               `}
-               src={theme ? light : dark}
-               alt="Essecial Dev Logo"
-           />
-       )
-   }
+    function Img({ light, dark, theme }){
+    
+        const [imageIsVisible, setImageIsVisible] = useState([])
+        const targetTheme = theme ? "light" : "dark"
+    
+        useEffect(() => {
+    
+            setImageIsVisible(false)
+            const timer = setTimeout(() => setImageIsVisible(true), 50)
+            return () => clearTimeout(timer)
+    
+        }, [theme])
+    
+        return (
+            <img
+                id="logo"
+                className={`
+                    h-full
+                    w-full
+                    object-contain
+                    max-h-[450px]
+                    max-w-[450px]
+                    transition-opacity
+                    ease-in-out
+                    duration-700
+                    ${imageIsVisible ? "opacity-100" : "opacity-0"}
+                `}
+                src={theme ? light : dark}
+                alt="Essecial Dev Logo"
+            />
+        )
+    }
+
+    useEffect(() => {
+        setHowManyClicks(width >= 1158 ? 3 : (width >= 775 ? 4 : 10))
+    }, [])
+
+    const scrollLeft = () => {
+
+        if(!cardRef.current) return
+        if(touch <= 0) return setTouch(0)
+
+        const x = touch - 1
+        const size = width >= 1158 ? 3 : (width >= 775 ? 2 : 1)
+        setTouch(x)
+
+        
+
+        const cardWidth = cardRef.current.offsetWidth + 24
+        scrollRef.current.scrollBy({
+            left: -(cardWidth * size),
+            behavior: "smooth"
+        })
+    }
+
+    const scrollRight = () => {
+
+        if (!cardRef.current) return;
+
+        setHowManyClicks(width >= 1158 ? 3 : (width >= 775 ? 4 : 9))
+
+        if(touch >= howManyClicks) return setTouch(howManyClicks)
+
+        const x = touch + 1
+        const size = width >= 1158 ? 3 : (width >= 775 ? 2 : 1)
+        setTouch(x)
+
+        const cardWidth = cardRef.current.offsetWidth + 24;
+        scrollRef.current.scrollBy({
+            left: cardWidth * size,
+            behavior: "smooth"
+        });
+    }
+
+    const renderDoctors = () => {
+        if(!doctors){
+            return <p>Carregando...</p>
+        }else{
+            return doctors.slice(0,10).map((doc, i) => <CardDoctor key={i} ref={i === 0 ? cardRef : null} specialty={doc.specialty} desc={doctorsDesc[i].desc}/>)
+        }
+    }
+
+    
+
+    useEffect(() => {
+        const getDoctors =  async() => {
+            const response = await axios.get("https://essencial-server.vercel.app/doctors");
+            
+            setTimeout(() => {
+                setDoctors(response.data)
+            },1000)
+            
+        }
+        
+        getDoctors()
+    }, [])
    
     return (
         <div
@@ -55,13 +145,13 @@ function HomePage(){
         ">
             <section 
                 className="
-                    bg-slate-50
                     p-6
                     flex
                     justify-center
                     items-center
                     flex-wrap-reverse
                     gap-[40px]
+                    w-full
             ">
                 <div
                     className="
@@ -123,13 +213,13 @@ function HomePage(){
             </section>
             <section 
                 className="
-                    bg-slate-50
                     p-6
                     flex
                     justify-center
                     items-center
                     flex-wrap
                     gap-[80px]
+                    w-full
             ">
                 <div>
                     <Img 
@@ -166,6 +256,98 @@ function HomePage(){
                         Conte com uma equipe preparada para cuidar de você.
                     </p>
                 </div>
+            </section>
+            <section className="
+                    flex
+                    items-center
+                    justify-center
+                    flex-col
+                    w-full
+                    px-[24px]
+            ">
+                <div className="
+                    w-auto
+                    h-auto
+                    px-[24px]
+                    text-center
+                    mt-[32px]
+                    mb-[20px]
+                ">
+                    <p className="
+                        text-[1.275rem]
+                        leading-normal
+                        text-[#404040]
+                        font-normal
+                        font-DmSans
+                        mb-[18px]
+                    ">
+                        Mais Procurados  
+                    </p>
+                    <p className="
+                        text-[1.475rem]
+                        leading-normal
+                        text-[#404040]
+                        font-bold
+                        font-DmSans
+                        
+                    ">
+                        Encaixes Disponíveis
+                    </p>
+                </div>
+                <div 
+                    className={`
+                        w-full
+                        ${width >= 1158 ? "max-w-[1120px]" : (width >= 775 ? "max-w-[740px]" : "max-w-[352px]")} 
+                        mb-[32px]
+                `}>
+                    <div 
+                        className="
+                            w-full
+                            flex
+                            items-center
+                            justify-end
+                            px-[24px]
+                            gap-[12px]
+                            mb-[24px]
+                    ">
+                        <button 
+                            onClick={scrollLeft}
+                            className={`
+                                ${touch === 0 ? "border-none" : "border-[1px]"}
+                                border-[#E6E8EC]
+                                rounded-full
+                                p-1
+                        `}>
+                            <ArrowLeft width={24} color={touch === 0 ? "#9fa5b4" : "#777E90"}/>
+                        </button>
+                        <button 
+                            onClick={scrollRight}
+                            className={`
+                                ${touch === howManyClicks ? "border-none disabled" : "border-[1px]"}
+                                border-[#E6E8EC]
+                                rounded-full
+                                p-1
+                        `}>
+                            <ArrowRight width={24} color={touch === howManyClicks ? "#9fa5b4" : "#777E90"}/>
+                        </button>
+                    </div>
+                    <div
+                        style={{ scrollbarWidth: "none" }}
+                        ref={scrollRef}
+                        className="
+                            flex
+                            w-full
+                            overflow-x-auto
+                            overflow-y-hidden
+                            gap-[24px]
+                            snap-x
+                            snap-mandatory
+                            scrollbar-none
+                    ">  
+                        {renderDoctors()}
+                    </div>
+                </div>
+                
             </section>
         </div>
     )

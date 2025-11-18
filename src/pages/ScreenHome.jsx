@@ -7,6 +7,7 @@ import { User, TextAlignJustify  } from 'lucide-react';
 import { useLocation } from "react-router-dom";
 import { useOs } from "../contexts/os/useOs.js";
 
+
 function ScreenHome({ children }){
 
     const [load, setLoad] = useState(true)
@@ -72,8 +73,8 @@ function ScreenHome({ children }){
     return (
         <div 
             className={`
-                w-[100%]
-                h-[100dvh]
+                block
+                w-full
                 ${validateTheme(theme,"bg-[#FFFAFE]","bg-slate-900")}
         `}>
 
