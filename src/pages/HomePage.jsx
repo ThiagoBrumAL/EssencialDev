@@ -19,13 +19,7 @@ function HomePage(){
     const [touch, setTouch] = useState(0);
     const [howManyClicks, setHowManyClicks] = useState()
 
-    const { 
-    
-        theme,
-        changeTheme,
-        validateTheme, 
-
-    } = useTheme();
+    const { theme } = useTheme();
 
     const doctorsDesc = [
         { department: "Cardiologia", desc: "Cuide do seu coração com especialistas dedicados."},
@@ -118,7 +112,7 @@ function HomePage(){
         if(!doctors){
             return <p>Carregando...</p>
         }else{
-            return doctors.slice(0,10).map((doc, i) => <CardDoctor key={i} ref={i === 0 ? cardRef : null} specialty={doc.specialty} desc={doctorsDesc[i].desc}/>)
+            return doctors.slice(0,10).map((doc, i) => <CardDoctor key={i} ref={i === 0 ? cardRef : null} width={width} specialty={doc.specialty} desc={doctorsDesc[i].desc}/>)
         }
     }
 
@@ -297,7 +291,7 @@ function HomePage(){
                 <div 
                     className={`
                         w-full
-                        ${width >= 1158 ? "max-w-[1120px]" : (width >= 775 ? "max-w-[740px]" : "max-w-[352px]")} 
+                        ${width >= 1158 ? "max-w-[1120px]" : (width >= 775 ? "max-w-[740px]" : (width >= 407 ? "max-w-[352px]" : "max-w-[300px]"))} 
                         mb-[32px]
                 `}>
                     <div 

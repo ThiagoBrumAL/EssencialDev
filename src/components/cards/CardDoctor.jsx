@@ -3,14 +3,14 @@ import { forwardRef } from "react"
 const CardDoctor = forwardRef((props, ref) => {
     
     return (
-        <div ref={ref} className="
-            min-w-[352px]
+        <div ref={ref} className={`
+            ${props.width <= 407 ? "min-w-[300px]" : "min-w-[352px]"}
             border-[2px]
             border-[#B1B5C3]
             rounded-[20px]
             snap-start
             shadow-md
-        ">
+        `}>
 
             <div>
                 <div className="
