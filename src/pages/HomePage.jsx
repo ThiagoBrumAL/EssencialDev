@@ -8,6 +8,7 @@ import { ArrowLeft } from 'lucide-react';
 import { ArrowRight } from 'lucide-react';
 import CardDoctor from "../components/cards/CardDoctor";
 import SmallLoader from "../components/loaders/SmallLoader";
+import SpecialtiesCar from "../components/carrosel/SpecialtiesCar";
 
 import { cloudinary } from "../cloud/cloudinary";
 
@@ -15,13 +16,17 @@ import { cloudinary } from "../cloud/cloudinary";
 function HomePage(){
 
     const [doctors, setDoctors] = useState(null);
+    const [touch, setTouch] = useState(0);
+    const [howManyClicks, setHowManyClicks] = useState()
+    
     const cardRef = useRef();
     const scrollRef = useRef();
     const didRun = useRef(false);
+    const refSpecialties = useRef()
+
+
     const width = useWindowWidth();
 
-    const [touch, setTouch] = useState(0);
-    const [howManyClicks, setHowManyClicks] = useState()
 
     const { theme } = useTheme();
 
@@ -36,28 +41,6 @@ function HomePage(){
         { department: "Cardiologia", desc: "Cuide do seu coração com especialistas dedicados."},
         { department: "Cardiologia", desc: "Cuide do seu coração com especialistas dedicados."},
         { department: "Cardiologia", desc: "Cuide do seu coração com especialistas dedicados."},
-    ]
-
-    const specialtiesTop = [
-        {specialty: "Psiquiatria", image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458583/Psiquiatria_ddzzft.png"},
-        {specialty: "Psicologia", image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458581/Psicologia_w6dwqg.png"},
-        {specialty: "Neurologia", image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763462081/Neurologia_imrrz5.png"},
-        {specialty: "Geriatria", image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458577/Geriatria_wxkegf.png"},
-        {specialty: "Cardiologia", image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763462081/Cardiologia_roivrq.png"},
-        {specialty: "Clinica Geral", image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458576/Clinica_Geral_jvreyq.png"},
-        {specialty: "Pneumologia", image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458580/Pneumologia_giqzfu.png"},
-        {specialty: "Infectologia", image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458579/Infectologia_xdwzwb.png"},
-    ]
-
-    const specialtiesBottom = [
-        {specialty: "Endocrinologia", image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458577/Endocrinologia_rno75a.png"},
-        {specialty: "Nutrologia", image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458580/Nutrologia_uz7ht9.png"},
-        {specialty: "Ortopedia", image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458580/Ortopedia_y7lgeg.png"},
-        {specialty: "Reumatologia", image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458583/Reumatologia_ytgons.png"},
-        {specialty: "Dermatologia", image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458577/Dermatologia_et86tf.png"},
-        {specialty: "Alergologia", image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458576/Alergologia_rhafed.png"},
-        {specialty: "Ginecologia", image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458578/Ginecologia_insrwh.png"},
-        {specialty: "Urologia", image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458583/Urologia_jv7fbz.png"},
     ]
    
     function Img({ light, dark, theme }){
@@ -90,39 +73,6 @@ function HomePage(){
                 src={theme ? light : dark}
                 alt="Essecial Dev Logo"
             />
-        )
-    }
-
-    const SpecialtyDiv = ({ image, text }) => {
-        return (
-            <div className="
-                flex
-                flex-col
-                justify-center
-                items-center
-                w-[130px]
-            ">
-                <img
-                    className="
-                        w-[98px]
-                        h-[98px]
-                    "
-                    src={image} 
-                    alt={text} 
-                />
-                <h2 className="
-                    text-[1.02rem]
-                    leading-normal
-                    text-[#404040]
-                    font-bold
-                    font-DmSans
-                    mt-4
-                    w-[130px]
-                    text-center
-                ">
-                    {text}
-                </h2>
-            </div>
         )
     }
 
@@ -217,25 +167,7 @@ function HomePage(){
         ));
     };
 
-    const renderSpecialties = (dir) => {
-
-        return dir === "top" ? 
-            specialtiesTop.map((spec, i) => 
-                <SpecialtyDiv
-                    key={i}
-                    image={spec.image}
-                    text={spec.specialty}
-                />
-            )
-         : specialtiesBottom.map((spec, i) => 
-                <SpecialtyDiv 
-                    key={i}
-                    image={spec.image}
-                    text={spec.specialty}
-                />
-            )
-        
-    }
+    
 
     useEffect(() => {
 
@@ -475,47 +407,9 @@ function HomePage(){
                     </p>
                 </div>
 
-                <div 
-                    className={`
-                        w-full
-                        max-w-[1124px] 
-                        mb-[62px]
-                `}>     
-                    <div
-                        style={{ scrollbarWidth: "none" }}
-                        className={`
-                            flex
-                            w-full
-                            overflow-x-auto
-                            overflow-y-hidden
-                            gap-[12px]
-                            scrollbar-none
-                            md:touch-none
-                            md:select-none
-                    `}>  
-                        {renderSpecialties("top")}
-                    </div>
-                </div>
-                <div 
-                    className={`
-                        w-full
-                        max-w-[1124px] 
-                        mb-[62px]
-                `}>     
-                    <div
-                        style={{ scrollbarWidth: "none" }}
-                        className={`
-                            flex
-                            w-full
-                            overflow-x-auto
-                            overflow-y-hidden
-                            gap-[12px]
-                            scrollbar-none
-                            md:touch-none
-                            md:select-none
-                    `}>  
-                        {renderSpecialties("bottom")}
-                    </div>
+                <div ref={refSpecialties} className="w-full flex justify-center flex-col items-center">
+                    <SpecialtiesCar dir={"top"} ref={refSpecialties}/>
+                    <SpecialtiesCar dir={"bottom"} ref={refSpecialties}/>
                 </div>
             </section>
         </div>
