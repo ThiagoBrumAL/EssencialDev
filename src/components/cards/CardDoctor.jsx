@@ -13,7 +13,7 @@ const CardDoctor = forwardRef((props, ref) => {
                 className="w-full"
             >
                 <div ref={ref} className={`
-                    ${props.width <= 407 ? "min-w-[300px]" : "min-w-[352px]"}
+                    ${props.width <= 407 ? "min-w-[270px]" : "min-w-[352px]"}
                     border-[2px]
                     border-[#B1B5C3]
                     rounded-[20px]
