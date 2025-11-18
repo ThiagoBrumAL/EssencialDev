@@ -7,6 +7,7 @@ import axios from "axios";
 import { ArrowLeft } from 'lucide-react';
 import { ArrowRight } from 'lucide-react';
 import CardDoctor from "../components/cards/CardDoctor";
+import SmallLoader from "../components/loaders/SmallLoader";
 
 
 function HomePage(){
@@ -146,7 +147,18 @@ function HomePage(){
     }
 
     const renderDoctors = () => {
-        if (!doctors) return <p>Carregando...</p>;
+        if (!doctors){
+            return (
+                <div className="
+                    block
+                    w-full
+                    h-[46px]
+                    relative
+                ">
+                    <SmallLoader />
+                </div>
+            )
+        }
         return doctors.slice(0,10).map((doc, i) => (
             <CardDoctor key={i} ref={i === 0 ? cardRef : null} width={width} specialty={doc.specialty} desc={doctorsDesc[i].desc}/>
         ));

@@ -11,9 +11,14 @@ export default {
           "0%, 100%": {height: "20px", backgroundColor: "#818df873"},
           "50%": {height: "60px", backgroundColor: "#818cf8"}
         },
+        smallLoader:{
+          "0%, 100%": {height: "16px", backgroundColor: "#818df873"},
+          "50%": {height: "46px", backgroundColor: "#818cf8"}
+        },
       },
       animation:{
         loader: "loader 1s ease-in-out infinite",
+        smallLoader: "smallLoader 1s ease-in-out infinite",
       },
 
       fontFamily: {
