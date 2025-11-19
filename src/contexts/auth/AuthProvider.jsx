@@ -45,11 +45,10 @@ export function AuthProvider({ children }){
                 "https://essencial-server.vercel.app/auth/session",
                 {},
                 {
-                    withCredentials: true
+                    withCredentials: true,
+                    headers: { "Content-Type": `Bearer ${token}`}
                 }
             );
-
-            console.log("SESSION RESPONSE:", response.data);
 
             const newToken = response.data?.accessToken || response.data?.token;
 
