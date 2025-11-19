@@ -1,6 +1,7 @@
 import { motion, useInView } from "framer-motion"
+import { memo } from "react"
 
-function SpecialtiesCar({ dir, ref }){
+const SpecialtiesCar = memo(function SpecialtiesCar({ dir, ref }){
 
     const specialtiesTop = [
         {specialty: "Psiquiatria", image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458583/Psiquiatria_ddzzft.png"},
@@ -133,6 +134,6 @@ function SpecialtiesCar({ dir, ref }){
             </div>
         </div>
     )
-}
+})
 
 export default SpecialtiesCar

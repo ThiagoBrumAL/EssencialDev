@@ -11,24 +11,16 @@ import axios from "axios";
 
 export function AuthProvider({ children }){
     
-    const [token, setToken] = useState(() => {
-        const existToken = Cookies.get("tk");
+    const [token, setToken] = useState(() => Cookies.get("tk") || null)
 
-        if(existToken && existToken.length === 1071){
-            return existToken
-        }
-
-        return null
-    })
-
-    const [keepSessionUser, setKeepSessionUser] = useState(false) // ------
+    const [keepSessionUser, setKeepSessionUser] = useState(true)
     const [expiresAt, setExpiresAt] = useState(null)
     const timer = useRef(null)
 
     function login(tokenDatas, callback){
 
         setToken(tokenDatas.token)
-        setExpiresAt(Number(tokenDatas.dateExpiration));
+        setExpiresAt(Number(Date.now() + 7000));
         Cookies.set("tk", tokenDatas.token);
 
         if(callback) return callback()
@@ -47,23 +39,30 @@ export function AuthProvider({ children }){
         }
     }
 
-    async function keepSession(){
+    async function keepSession() {
+        try {
+            const response = await axios.post(
+                "https://essencial-server.vercel.app/auth/session",
+                {},
+                {
+                    withCredentials: true
+                }
+            );
 
-        const response = await axios.post(
-            "https://essencial-server.vercel.app/auth/session",
-            {},
-            { withCredentials: true }
-        );
+            console.log("SESSION RESPONSE:", response.data);
 
-        const status = response.status
+            const newToken = response.data?.accessToken || response.data?.token;
 
-        if(status === 200){
-            Cookies.remove("tk")
-            setToken(response.data.user.accessToken)
-            Cookies.set("tk", response.data.user.accessToken)
-            setExpiresAt(Date.now() + 7000);
+            if (newToken) {
+                setToken(newToken);
+                Cookies.set("tk", newToken);
+                setExpiresAt(Date.now() + 60000);
+            }
+
+        } catch (err) {
+            console.error("Erro no keepSession:", err);
+            logout();
         }
-
     }
 
 

@@ -28,7 +28,7 @@ function HomePage(){
     const width = useWindowWidth();
 
 
-    const { theme } = useTheme();
+    const { theme, validateTheme } = useTheme();
 
     const doctorsDesc = [
         { department: "Cardiologia", desc: "Cuide do seu coração com especialistas dedicados."},
@@ -182,7 +182,7 @@ function HomePage(){
             },1000)
             
         }
-        
+
         getDoctors()
     }, [])
 
@@ -410,6 +410,50 @@ function HomePage(){
                 <div ref={refSpecialties} className="w-full flex justify-center flex-col items-center">
                     <SpecialtiesCar dir={"top"} ref={refSpecialties}/>
                     <SpecialtiesCar dir={"bottom"} ref={refSpecialties}/>
+                </div>
+            </section>
+
+            <section className="
+                block
+                w-full
+            ">
+                <div className={`
+                    w-full
+                    py-[42px]
+                    bg-gradient-to-tr
+                    ${validateTheme(theme,"from-teal-400 to-indigo-400", "from-[#01051C] to-[#051782]")}
+                `}>
+                    <div>
+                        <h2 className="
+                            text-[1.775rem]
+                            leading-normal
+                            text-[#FFFAFE]
+                            font-normal
+                            font-DmSans
+                            mb-[12px]
+                            text-center
+                        ">
+                            Nossas Vantagens
+                        </h2>
+                        <h1 className="
+                            text-[1.775rem]
+                            leading-normal
+                            text-[#FFFAFE]
+                            font-bold
+                            font-DmSans
+                            mb-[12px]
+                            text-center
+                        ">
+                            A Qualidade do Atendimento é Nossa Prioridade
+                        </h1>
+                    </div>
+
+                    <div className="
+                        w-full
+                        max-w-[400px]
+                    ">
+
+                    </div>
                 </div>
             </section>
         </div>
