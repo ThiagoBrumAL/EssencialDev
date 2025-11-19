@@ -54,8 +54,10 @@ const SpecialtiesCar = memo(function SpecialtiesCar({ dir, ref }){
                 ">
                     <img
                         className="
-                            w-[98px]
-                            h-[98px]
+                            w-[68px]
+                            h-[68px]
+                            md:w-[98px]
+                            md:h-[98px]
                         "
                         src={image} 
                         alt={text} 

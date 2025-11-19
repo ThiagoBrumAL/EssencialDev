@@ -20,7 +20,7 @@ export function AuthProvider({ children }){
     function login(tokenDatas, callback){
 
         setToken(tokenDatas.token)
-        setExpiresAt(Number(Date.now() + 7000));
+        setExpiresAt(Number(tokenDatas.dateExpiration));
         Cookies.set("tk", tokenDatas.token);
 
         if(callback) return callback()
@@ -29,7 +29,11 @@ export function AuthProvider({ children }){
 
     async function logout(){
 
-        const response = await axios.post("https://essencial-server.vercel.app/auth/logout");
+        const response = await axios.post(
+            "https://essencial-server.vercel.app/auth/logout",
+            {},
+            { withCredentials: true }
+        );
         const status = response.status;
 
         if(status === 200){
@@ -44,18 +48,16 @@ export function AuthProvider({ children }){
             const response = await axios.post(
                 "https://essencial-server.vercel.app/auth/session",
                 {},
-                {
-                    withCredentials: true,
-                    headers: { "Content-Type": `Bearer ${token}`}
-                }
+                { withCredentials: true }
             );
 
-            const newToken = response.data?.accessToken || response.data?.token;
+            const newToken = response.data?.user.accessToken;
+            const expire = response.data?.user.expiresAt
 
             if (newToken) {
                 setToken(newToken);
                 Cookies.set("tk", newToken);
-                setExpiresAt(Date.now() + 60000);
+                setExpiresAt(Number(expire));
             }
 
         } catch (err) {
@@ -64,6 +66,14 @@ export function AuthProvider({ children }){
         }
     }
 
+    useEffect(() => {
+
+        if(token && keepSessionUser){
+            keepSession();
+        }
+
+        return
+    }, [])
 
     useEffect(() => {
 

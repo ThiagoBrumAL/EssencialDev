@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, memo } from "react"
+import React from "react";
 import { useTheme } from "../contexts/theme/useTheme";
 import { useWindowWidth } from '../hooks/WindowWidth'
 
@@ -9,8 +10,13 @@ import { ArrowRight } from 'lucide-react';
 import CardDoctor from "../components/cards/CardDoctor";
 import SmallLoader from "../components/loaders/SmallLoader";
 import SpecialtiesCar from "../components/carrosel/SpecialtiesCar";
+import SectionWrapperA from "../components/wrappers/home/SectionWrapperA"
+import SectionWrapperB from "../components/wrappers/home/SectionWrapperB";
+import SectionWrapperC from "../components/wrappers/home/SectionWrapperC";
+
 
 import { cloudinary } from "../cloud/cloudinary";
+
 
 
 function HomePage(){
@@ -30,51 +36,28 @@ function HomePage(){
 
     const { theme, validateTheme } = useTheme();
 
-    const doctorsDesc = [
-        { department: "Cardiologia", desc: "Cuide do seu coração com especialistas dedicados."},
-        { department: "Cardiologia", desc: "Cuide do seu coração com especialistas dedicados."},
-        { department: "Cardiologia", desc: "Cuide do seu coração com especialistas dedicados."},
-        { department: "Cardiologia", desc: "Cuide do seu coração com especialistas dedicados."},
-        { department: "Cardiologia", desc: "Cuide do seu coração com especialistas dedicados."},
-        { department: "Cardiologia", desc: "Cuide do seu coração com especialistas dedicados."},
-        { department: "Cardiologia", desc: "Cuide do seu coração com especialistas dedicados."},
-        { department: "Cardiologia", desc: "Cuide do seu coração com especialistas dedicados."},
-        { department: "Cardiologia", desc: "Cuide do seu coração com especialistas dedicados."},
-        { department: "Cardiologia", desc: "Cuide do seu coração com especialistas dedicados."},
+    const adventages = [
+        {
+            image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763507355/icon-hospital_ywpghf.png", 
+            h2: "Equipe Humanizada", 
+            p: "Nossa equipe é dedicada e atenciosa, garantindo que cada paciente se sinta ouvido e cuidado."
+        },
+        {
+            image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763507356/icon-tec_cejhze.png", 
+            h2: "Tecnologia Avançada", 
+            p: "Utilizamos equipamentos modernos e métodos atualizados para oferecer diagnósticos precisos e rápidos."
+        },
+        {
+            image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763507355/icon-hospital_ywpghf.png", 
+            h2: "Foco no Paciente", 
+            p: "Cada atendimento é planejado pensando nas necessidades e conforto do paciente, sempre com atenção especial."
+        },
+        {
+            image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763507355/icon-hospital_ywpghf.png", 
+            h2: "Acesso Fácil", 
+            p: "Agendamento simples, horários flexíveis e facilidade para acessar nossos serviços, sem complicações."
+        },
     ]
-   
-    function Img({ light, dark, theme }){
-    
-        const [imageIsVisible, setImageIsVisible] = useState([])
-        const targetTheme = theme ? "light" : "dark"
-    
-        useEffect(() => {
-    
-            setImageIsVisible(false)
-            const timer = setTimeout(() => setImageIsVisible(true), 50)
-            return () => clearTimeout(timer)
-    
-        }, [theme])
-    
-        return (
-            <img
-                id="logo"
-                className={`
-                    h-full
-                    w-full
-                    object-contain
-                    max-h-[450px]
-                    max-w-[450px]
-                    transition-opacity
-                    ease-in-out
-                    duration-700
-                    ${imageIsVisible ? "opacity-100" : "opacity-0"}
-                `}
-                src={theme ? light : dark}
-                alt="Essecial Dev Logo"
-            />
-        )
-    }
 
     const scrollRight = () => {
 
@@ -166,7 +149,6 @@ function HomePage(){
             <CardDoctor key={i} ref={i === 0 ? cardRef : null} width={width} specialty={doc.specialty} desc={"Cuide do seu coração com especialistas dedicados."}/>
         ));
     };
-
     
 
     useEffect(() => {
@@ -199,120 +181,9 @@ function HomePage(){
                 w-full
                 h-full
         ">
-            <section 
-                className="
-                    p-6
-                    flex
-                    justify-center
-                    items-center
-                    flex-wrap-reverse
-                    gap-[40px]
-                    w-full
-            ">
-                <div
-                    className="
-                        w-full
-                        max-w-[600px]    
-                ">
-                    <div className="
-                        mb-[3rem]
-                    ">
-                        <h1 
-                            className="
-                                font-DmSans
-                                md:text-[4.275rem]
-                                text-[3rem]
-                                font-bold
-                                md:leading-[3.975rem]
-                                leading-[2.675rem]
-                                text-sky-300
-                                mb-[1.275rem]
-                        ">
-                            Agende sua consulta em minutos
-                        </h1>
-                        <p className="
-                            font-DmSans
-                            text-[1.275rem]
-                            text-[#000000]
-                            font-normal
-                            leading-normal
-                        ">
-                            Clínica geral e diversas especialidades em um só lugar.
-                        </p>
-                    </div>
+            <SectionWrapperA theme={theme} cloudinary={cloudinary}/>
+            <SectionWrapperB theme={theme} cloudinary={cloudinary}/>
 
-                    <button className="
-                        bg-[#A3B3FF]
-                        px-6
-                        py-2
-                        rounded-full
-                        text-slate-50
-                        font-bold
-                        leading-normal
-                        text-[1.275rem]
-                        shadow-sm
-                        duration-200
-                        transition-transform
-                        md:hover:-translate-y-1
-                    ">
-                        Agendar Agora
-                    </button>
-                    
-                </div>
-                <div>
-                    <Img 
-                        light={cloudinary["/home"].imageTop.light}
-                        dark={""}
-                        theme={theme}
-                    />
-                </div>
-            </section>
-            <section 
-                className="
-                    p-6
-                    flex
-                    justify-center
-                    items-center
-                    flex-wrap
-                    gap-[80px]
-                    w-full
-            ">
-                <div>
-                    <Img 
-                        light={cloudinary["/home"].imageMiddle.light}
-                        dark={""}
-                        theme={theme}
-                    />
-                </div>
-                <div
-                    className="
-                        w-full
-                        max-w-[600px]
-                ">
-                    <h1 
-                        className="
-                            font-DmSans
-                            md:text-[3.275rem]
-                            text-[3rem]
-                            font-bold
-                            md:leading-[3.975rem]
-                            leading-[2.675rem]
-                            text-sky-300
-                            mb-[1.275rem]
-                    ">
-                        Sua saúde é a nossa prioridade
-                    </h1>
-                    <p className="
-                        font-DmSans
-                        text-[1.275rem]
-                        text-[#000000]
-                        font-normal
-                        leading-normal
-                    ">
-                        Conte com uma equipe preparada para cuidar de você.
-                    </p>
-                </div>
-            </section>
             <section className="
                     flex
                     items-center
@@ -413,49 +284,7 @@ function HomePage(){
                 </div>
             </section>
 
-            <section className="
-                block
-                w-full
-            ">
-                <div className={`
-                    w-full
-                    py-[42px]
-                    bg-gradient-to-tr
-                    ${validateTheme(theme,"from-teal-400 to-indigo-400", "from-[#01051C] to-[#051782]")}
-                `}>
-                    <div>
-                        <h2 className="
-                            text-[1.775rem]
-                            leading-normal
-                            text-[#FFFAFE]
-                            font-normal
-                            font-DmSans
-                            mb-[12px]
-                            text-center
-                        ">
-                            Nossas Vantagens
-                        </h2>
-                        <h1 className="
-                            text-[1.775rem]
-                            leading-normal
-                            text-[#FFFAFE]
-                            font-bold
-                            font-DmSans
-                            mb-[12px]
-                            text-center
-                        ">
-                            A Qualidade do Atendimento é Nossa Prioridade
-                        </h1>
-                    </div>
-
-                    <div className="
-                        w-full
-                        max-w-[400px]
-                    ">
-
-                    </div>
-                </div>
-            </section>
+            <SectionWrapperC adventages={adventages} theme={theme} validateTheme={validateTheme}/>
         </div>
     )
 

@@ -17,7 +17,7 @@ export const cloudinary = {
             "dark" : ""
         },
         imageMiddle: {
-            "light": "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763405014/Medical_research-bro_i5rnb6.png",
+            "light": "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763382138/Cardiologist-bro_1_ezmc76.png",
             "dark" : ""
         },
     }

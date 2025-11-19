@@ -14,7 +14,13 @@ export const useSignIn = () => {
 
         try {
             const { isValid: _isValid, role: _role, ...rest } = data
-            const response = await axios.post("https://essencial-server.vercel.app/auth/sign-in", rest)
+            const response = await axios.post(
+                "https://essencial-server.vercel.app/auth/sign-in",
+                rest,
+                {
+                    withCredentials: true
+                }
+            )
 
             const returnFromApi = await response.data
 
