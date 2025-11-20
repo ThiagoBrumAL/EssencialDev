@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, memo } from "react"
 import React from "react";
 import { useTheme } from "../contexts/theme/useTheme";
 import { useWindowWidth } from '../hooks/WindowWidth'
+import { useAuth } from "../contexts/auth/useAuth";
 
 import axios from "axios";
 
@@ -13,11 +14,10 @@ import SpecialtiesCar from "../components/carrosel/SpecialtiesCar";
 import SectionWrapperA from "../components/wrappers/home/SectionWrapperA"
 import SectionWrapperB from "../components/wrappers/home/SectionWrapperB";
 import SectionWrapperC from "../components/wrappers/home/SectionWrapperC";
+import SectionWrapperD from "../components/wrappers/home/SectionWrapperD";
 
 
 import { cloudinary } from "../cloud/cloudinary";
-
-
 
 function HomePage(){
 
@@ -29,6 +29,8 @@ function HomePage(){
     const scrollRef = useRef();
     const didRun = useRef(false);
     const refSpecialties = useRef()
+
+    const { token } = useAuth()
 
 
     const width = useWindowWidth();
@@ -157,7 +159,13 @@ function HomePage(){
         didRun.current = true;
 
         const getDoctors =  async() => {
-            const response = await axios.get("https://essencial-server.vercel.app/doctors");
+            const response = await axios.get("https://essencial-server.vercel.app/doctors", 
+                { withCredentials: true,
+                    headers: {
+                        Authorization: `Bearer ${ token }`
+                    }
+                 }
+            );
             
             setTimeout(() => {
                 setDoctors(response.data)
@@ -225,6 +233,7 @@ function HomePage(){
                         w-full
                         ${width >= 1158 ? "max-w-[1120px]" : (width >= 775 ? "max-w-[740px]" : (width >= 407 ? "max-w-[352px]" : "max-w-[270px]"))} 
                         mb-[32px]
+                        py-[24px]
                 `}>
 
                     {width <= 775 ? null : renderButtonArrows()}
@@ -235,9 +244,11 @@ function HomePage(){
                         className={`
                             flex
                             w-full
+                            h-full
                             overflow-x-auto
                             overflow-y-hidden
                             gap-[24px]
+                            py-[24px]
                             snap-x
                             snap-mandatory
                             scrollbar-none
@@ -245,7 +256,7 @@ function HomePage(){
                             md:touch-none
                             md:select-none
                     `}>  
-                        {renderDoctors()}
+                        { renderDoctors() }
                     </div>
                 </div>
                 <div className="
@@ -253,7 +264,7 @@ function HomePage(){
                     h-auto
                     px-[24px]
                     text-center
-                    mt-[70px]
+                    mt-[100px]
                     mb-[20px]
                 ">
                     <p className="
@@ -278,13 +289,15 @@ function HomePage(){
                     </p>
                 </div>
 
-                <div ref={refSpecialties} className="w-full flex justify-center flex-col items-center">
-                    <SpecialtiesCar dir={"top"} ref={refSpecialties}/>
-                    <SpecialtiesCar dir={"bottom"} ref={refSpecialties}/>
+                <div ref={ refSpecialties } className="w-full flex justify-center flex-col items-center mb-[100px]">
+                    <SpecialtiesCar dir={"top"} ref={ refSpecialties }/>
+                    <SpecialtiesCar dir={"bottom"} ref={ refSpecialties }/>
                 </div>
             </section>
 
             <SectionWrapperC adventages={adventages} theme={theme} validateTheme={validateTheme}/>
+            <SectionWrapperD theme={theme} cloudinary={cloudinary}/>
+
         </div>
     )
 

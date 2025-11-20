@@ -7,6 +7,8 @@ import { User, TextAlignJustify  } from 'lucide-react';
 import { useLocation } from "react-router-dom";
 import { useOs } from "../contexts/os/useOs.js";
 
+import { AnimatePresence, motion } from "framer-motion";
+
 
 function ScreenHome({ children }){
 
@@ -70,6 +72,184 @@ function ScreenHome({ children }){
         )
     }
 
+    const Structure = () => {
+        return <div className="
+            w-full
+            h-full
+            relative
+        ">
+            <AnimatePresence>
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.9 }}
+                    className="w-full h-full"
+                >
+                    <header 
+                        className={`
+                            ${validateTheme(theme,"from-teal-400 to-indigo-400", "from-[#01051C] to-[#051782]")}
+                            bg-gradient-to-tr
+                            ${isWindows ? "md:h-[74px]" : "md:h-[90px]"}
+                            ${isWindows ? "h-[70px]" : "h-[86px]"}
+                            w-full
+                            px-[32px]
+                            justify-center
+                            flex
+                            items-center
+                            transition 
+                            duration-1000
+                            ease-in-out
+                            z-50
+                            fixed
+                    `}>
+
+                            <div className="
+                                flex
+                                justify-center
+                                h-full
+                                w-[90%]
+                            ">
+                                <div 
+                                    className="
+                                        flex
+                                        items-center
+                                        justify-between
+                                        h-full
+                                        w-[100%]
+                                    ">
+
+                                    <img 
+                                        src="https://res.cloudinary.com/essencialdev-cloudinary/image/upload/g_auto/f_auto/v1761500133/Logo_xy67v8.png" 
+                                        alt=""
+                                        className="
+                                            w-[186px]
+                                            h-[43px]
+                                            outline-none
+                                            p-0
+                                            m-0
+                                            md:block
+                                            hidden
+                                        "/>
+
+                                    <div className="
+                                        w-[2px]
+                                        bg-[#FFFAFE]
+                                        md:block
+                                        hidden
+                                        h-[40px]
+                                    "></div>
+
+                                    <nav className="
+                                        w-[50%]
+                                        h-full
+                                        items-center
+                                        justify-between
+                                        hidden
+                                        md:flex
+                                    ">
+                                        
+                                        <Link 
+                                            path={"/home"} 
+                                            name={"Inicio"}
+                                            condition={"md:block hidden"}
+                                        />
+
+                                        <Link 
+                                            path={"/blog"} 
+                                            name={"Blog"}
+                                            condition={"md:block hidden"}
+                                        />
+                                        
+                                        <Link 
+                                            path={"/about"} 
+                                            name={"Sobre Nós"}
+                                            condition={"md:block hidden"}
+                                        />
+
+                                        <Link 
+                                            path={"/chat"} 
+                                            name={<>Assistente <br /> Virtual</>}
+                                            condition={"md:block hidden"}
+                                        />
+                                        
+                                    </nav>
+
+                                    <div className="
+                                        md:hidden
+                                        block
+                                    ">
+                                        <TextAlignJustify color="#FFFFFF"/>
+                                    </div>
+
+                                    <div className="
+                                        flex
+                                        justify-center
+                                        items-center
+                                        md:w-[100px]
+                                        md:h-full
+                                        h-[30px]
+                                        w-[30px]
+                                    ">
+                                        <Link 
+                                            path={"/info"} 
+                                            name={<User size={30} color="#FFFFFF"/>}
+                                            condition={""}
+                                        />
+                                    </div>
+                                </div>
+                                
+                            </div>
+                    </header>
+
+                    <main className={`
+                        h-auto
+                        w-full
+                        transition 
+                        duration-1000
+                        ease-in-out
+                        pt-[80px]
+
+                    `}>
+                        { children }
+                    </main>
+
+                    <footer className={`
+                        w-full
+                        p-[24px]
+                        bg-gradient-to-tr
+                        flex
+                        justify-center
+                        items-center
+                        flex-col
+                        ${validateTheme(theme,"from-teal-400 to-indigo-400", "from-[#01051C] to-[#051782]")}    
+                    `}>
+                        <h1 className="
+                            text-[1.375rem]
+                            leading-normal
+                            text-[#FFFAFE]
+                            font-normal
+                            font-DmSans
+                        ">
+                            Clinica EssencialDev
+                        </h1>
+                        <h2 className="
+                            text-[1.175rem]
+                            leading-normal
+                            text-[#FFFAFE]
+                            font-normal
+                            font-DmSans
+                        ">
+                            Sua saúde, nossa prioridade!
+                        </h2>
+                    </footer>
+                </motion.div>
+            </AnimatePresence>
+            
+            
+        </div>
+    }
+
     return (
         <div 
             className={`
@@ -78,133 +258,8 @@ function ScreenHome({ children }){
                 ${validateTheme(theme,"bg-[#FFFAFE]","bg-slate-900")}
         `}>
 
-            {load && <Loader /> }
+            {load ? <Loader /> : Structure()}
 
-            <header 
-                className={`
-                    ${validateTheme(theme,"from-teal-400 to-indigo-400", "from-[#01051C] to-[#051782]")}
-                    bg-gradient-to-tr
-                    ${isWindows ? "md:h-[74px]" : "md:h-[90px]"}
-                    ${isWindows ? "h-[70px]" : "h-[86px]"}
-                    w-full
-                    px-[32px]
-                    justify-center
-                    flex
-                    items-center
-                    transition 
-                    duration-1000
-                    ease-in-out
-                    ${load ? "opacity-0" : "opacity-100"}
-            `}>
-
-                    <div className="
-                        flex
-                        justify-center
-                        h-full
-                        w-[90%]
-                    ">
-                        <div 
-                            className="
-                                flex
-                                items-center
-                                justify-between
-                                h-full
-                                w-[100%]
-                            ">
-
-                            <img 
-                                src="https://res.cloudinary.com/essencialdev-cloudinary/image/upload/g_auto/f_auto/v1761500133/Logo_xy67v8.png" 
-                                alt=""
-                                className="
-                                    w-[186px]
-                                    h-[43px]
-                                    outline-none
-                                    p-0
-                                    m-0
-                                    md:block
-                                    hidden
-                                "/>
-
-                            <div className="
-                                w-[2px]
-                                bg-[#FFFAFE]
-                                md:block
-                                hidden
-                                h-[40px]
-                            "></div>
-
-                            <nav className="
-                                w-[50%]
-                                h-full
-                                items-center
-                                justify-between
-                                hidden
-                                md:flex
-                            ">
-                                
-                                <Link 
-                                    path={"/home"} 
-                                    name={"Inicio"}
-                                    condition={"md:block hidden"}
-                                />
-
-                                <Link 
-                                    path={"/blog"} 
-                                    name={"Blog"}
-                                    condition={"md:block hidden"}
-                                />
-                                
-                                <Link 
-                                    path={"/about"} 
-                                    name={"Sobre Nós"}
-                                    condition={"md:block hidden"}
-                                />
-
-                                <Link 
-                                    path={"/chat"} 
-                                    name={<>Assistente <br /> Virtual</>}
-                                    condition={"md:block hidden"}
-                                />
-                                
-                            </nav>
-
-                            <div className="
-                                md:hidden
-                                block
-                            ">
-                                <TextAlignJustify color="#FFFFFF"/>
-                            </div>
-
-                            <div className="
-                                flex
-                                justify-center
-                                items-center
-                                md:w-[100px]
-                                md:h-full
-                                h-[30px]
-                                w-[30px]
-                            ">
-                                <Link 
-                                    path={"/info"} 
-                                    name={<User size={30} color="#FFFFFF"/>}
-                                    condition={""}
-                                />
-                            </div>
-                        </div>
-                        
-                    </div>
-            </header>
-
-            <main className={`
-                h-auto
-                w-full
-                transition 
-                duration-1000
-                ease-in-out
-                ${load ? "opacity-0" : "opacity-100"}
-            `}>
-                { load ? null : children }
-            </main>
         </div>
     )
 }

@@ -20,8 +20,6 @@ function Img({ light, dark, theme }){
                 h-full
                 w-full
                 object-contain
-                max-h-[450px]
-                max-w-[450px]
                 transition-opacity
                 ease-in-out
                 duration-700

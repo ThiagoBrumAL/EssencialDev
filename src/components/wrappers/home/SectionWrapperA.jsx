@@ -1,5 +1,6 @@
 import React, { memo } from "react"
 import Img from "../../img/ImgForHome"
+import { motion } from "framer-motion"
 
 const SectionWrapperA = React.memo(function SectionWrapperA({ theme, cloudinary }){
     return (
@@ -45,25 +46,32 @@ const SectionWrapperA = React.memo(function SectionWrapperA({ theme, cloudinary 
                     </p>
                 </div>
 
-                <button className="
-                    bg-[#A3B3FF]
-                    px-6
-                    py-2
-                    rounded-full
-                    text-slate-50
-                    font-bold
-                    leading-normal
-                    text-[1.275rem]
-                    shadow-sm
-                    duration-200
-                    transition-transform
-                    md:hover:-translate-y-1
-                ">
-                    Agendar Agora
-                </button>
+                <motion.button
+                    whileTap={{ scale: 0.9 }}
+                >
+                    <button className="
+                        bg-[#A3B3FF]
+                        px-6
+                        py-2
+                        rounded-full
+                        text-slate-50
+                        font-bold
+                        leading-normal
+                        text-[1.275rem]
+                        shadow-sm
+                        duration-200
+                        transition-transform
+                        md:hover:-translate-y-1
+                    ">
+                        Agendar Agora
+                    </button>
+                </motion.button>
                 
             </div>
-            <div>
+            <div className="
+                max-h-[450px]
+                max-w-[450px]
+            ">
                 <Img 
                     light={cloudinary["/home"].imageTop.light}
                     dark={""}

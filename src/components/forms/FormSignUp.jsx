@@ -298,7 +298,7 @@ function FormSignUp(){
                 </div>
 
                 <div className="
-                    max-w-[320px]
+                    max-w-[350px]
                     w-full
                 ">
                     

@@ -24,7 +24,7 @@ const SpecialtiesCar = memo(function SpecialtiesCar({ dir, ref }){
         {specialty: "Ginecologia", image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458578/Ginecologia_insrwh.png"},
         {specialty: "Urologia", image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458583/Urologia_jv7fbz.png"},
     ]
-    
+
     const inView = useInView(ref, {
         once: true,
         margin: "0px 0px -50px 0px"
@@ -41,7 +41,7 @@ const SpecialtiesCar = memo(function SpecialtiesCar({ dir, ref }){
             <motion.div
                 variants={variants}
                 initial="hidden"
-                animate={inView ? "visible" : "hidden"}
+                animate={ inView ? "visible" : "hidden" }
                 transition={{ duration: 0.5, delay: 0.25 }}
                 className="w-full"
             >
@@ -54,8 +54,8 @@ const SpecialtiesCar = memo(function SpecialtiesCar({ dir, ref }){
                 ">
                     <img
                         className="
-                            w-[68px]
-                            h-[68px]
+                            w-[78px]
+                            h-[78px]
                             md:w-[98px]
                             md:h-[98px]
                         "
@@ -81,13 +81,14 @@ const SpecialtiesCar = memo(function SpecialtiesCar({ dir, ref }){
 
     const renderSpecialties = (dir) => {
 
-        return dir === "top" ? 
+        return dir === "top" ?
             specialtiesTop.map((spec, i) => 
                 <SpecialtyDiv
                     key={i}
                     image={spec.image}
                     text={spec.specialty}
                 />
+            
             )
          : specialtiesBottom.map((spec, i) => 
                 <SpecialtyDiv 

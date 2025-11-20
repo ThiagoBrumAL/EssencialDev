@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import { useTheme } from "../../contexts/theme/useTheme";
 import { useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
 
 function ButtonMain({
     name, 
@@ -31,27 +32,32 @@ function ButtonMain({
 
     return (
 
-        <button onClick={(event) => {
-            event.preventDefault();
-            operation.api(method, where, body)
-        }}
+        <motion.div
+            whileTap={{ scale: 0.9 }}
+            className="w-full h-auto"
+        >
+            <button onClick={(event) => {
+                event.preventDefault();
+                operation.api(method, where, body)
+            }}
 
-        disabled={locale.pathname === "/recover" ? body.fields[0].disabled : false}
+            disabled={locale.pathname === "/recover" ? body.fields[0].disabled : false}
 
-        className={` 
-            ${validateTheme(theme, "bg-indigo-300", "bg-indigo-700")}
-            w-full 
-            text-slate-50 
-            py-2 
-            rounded-full
-            md:mt-[40px]
-            mt-[50px]
-            font-[500]
-            ${validateTheme(theme, `${hoverLight}`, `${hoverDark}`)}
-            ease-in-out transition`
-        }>
-            {name}
-        </button>
+            className={` 
+                ${validateTheme(theme, "bg-indigo-300", "bg-indigo-700")}
+                w-full 
+                text-slate-50 
+                py-2 
+                rounded-full
+                md:mt-[40px]
+                mt-[50px]
+                font-[500]
+                ${validateTheme(theme, `${hoverLight}`, `${hoverDark}`)}
+                ease-in-out transition`
+            }>
+                {name}
+            </button>
+        </motion.div>
     )
 }
 export default ButtonMain;
