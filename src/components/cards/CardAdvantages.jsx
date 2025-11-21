@@ -2,7 +2,7 @@ function CardAdventages({ image, h2, p }){
     return (
         <div className="
             w-full
-            max-w-[400px]
+            sm:max-w-[400px]
         ">
             <div className="
                 w-full
@@ -22,17 +22,19 @@ function CardAdventages({ image, h2, p }){
                 h-auto
                 flex
                 justify-center
-                items-center
+                items-start
                 flex-col
             ">
                 <h2 className="
-                    text-[1.675rem]
+                    md:text-[1.675rem]
+                    text-[1.475rem]
                     leading-normal
                     text-[#FFFAFE]
                     font-bold
                     font-DmSans
                     mb-[12px]
-                    text-center
+                    sm:text-center
+                    text-left
                 ">
                     {h2}
                 </h2>
@@ -44,7 +46,7 @@ function CardAdventages({ image, h2, p }){
                     font-DmSans
                     mb-[12px]
                     text-left
-                    max-w-[250px]
+                    my:max-w-[250px]
                 ">
                     {p}
                 </p>

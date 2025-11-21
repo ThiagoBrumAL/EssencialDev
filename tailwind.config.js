@@ -28,7 +28,8 @@ export default {
     },
     screens: {
       'xs': '480px',
-      'sm': '640px',   
+      'sm': '640px',
+      'my': '800px',   
       'md': '940px',
       'lg': '1024px',
       'xl': '1280px',

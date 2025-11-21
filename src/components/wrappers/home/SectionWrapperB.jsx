@@ -17,6 +17,8 @@ const SectionWrapperB = React.memo(function SectionWrapperB({ theme, cloudinary 
             <div className="
                 max-h-[450px]
                 max-w-[450px]
+                flex
+                justify-center
             ">
                 <Img 
                     light={cloudinary["/home"].imageMiddle.light}

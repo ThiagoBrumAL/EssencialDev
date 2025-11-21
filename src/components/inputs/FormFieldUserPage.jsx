@@ -47,7 +47,7 @@ function FormFieldUserPage({ body, value }) {
                             font-Inter
                             font-normal
                             md:text-[0.95rem]
-                            text-[0.8rem]
+                            text-[0.96rem]
                         `}
                         htmlFor={body["field"].id}
                     >

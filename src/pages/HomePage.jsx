@@ -156,7 +156,7 @@ function HomePage(){
 
         const body = { setDoctors }
         api("get", "/home", body)
-        
+
     }, [])
 
     useEffect(() => {
@@ -186,7 +186,6 @@ function HomePage(){
                 <div className="
                     w-auto
                     h-auto
-                    px-[24px]
                     text-center
                     mt-[32px]
                     mb-[20px]
@@ -215,8 +214,8 @@ function HomePage(){
                     className={`
                         w-full
                         ${width >= 1158 ? "max-w-[1120px]" : (width >= 775 ? "max-w-[740px]" : (width >= 407 ? "max-w-[352px]" : "max-w-[270px]"))} 
-                        mb-[32px]
-                        py-[24px]
+                        sm:mb-[32px]
+                        sm:py-[24px]
                 `}>
 
                     {width <= 775 ? null : renderButtonArrows()}
@@ -245,9 +244,9 @@ function HomePage(){
                 <div className="
                     w-auto
                     h-auto
-                    px-[24px]
                     text-center
-                    mt-[100px]
+                    sm:mt-[100px]
+                    mt-[50px]
                     mb-[20px]
                 ">
                     <p className="
@@ -272,7 +271,7 @@ function HomePage(){
                     </p>
                 </div>
 
-                <div ref={ refSpecialties } className="w-full flex justify-center flex-col items-center mb-[100px]">
+                <div ref={ refSpecialties } className="w-full flex justify-center flex-col items-center sm:mb-[100px] mb-[20px]">
                     <SpecialtiesCar dir={"top"} ref={ refSpecialties }/>
                     <SpecialtiesCar dir={"bottom"} ref={ refSpecialties }/>
                 </div>

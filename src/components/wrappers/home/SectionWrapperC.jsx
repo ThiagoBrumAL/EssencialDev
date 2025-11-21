@@ -22,7 +22,8 @@ const SectionWrapperC = React.memo(function SectionWrapperC({ adventages, theme,
                     mb-[56px]
                 ">
                     <h2 className="
-                        text-[1.775rem]
+                        md:text-[1.775rem]
+                        text-[1.475rem]
                         leading-normal
                         text-[#FFFAFE]
                         font-normal
@@ -33,7 +34,8 @@ const SectionWrapperC = React.memo(function SectionWrapperC({ adventages, theme,
                         Nossas Vantagens
                     </h2>
                     <h1 className="
-                        text-[1.775rem]
+                        md:text-[1.775rem]
+                        text-[1.475rem]
                         leading-normal
                         text-[#FFFAFE]
                         font-bold

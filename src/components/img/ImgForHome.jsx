@@ -18,7 +18,8 @@ function Img({ light, dark, theme }){
             id="logo"
             className={`
                 h-full
-                w-full
+                sm:w-full
+                w-[90%]
                 object-contain
                 transition-opacity
                 ease-in-out

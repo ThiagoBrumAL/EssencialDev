@@ -12,7 +12,7 @@ const SectionWrapperD = React.memo(function SectionWrapperD({ theme, cloudinary 
                 items-center
                 justify-center
                 w-full
-                mt-[100px]
+                sm:mt-[100px]
         ">
             <div className="
                 w-auto
@@ -33,7 +33,8 @@ const SectionWrapperD = React.memo(function SectionWrapperD({ theme, cloudinary 
                     Fale Conosco 
                 </p>
                 <p className="
-                    text-[1.575rem]
+                    sm:text-[1.575rem]
+                    text-[1.425rem]
                     leading-normal
                     text-[#000000]
                     font-bold
@@ -46,7 +47,10 @@ const SectionWrapperD = React.memo(function SectionWrapperD({ theme, cloudinary 
             <div className="
                 max-h-[120px]
                 max-w-[120px]
+                w-full
                 mb-[52px]
+                flex
+                justify-center
             ">
                 <Img 
                     light={cloudinary["/home"].imageChatBot.light}
