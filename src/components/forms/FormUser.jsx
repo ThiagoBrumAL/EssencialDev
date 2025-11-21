@@ -13,6 +13,7 @@ import { maskHeight } from "../../utils/masks/maskHeight.js";
 import { maskWeight } from "../../utils/masks/maskWeight.js";
 
 import FormFieldUserPage from "../inputs/FormFieldUserPage.jsx";
+import ClassicButton from "../buttons/ClassicButton.jsx";
 
 import { X } from "lucide-react";
 import SmallLoader from "../loaders/SmallLoader.jsx";
@@ -54,31 +55,6 @@ function FormUser() {
         setShowEdit(true);
         setFields(originalFields)
         setUpdate(false)
-    }
-
-    const ClassicButton = ({ text, fn, type }) => {
-
-        const body = { fields, setFields, setStatusReq }
-
-        return (
-            <motion.button
-                onClick={() => fn && type === "update" ? fn("patch", "/info/update", body) : fn()}
-                whileTap={{ scale: 0.9 }} className={`
-                    block
-                    ${type === "update" ? "text-white ": "text-slate-950"}
-                    ${type === "update" ? "bg-gradient-to-tr ": null}
-                    md:text-[0.9rem]
-                    text[0.8rem]
-                    px-3
-                    py-2
-                    ${type === "update" ? validateTheme(theme, "from-teal-400 to-indigo-400" , "from-[#01051C] to-[#051782]") : "bg-white border-[2px] border-slate-200"}
-                    rounded-xl
-                    hover:cursor-pointer
-                    font-DmSans
-            `}>
-                { text }
-            </motion.button>
-        )
     }
 
     useEffect(() => {
@@ -249,13 +225,12 @@ function FormUser() {
                     items-center
                     mb-[32px]
                 '>
-                    <h2 className='
-                        md:text-[1.275rem]
-                        tetx-[1rem]
-                        text-[#101828]
+                    <h2 className={`
+                        text-[1.475rem]
+                        ${validateTheme(theme, "text-black", "text-slate-500")}
                         font-DmSans
-
-                    '>
+                        font-bold
+                    `}>
                         Informações pessoais
                     </h2>
                     { showEdit && user ? <ClassicButton text={"Editar Perfil"} fn={enableFields} pos={"block"} type={"edit"}/> : null}
@@ -271,15 +246,14 @@ function FormUser() {
                     layout
                     transition={{ type: "tween", duration: 0.4, ease: "easeInOut" }}
                     exit={{ opacity: 0 }}
-                    className='
+                    className={`
                         w-full
-                        bg-[#FFFFFF] 
+                        ${validateTheme(theme, "bg-white border-slate-200", "bg-slate-900 border-slate-800")}
                         p-[32px]  
                         shadow-lg
                         rounded-2xl
-                        border-[2px]
-                        border-slate-200
-                    '>
+                        border-[3px]
+                    `}>
                         <form 
                             layout="true"
                             action=""
@@ -345,7 +319,7 @@ function FormUser() {
                             md:flex-row
                             flex-col
                         '>
-                            { update && <ClassicButton text={`Atualizar perfil`} fn={ api } type={"update"}/>}
+                            { update && <ClassicButton text={`Atualizar perfil`} fn={ api } type={"update"} body={{ fields, setFields, setStatusReq }}/>}
                             { update && <ClassicButton 
                                 text={
                                     <> 

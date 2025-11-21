@@ -9,42 +9,58 @@ import Cookies from "js-cookie";
 
 import axios from "axios";
 
-export function AuthProvider({ children }){
-    
-    const [token, setToken] = useState(() => Cookies.get("tk") || null)
+export function AuthProvider({ children }) {
 
+    const [token, setToken] = useState(() => Cookies.get("tk") || null);
     const [sub, setSub] = useState(() => Cookies.get("sb") || null);
 
-    const [keepSessionUser, setKeepSessionUser] = useState(true)
-    const [expiresAt, setExpiresAt] = useState(null)
-    const timer = useRef(null)
+    const [keepSessionUser, setKeepSessionUser] = useState(() => {
+        const value = Cookies.get("ksu");
+        return value === "true";
+    });
 
-    function login(datas, callback){
+    const [expiresAt, setExpiresAt] = useState(null);
 
-        setToken(datas.token)
-        setExpiresAt(Number(datas.dateExpiration));
-        Cookies.set("tk", datas.token);
-        Cookies.set("sb", datas.sub)
+    const timer = useRef(null);
 
-        if(callback) return callback()
+    function login(datas, callback) {
 
+        const expire = Number(datas.dateExpiration);
+
+        setToken(datas.token);
+        setSub(datas.sub);
+        setExpiresAt(expire);
+
+        if (keepSessionUser) {
+            // cookie persistente
+            Cookies.set("tk", datas.token, { expires: new Date(expire) });
+            Cookies.set("sb", datas.sub, { expires: new Date(expire) });
+        } else {
+            // cookie de sessão
+            Cookies.set("tk", datas.token);
+            Cookies.set("sb", datas.sub);
+        }
+
+        if (callback) return callback();
     }
 
-    async function logout(){
 
-        const response = await axios.post(
+    async function logout() {
+
+        await axios.post(
             "https://essencial-server.vercel.app/auth/logout",
             {},
             { withCredentials: true }
         );
-        const status = response.status;
 
-        if(status === 200){
-            Cookies.remove("tk")
-            Cookies.remove("sb")
-            setToken(null)
-            setExpiresAt(null)
-        }
+        Cookies.remove("tk");
+        Cookies.remove("sb");
+        Cookies.remove("ksu");
+
+        setToken(null);
+        setSub(null);
+        setExpiresAt(null);
+        setKeepSessionUser(false);
     }
 
     async function keepSession() {
@@ -56,12 +72,17 @@ export function AuthProvider({ children }){
             );
 
             const newToken = response.data?.user.accessToken;
-            const expire = response.data?.user.expiresAt
+            const expire = Number(response.data?.user.expiresAt);
 
             if (newToken) {
                 setToken(newToken);
-                Cookies.set("tk", newToken);
-                setExpiresAt(Number(expire));
+                setExpiresAt(expire);
+
+                if (keepSessionUser) {
+                    Cookies.set("tk", newToken, { expires: new Date(expire) });
+                } else {
+                    Cookies.set("tk", newToken); // cookie de sessão
+                }
             }
 
         } catch (err) {
@@ -71,53 +92,56 @@ export function AuthProvider({ children }){
     }
 
     useEffect(() => {
-
-        if(token && keepSessionUser){
-            keepSession();
-        }
-
-        return
-    }, [])
+        Cookies.set("ksu", keepSessionUser ? "true" : "false");
+    }, [keepSessionUser]);
 
     useEffect(() => {
+        if (!token) return;
 
-        if(!token || !expiresAt) return
+        if (keepSessionUser) {
+            // tornar persistente
+            Cookies.set("tk", token, { expires: new Date(expiresAt) });
+            Cookies.set("sb", sub, { expires: new Date(expiresAt) });
+        } else {
+            // tornar cookie de sessão
+            Cookies.set("tk", token);
+            Cookies.set("sb", sub);
+        }
+    }, [keepSessionUser]);
+
+    useEffect(() => {
+        if (!token || !expiresAt) return;
 
         const now = Date.now();
-    
-        if(now >= expiresAt){
 
-            if(keepSessionUser){
-                keepSession()
-                return
-            }else{
-                logout();
-                return 
-            }
-            
+        if (now >= expiresAt) {
+            if (keepSessionUser) keepSession();
+            else logout();
+            return;
         }
 
-        const timeLeft = expiresAt - now
+        const timeLeft = expiresAt - now;
 
         timer.current = setTimeout(() => {
-            if(keepSessionUser){
-                keepSession()
-                return
-            }else{
-                logout();
-                return 
-            }
-        }, timeLeft)
+            if (keepSessionUser) keepSession();
+            else logout();
+        }, timeLeft);
 
-        return () => {
-            if(timer.current) clearTimeout(timer.current)
-        }
+        return () => clearTimeout(timer.current);
 
-    }, [token, expiresAt])
+    }, [token, expiresAt]);
 
     return (
-        <AuthContext.Provider value={{ login, logout, token, setSub, sub }}>
-            { children }
+        <AuthContext.Provider value={{
+            login,
+            logout,
+            token,
+            sub,
+            setSub,
+            keepSessionUser,
+            setKeepSessionUser
+        }}>
+            {children}
         </AuthContext.Provider>
-    )
+    );
 }

@@ -14,13 +14,17 @@ import { AuthProvider } from "./contexts/auth/AuthProvider"
 import { ThemeProvider } from "./contexts/theme/ThemeProvider"
 import { OsProvider } from "./contexts/os/OsProvider"
 
-import { useContext } from "react"
+//Cookies
+import Cookies from "js-cookie";
+
+import { useContext, useEffect } from "react"
 import { AuthContext } from "./contexts/auth/AuthContext"
 import HomePage from "./pages/HomePage"
 import FormUser from "./components/forms/FormUser"
 import CardAppointments from "./components/cards/CardAppointments"
-import CardTheme from "./components/cards/CardTheme"
-import CardLogout from "./components/cards/CardLogout"
+import CardForUserRoutes from "./components/cards/CardForUserRoutes"
+import ClassicButton from "./components/buttons/ClassicButton"
+import ButtonTheme from "./components/buttons/ButtonTheme"
 
 function PrivateRoute({ children }){
   const { token } = useContext(AuthContext)
@@ -29,12 +33,20 @@ function PrivateRoute({ children }){
   return children
 }
 
-function PublicRoute({ children }){
-  return children
+function PublicRoute({ children }) {
+
+  const { keepSessionUser } = useContext(AuthContext);
+
+  if (keepSessionUser) {
+    return <Navigate to="/home" replace />;
+  }
+
+  return children;
 }
 
 
 function App() {
+
   return (
     <main className="h-[100dvh] w-full">
 
@@ -135,7 +147,11 @@ function App() {
                       <PrivateRoute>
                         <ScreenHome>
                           <UserPage>
-                            <CardTheme />
+                            <CardForUserRoutes params={{ 
+                              title: "Tema",
+                              text: "Clique aqui para alterar o tema do jeito que preferir" , 
+                              button: ButtonTheme}
+                            }/>
                           </UserPage>
                         </ScreenHome>
                       </PrivateRoute>
@@ -148,7 +164,11 @@ function App() {
                       <PrivateRoute>
                         <ScreenHome>
                           <UserPage>
-                            <CardLogout />
+                            <CardForUserRoutes params={{ 
+                              title: "Sair",
+                              text: "Para sair da aplicação basta clicar aqui", 
+                              button: ClassicButton}
+                            }/>
                           </UserPage>
                         </ScreenHome>
                       </PrivateRoute>

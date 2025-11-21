@@ -49,20 +49,20 @@ function UserPage({ children }){
 
                 <motion.button 
                 onClick={() => fn()}
-                className='
+                className={`
                     flex
                     items-center
                     gap-2
                     w-full
                     h-full
-                    hover:bg-slate-200
+                    ${validateTheme(theme, "hover:bg-slate-200" , "hover:bg-slate-700")}
                     py-[12px]
                     rounded-lg
                     duration-200
-                '>
+                `}>
                     &nbsp;
-                    { <Icon color={isActive ? "#000000" : "#777E90"}/> }
-                    <span className={` ${isActive ? "text-[#000000]" : "text-[#777E90]"} leading-normal text-[1rem] font-DmSans`}>{ text }</span>
+                    { <Icon color={isActive ? validateTheme(theme, "#000000", "#FFFFFF") : "#777E90"}/> }
+                    <span className={` ${isActive ? validateTheme(theme, "text-[#000000]", "text-slate-100") : "text-[#777E90]"} leading-normal text-[1rem] font-DmSans`}>{ text }</span>
                     &nbsp;
                 </motion.button>
 
@@ -74,8 +74,7 @@ function UserPage({ children }){
         <div className={`
             w-full
             h-full
-            bg-[#FFFAFE]
-            transition duration-1000 ease-in-out
+            ${validateTheme(theme,"bg-[#FAFAFA]","bg-slate-900")}
             min-h-[100dvh]
             flex
             justify-center
@@ -92,8 +91,12 @@ function UserPage({ children }){
                 md:flex-row
                 flex-col
             ">
-                <div className="
-                    bg-[#FFFFFF]
+                <div className={`}
+                    ${validateTheme(
+                        theme, 
+                        "bg-white border-slate-200 text-slate-950", 
+                        "bg-slate-900 border-slate-800 text-slate-300"
+                    )}
                     w-full
                     h-full
                     md:max-w-[280px]
@@ -103,7 +106,7 @@ function UserPage({ children }){
                     md:py-[42px] py-[32px]
                     border-[2px]
                     border-slate-200
-                ">
+                `}>
 
                     <ul className='
                         w-full

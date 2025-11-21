@@ -61,7 +61,7 @@ function FormFieldUserPage({ body, value }) {
                             ${validateTheme(
                                 theme,
                                 (body["field"].disabled ? `bg-slate-200 opacity-[0.4]  placeholder:text-slate-500 text-slate-950` : `bg-slate-200  placeholder:text-slate-500 text-slate-950`),
-                                `bg-slate-900 border-[2px] placeholder:text-slate-400 text-slate-300`
+                                (body["field"].disabled ? `bg-slate-800 opacity-[0.4] placeholder:text-slate-400 text-slate-300` : "bg-slate-900 placeholder:text-slate-400 text-slate-300")
                             )}
                             rounded-[6px]
                             outline-none 
@@ -86,7 +86,7 @@ function FormFieldUserPage({ body, value }) {
                         value={String(body["field"].value)}
 
                         disabled={body["field"].disabled}
-
+                        
                         onChange={(e) => {
                             const rawValue = e.target.value;
                             const maskedValue = body["field"].mask ? body["field"].mask(rawValue, body["field"].id) : rawValue;

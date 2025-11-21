@@ -216,12 +216,12 @@ function ScreenHome({ children }){
                         ease-in-out
                         md:pt-[80px]
                         pt-[86px]
-
                     `}>
                         { children }
                     </main>
 
                     <footer className={`
+                        mt-[50px]
                         w-full
                         p-[24px]
                         bg-gradient-to-tr

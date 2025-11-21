@@ -168,10 +168,11 @@ function HomePage(){
    
     return (
         <div
-            className="
+            className={`
                 w-full
                 h-full
-        ">
+                ${validateTheme(theme,"bg-[#FAFAFA]","bg-slate-900")}
+        `}>
             <SectionWrapperA theme={theme} cloudinary={cloudinary}/>
             <SectionWrapperB theme={theme} cloudinary={cloudinary}/>
 

@@ -44,8 +44,9 @@ function FormSignIn(){
         validateTheme,
     } = useTheme()
 
-    const { login } = useAuth();
+    const { login, setKeepSessionUser } = useAuth();
 
+    
     const [fields, setFields] = useState([
 
             //E-mail
@@ -171,6 +172,35 @@ function FormSignIn(){
                 </form>
             </div>
 
+            <div 
+                className="
+                    flex 
+                    gap-2 
+                    max-w-[450px] 
+                    sm:mt-[50px]
+                    mt-[60px] 
+            ">
+                <input 
+                    type="checkbox" 
+                    id="authorizedTerms" 
+                    onChange={(event) => setKeepSessionUser(event.target.checked)}
+                    name="authorizedTerms" 
+                    className="
+                        justify-self-end
+                        w-6
+                        h-6
+                "/>
+                <label 
+                    className={`
+                        block
+                        p-0 
+                        m-0
+                        text-[14px] 
+                        font-Inter
+                `}> 
+                    Você deseja manter sua sessão conectada
+                </label>
+            </div>
             <p 
                 className={`
                     m-0 
@@ -188,6 +218,7 @@ function FormSignIn(){
                     Faça o seu Cadastro
                 </Link>
             </p>
+
         </div>
     )
 }

@@ -1,11 +1,12 @@
-
-import { motion } from "framer-motion"
+import { DoorOpen } from "lucide-react";
 import { useTheme } from "../../contexts/theme/useTheme";
-import ButtonTheme from "../buttons/ButtonTheme";
+import { motion } from "framer-motion";
+import { useAuth } from "../../contexts/auth/useAuth";
 
-function CardTheme () {
+function CardForUserRoutes ({ params }) {
 
-    const { theme, changeTheme } = useTheme();
+    const { theme, validateTheme } = useTheme();
+    const { logout } = useAuth();
 
     return (
         <div className="
@@ -31,33 +32,32 @@ function CardTheme () {
                     items-center
                     mb-[32px]
                 '>
-                    <h2 className='
-                        md:text-[1.275rem]
-                        tetx-[1rem]
-                        text-[#101828]
+                    <h2 className={`
+                        text-[1.475rem]
+                        ${validateTheme(theme, "text-black", "text-slate-500")}
                         font-DmSans
-
-                    '>
-                        Tema
+                        font-bold
+                    `}>
+                        { params.title }
                     </h2>
                 </div>
 
             </div>
             <motion.div
-                layout
-                transition={{ type: "tween", duration: 0.4, ease: "easeInOut" }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1}}
+                transition={{ duration: 0.4, ease: "easeInOut" }}
                 exit={{ opacity: 0 }}
-                className='
+                className={`
                     w-full
-                    bg-[#FFFFFF] 
+                    ${validateTheme(theme, "bg-white border-slate-200", "bg-slate-900 border-slate-800")}
                     p-[32px]  
                     shadow-lg
                     rounded-2xl
                     border-[2px]
                     border-slate-200
-                '>
+                `}>
                     <div 
-                        layout="true"
                         className='
                             w-full  
                             h-auto
@@ -66,19 +66,19 @@ function CardTheme () {
                             justify-between
                             items-center
                     '>
-                        <h1>
-                            Clique aqui para alterar o tema do jeito que preferir
-                        </h1>
-                        <div className="
-                            h-[20px]
-                            w-auto
-                        ">
-                            <ButtonTheme theme={theme} changeTheme={changeTheme} />
-                        </div>
+                        <p className={`
+                            ${validateTheme(theme, "text-[#000000]", "text-slate-500")}
+                            md:text-[1.075rem]
+                            text-[0.9rem]
+                        `}>
+                            { params.text }
+                        </p>
+
+                        { params.title === "Sair" ? <params.button text={<> <DoorOpen/> Sair</>} fn={() => logout()} type={"logout"}/> : <params.button /> }
                     </div>
             </motion.div>
         </div>
     )
 }
 
-export default CardTheme;
+export default CardForUserRoutes;

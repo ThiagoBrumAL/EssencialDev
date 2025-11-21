@@ -2,10 +2,12 @@
 import { motion } from "framer-motion"
 import { useApi } from "../../api/api"
 import { useEffect } from "react"
+import { useTheme } from "../../contexts/theme/useTheme"
 
-function CardAppointments () {
+function CardAppointments ({ params }) {
 
     const api = useApi()
+    const { theme, validateTheme } = useTheme()
 
     useEffect(() => {
         
@@ -38,14 +40,13 @@ function CardAppointments () {
                     items-center
                     mb-[32px]
                 '>
-                    <h2 className='
-                        md:text-[1.275rem]
-                        tetx-[1rem]
-                        text-[#101828]
+                    <h2 className={`
+                        text-[1.475rem]
+                        ${validateTheme(theme, "text-black", "text-slate-500")}
                         font-DmSans
-
-                    '>
-                        Informações pessoais
+                        font-bold
+                    `}>
+                        Agendamentos
                     </h2>
                 </div>
 

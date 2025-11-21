@@ -1,4 +1,9 @@
-function ButtonTheme({theme, changeTheme}){
+import { useTheme } from "../../contexts/theme/useTheme";
+
+function ButtonTheme(){
+
+    const { theme, changeTheme } = useTheme();
+
     return (
         <button 
             onClick={() => changeTheme()} 
