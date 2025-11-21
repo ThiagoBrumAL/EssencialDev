@@ -18,6 +18,7 @@ import SectionWrapperD from "../components/wrappers/home/SectionWrapperD";
 
 
 import { cloudinary } from "../cloud/cloudinary";
+import { useApi } from "../api/api";
 
 function HomePage(){
 
@@ -27,13 +28,11 @@ function HomePage(){
     
     const cardRef = useRef();
     const scrollRef = useRef();
-    const didRun = useRef(false);
     const refSpecialties = useRef()
-
-    const { token } = useAuth()
 
 
     const width = useWindowWidth();
+    const api = useApi();
 
 
     const { theme, validateTheme } = useTheme();
@@ -155,25 +154,9 @@ function HomePage(){
 
     useEffect(() => {
 
-        if(didRun.current) return;
-        didRun.current = true;
-
-        const getDoctors =  async() => {
-            const response = await axios.get("https://essencial-server.vercel.app/doctors", 
-                { withCredentials: true,
-                    headers: {
-                        Authorization: `Bearer ${ token }`
-                    }
-                 }
-            );
-            
-            setTimeout(() => {
-                setDoctors(response.data)
-            },1000)
-            
-        }
-
-        getDoctors()
+        const body = { setDoctors }
+        api("get", "/home", body)
+        
     }, [])
 
     useEffect(() => {

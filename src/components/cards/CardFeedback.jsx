@@ -1,47 +1,67 @@
-function CardFeedback({ object, theme }){
+import { motion } from "framer-motion";
+import { useFeedback } from "../../contexts/api/useFeedback";
+import { useTheme } from "../../contexts/theme/useTheme";
+
+function CardFeedback({ params }){
+
+    const { 
+
+        messageFeedback,
+        colorFeedback,
+        iconFeedback
+
+    } = useFeedback();
+
+    const { theme } = useTheme();
     
     return (
-        <div 
-            className={`
-                fixed 
-                flex 
-                items-center 
-                right-0 ${object.show ? "translate-x-[-24px] pr-[12px] opacity-100" : "translate-x-full p-0 opacity-0"} 
-                ${theme ? "bg-indigo-200" : "bg-slate-700"} 
-                transition 
-                transform 
-                ease-in-out 
-                duration-700 
-                rounded-md 
-                text-slate-50 
-                shadow-md
-                mt-[24px]
-        `}>
-            <div 
-                className={` 
-                    ${object.color} 
-                    rounded-tl-[4px] 
-                    rounded-bl-[4px] 
-                    flex 
-                    items-center 
-                    justify-center
-                    px-[6px]
-                    py-[12px]
-            `}>
-                {object.icon}
-            </div>
+        <motion.div
+        initial={{ opacity: 0, x: 1000 }}
+        animate={{ opacity: 1, x: -24 }}
+        exit={{ opacity: 0, x: 1000 }}
+        transition={{ duration: 0.9 }}
+        className={`
+            fixed 
+            flex 
+            items-center 
+            ${theme ? "bg-indigo-200" : "bg-slate-700"}
+            ${params}
+            right-0
+            transition 
+            transform 
+            ease-in-out 
+            duration-700 
+            rounded-md 
+            text-slate-50 
+            shadow-md
+            mt-[24px]`}>
+                <div 
+                    className={` 
+                        ${ colorFeedback } 
+                        rounded-tl-[4px] 
+                        rounded-bl-[4px] 
+                        flex 
+                        items-center 
+                        justify-center
+                        px-[6px]
+                        py-[12px]
+                `}>
+                    { iconFeedback }
+                </div>
 
-            <h1 
-                className="
-                    ml-[12px] 
-                    sm:text-[16px] 
-                    text-[12px]
-                    font-[600] 
-                    font-Inter
-            ">
-                {object.message}
-            </h1>
-        </div>
+                <h1 
+                    className="
+                        ml-[12px] 
+                        sm:text-[16px] 
+                        text-[12px]
+                        font-[600] 
+                        font-Inter
+                        mr-[12px]
+                ">
+                    { messageFeedback }
+                </h1>
+        </motion.div>
+            
     )
 }
 

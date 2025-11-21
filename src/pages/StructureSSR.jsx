@@ -6,6 +6,8 @@ import CardFeedback from "../components/cards/CardFeedback.jsx";
 import Loader from "../components/loaders/Loader.jsx";
 import Img from '../components/img/Img.jsx';
 import { Sun, Moon } from "lucide-react";
+import { AnimatePresence } from 'framer-motion';
+
 
 
 // Hooks.
@@ -15,11 +17,7 @@ import { useEffect, useState } from "react";
 
 // Contexts.
 import { useTheme } from "../contexts/theme/useTheme.js";
-import { useSsr } from "../contexts/ssr/useSsr.js";
-
-
-// Cloud for images.
-import { cloudinary } from "../cloud/cloudinary.js";
+import { useFeedback } from "../contexts/api/useFeedback.js";
 
 
 // SSF - Sign-in / Sign-up / Recover.
@@ -27,19 +25,29 @@ function ScreenSSR({ children }) {
 
     const [load, setLoad] = useState(true)
     const [userOpacity, setUserOpacity] = useState(0);
+    
+    const { showMessage } = useFeedback();
+
+    const titles = [
+        {
+            page: "/sign-in", 
+            title:"Bem vindo(a) de volta!", 
+            subTitle:"Cadastre-se e tenha sua saúde na palma da mão."
+        },
+        {
+            page: "/sign-up", 
+            title:"Estamos prontos para cuidar de você.", 
+            subTitle:"Cadastre-se e tenha sua saúde na palma da mão."
+        },
+        {
+            page: "/recover", 
+            title:"Redefinir acesso", 
+            subTitle:"Não se preocupe, nós te ajudamos a recuperar o acesso rapidinho."
+        },
+    ]
+
 
     const locale = useLocation()
-
-    const {
-
-        messageFeedback,
-        colorFeedback,
-        iconFeedback,
-        titles,
-        showMessage
-
-    } = useSsr();
-
 
     const { 
 
@@ -61,6 +69,8 @@ function ScreenSSR({ children }) {
 
     }, [])
 
+    
+
     return (
 
         <div
@@ -72,12 +82,11 @@ function ScreenSSR({ children }) {
             flex-col
             overflow-x-hidden
             relative
-            ${validateTheme(theme,"bg-[#FFFAFE]","bg-slate-900")}
+            ${validateTheme(theme,"bg-[#FAFAFA]","bg-slate-900")}
             z-[1]
             ${load ? "overflow-y-hidden" : null}
         `}>
 
-            {/* Se o load for verdadeiro, renderize o componente. Caso contrário, tire-o */}
             {load && <Loader />}
 
             <div 
@@ -135,7 +144,7 @@ function ScreenSSR({ children }) {
                 <section
                     id="login-screen-div-two"
                     className={`
-                        ${validateTheme(theme,"bg-[#FFFAFE]","bg-slate-900")} 
+                        ${validateTheme(theme,"bg-[#FAFAFA]","bg-slate-900")} 
                         w-full 
                         min-h-dvh 
                         flex 
@@ -181,12 +190,11 @@ function ScreenSSR({ children }) {
                     </div>
                 </section>
 
-                {messageFeedback && 
-                    <CardFeedback 
-                        theme={theme} 
-                        object={{message: messageFeedback, show: showMessage, color: colorFeedback, icon: iconFeedback}}
-                    />
-                }
+
+                <AnimatePresence>
+                        { showMessage && <CardFeedback params={ "top-[30px]" }/> }
+                </AnimatePresence>
+                
             </div>
         </div>
     );

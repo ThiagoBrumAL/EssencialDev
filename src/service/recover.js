@@ -1,6 +1,6 @@
 import { handlingAnalyzeDatas } from '../utils/errors/handlers/handlingAnalyzeDatas'
 
-import { useSsr } from '../contexts/ssr/useSsr';
+import { useFeedback } from '../contexts/api/useFeedback';
 
 import { badFeedback } from '../utils/helpers/feedback/Failure';
 import { goodFeedback } from '../utils/helpers/feedback/Success';
@@ -9,7 +9,7 @@ import { handlingRecoverEmail } from '../utils/errors/handlers/hadlingRecoverEma
 
 export const useRecoverEmail = () => {
 
-    const { renderCardFeedback } = useSsr();
+    const { renderCardFeedback } = useFeedback();
 
     const recoverEmail = async (body, axios) => {
 

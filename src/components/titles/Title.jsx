@@ -1,4 +1,4 @@
-function Title({path, titles}){
+function Title({ path, titles }){
 
     return (
         <div 

@@ -1,14 +1,14 @@
 import { handlingAnalyzeDatas } from '../utils/errors/handlers/handlingAnalyzeDatas'
 import { handlingAuthorized } from '../utils/errors/handlers/handlingAuthorized';
 
-import { useSsr } from '../contexts/ssr/useSsr';
+import { useFeedback } from '../contexts/api/useFeedback';
 
 import { goodFeedback } from '../utils/helpers/feedback/Success';
 import { badFeedback } from '../utils/helpers/feedback/Failure';
 
 export const useSignUp = () => {
 
-    const { renderCardFeedback } = useSsr();
+    const { renderCardFeedback } = useFeedback();
 
     const signUp = async (body, axios) => {
 

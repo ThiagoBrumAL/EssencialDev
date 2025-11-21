@@ -1,6 +1,6 @@
 
 //Icons
-import { UserRoundCheck, Send, ShieldOff } from 'lucide-react';
+import { UserRoundCheck, Send, ShieldOff, UserPen } from 'lucide-react';
 
 export const goodFeedback = (status, renderCardFeedback, path) => {
 
@@ -41,7 +41,16 @@ export const goodFeedback = (status, renderCardFeedback, path) => {
                 message: "Usuário cadastrado com sucesso",
                 timeout: 5000
             },
-        }
+        },
+
+        "/info/update": {
+            200: { 
+                icon: <UserPen />, 
+                color: "bg-green-400",
+                message:"Alteração concluída",
+                timeout: 5000
+            }
+        },
         
 
     }

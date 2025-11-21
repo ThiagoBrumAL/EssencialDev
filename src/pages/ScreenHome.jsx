@@ -8,6 +8,8 @@ import { useLocation } from "react-router-dom";
 import { useOs } from "../contexts/os/useOs.js";
 
 import { AnimatePresence, motion } from "framer-motion";
+import { useFeedback } from "../contexts/api/useFeedback.js";
+import CardFeedback from "../components/cards/CardFeedback.jsx";
 
 
 function ScreenHome({ children }){
@@ -15,6 +17,8 @@ function ScreenHome({ children }){
     const [load, setLoad] = useState(true)
     const locale = useLocation()
     const { isWindows } = useOs()
+
+    const { showMessage } = useFeedback();
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -78,8 +82,9 @@ function ScreenHome({ children }){
             h-full
             relative
         ">
-            <AnimatePresence>
+            <AnimatePresence mode="sync">
                 <motion.div
+                    key={"structure"}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
@@ -244,8 +249,9 @@ function ScreenHome({ children }){
                         </h2>
                     </footer>
                 </motion.div>
+
+                { showMessage && <CardFeedback params={"top-[100px]"}/> }
             </AnimatePresence>
-            
             
         </div>
     }
@@ -255,7 +261,7 @@ function ScreenHome({ children }){
             className={`
                 block
                 w-full
-                ${validateTheme(theme,"bg-[#FFFAFE]","bg-slate-900")}
+                ${validateTheme(theme,"bg-[#FAFAFA]","bg-slate-900")}
         `}>
 
             {load ? <Loader /> : Structure()}

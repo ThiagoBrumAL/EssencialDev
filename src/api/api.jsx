@@ -4,6 +4,8 @@ import { useSignIn } from '../service/signIn';
 import { useSignUp } from '../service/signUp';
 import { useRecoverEmail } from '../service/recover';
 import { useConfirmPassword } from '../service/confirmPassword';
+import { useUser } from '../service/user';
+import { useDoctors } from '../service/doctors';
 
 export const useApi = () => {
 
@@ -11,6 +13,9 @@ export const useApi = () => {
     const signUp = useSignUp();
     const recoverEmail = useRecoverEmail();
     const confirmPassword = useConfirmPassword();
+    const { getUser } = useUser();
+    const { updateUser } = useUser();
+    const getDoctorsForHome = useDoctors();
 
     const api = async (method, where, body) => {
 
@@ -21,8 +26,13 @@ export const useApi = () => {
                 "/recover": recoverEmail,
                 "/recover/confirm-password": confirmPassword
             },
-            "get": {},
-            "patch":{},
+            "get": {
+                "/home": getDoctorsForHome,
+                "/info": getUser
+            },
+            "patch":{
+                "/info/update": updateUser
+            },
             "put":{},
             "delete":{}
         }

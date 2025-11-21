@@ -19,6 +19,27 @@ export const badFeedback = (status, renderCardFeedback, path) => {
             }
         },
 
+        "/info/update": {
+            400: { 
+                icon: <ShieldOff />, 
+                color: "bg-red-400",
+                message:"Erro na requisição",
+                timeout: 5000
+            },
+            401: { 
+                icon: <ShieldOff />, 
+                color: "bg-red-400",
+                message:"Não autorizado",
+                timeout: 5000
+            },
+            500: { 
+                icon: <ShieldOff />, 
+                color: "bg-red-400",
+                message:"Erro no servidor",
+                timeout: 5000
+            }
+        },
+
         "/recover/confirm-password":{
             400: {
                 icon: <ShieldOff />, 

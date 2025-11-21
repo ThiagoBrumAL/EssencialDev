@@ -1,9 +1,9 @@
 import { useContext } from "react";
-import { SsrContext } from "./SsrContext";
+import { feedbackContext } from "./feedbackContext";
 
-export function useSsr(){
+export function useFeedback(){
 
-    const context = useContext(SsrContext)
+    const context = useContext(feedbackContext)
 
     if(!context){
         throw new Error("useSsr precisa ser utilizado dentro de um SsrProvider")

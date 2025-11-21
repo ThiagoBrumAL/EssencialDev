@@ -74,8 +74,7 @@ const SectionWrapperD = React.memo(function SectionWrapperD({ theme, cloudinary 
                 </p>
                 <motion.button 
                     whileTap={ { scale: 0.9 } }
-                >
-                    <button className="
+                    className="
                         bg-[#A3B3FF]
                         px-6
                         py-3
@@ -88,9 +87,9 @@ const SectionWrapperD = React.memo(function SectionWrapperD({ theme, cloudinary 
                         duration-200
                         transition-transform
                         md:hover:-translate-y-1
-                    ">
+                    "
+                >
                         CONHEÇA O AGENTE
-                    </button>
                 </motion.button>
             </div>
         </section>

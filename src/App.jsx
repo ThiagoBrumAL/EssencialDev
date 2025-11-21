@@ -1,6 +1,5 @@
 import "./index.css"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
-import Cookies from "js-cookie"
 
 //Components
 import ScreenSSR from "./pages/StructureSSR"
@@ -10,12 +9,12 @@ import FormSignUp from "./components/forms/FormSignUp"
 import FormRecover from "./components/forms/FormRecover"
 import UserPage from "./pages/UserPage"
 
-import { SsrProvider } from "./contexts/ssr/SsrProvider"
+import { FeedbackProvider } from "./contexts/api/feebackProvider"
 import { AuthProvider } from "./contexts/auth/AuthProvider"
 import { ThemeProvider } from "./contexts/theme/ThemeProvider"
 import { OsProvider } from "./contexts/os/OsProvider"
 
-import { useContext, useEffect } from "react"
+import { useContext } from "react"
 import { AuthContext } from "./contexts/auth/AuthContext"
 import HomePage from "./pages/HomePage"
 
@@ -41,6 +40,8 @@ function App() {
 
           <AuthProvider>
 
+            <FeedbackProvider>
+
             <OsProvider>
 
               <Routes>
@@ -48,39 +49,35 @@ function App() {
                 <Route 
                   path="/sign-in" 
                   element={
-                    <SsrProvider>
+                    
                       <PublicRoute>
                         <ScreenSSR>
                           <FormSignIn />
                         </ScreenSSR>
                       </PublicRoute>
-                    </SsrProvider>
                   }
                 />
 
                 <Route 
                   path="/sign-up" 
                   element={
-                    <SsrProvider>
                       <PublicRoute>
                         <ScreenSSR>
                           <FormSignUp />
                         </ScreenSSR>
                       </PublicRoute>
-                    </SsrProvider>
+                    
                   }
                 />
 
                 <Route 
                   path="/recover" 
                   element={
-                    <SsrProvider>
                       <PublicRoute>
                         <ScreenSSR>
                           <FormRecover />
                         </ScreenSSR>
                       </PublicRoute>
-                    </SsrProvider>
                   }
                 />
 
@@ -105,17 +102,19 @@ function App() {
                   <Route 
                     path="/info" 
                     element={
-                      <PublicRoute>
+                      <PrivateRoute>
                         <ScreenHome>
                           <UserPage />
                         </ScreenHome>
-                      </PublicRoute>
+                      </PrivateRoute>
                     }
                   />
 
               </Routes>
               
             </OsProvider>
+
+            </FeedbackProvider>
 
           </AuthProvider>
 

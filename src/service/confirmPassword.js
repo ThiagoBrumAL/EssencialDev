@@ -1,13 +1,13 @@
 import { handlingAnalyzeDatas } from '../utils/errors/handlers/handlingAnalyzeDatas'
 
-import { useSsr } from '../contexts/ssr/useSsr';
+import { useFeedback } from '../contexts/api/useFeedback';
 
 import { badFeedback } from '../utils/helpers/feedback/Failure';
 import { goodFeedback } from '../utils/helpers/feedback/Success';
 
 export const useConfirmPassword = () => {
 
-    const { renderCardFeedback } = useSsr();
+    const { renderCardFeedback } = useFeedback();
 
     const confirmPassword = async (body, axios) => {
 

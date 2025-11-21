@@ -13,15 +13,18 @@ export function AuthProvider({ children }){
     
     const [token, setToken] = useState(() => Cookies.get("tk") || null)
 
+    const [sub, setSub] = useState(() => Cookies.get("sb") || null);
+
     const [keepSessionUser, setKeepSessionUser] = useState(true)
     const [expiresAt, setExpiresAt] = useState(null)
     const timer = useRef(null)
 
-    function login(tokenDatas, callback){
+    function login(datas, callback){
 
-        setToken(tokenDatas.token)
-        setExpiresAt(Number(tokenDatas.dateExpiration));
-        Cookies.set("tk", tokenDatas.token);
+        setToken(datas.token)
+        setExpiresAt(Number(datas.dateExpiration));
+        Cookies.set("tk", datas.token);
+        Cookies.set("sb", datas.sub)
 
         if(callback) return callback()
 
@@ -112,7 +115,7 @@ export function AuthProvider({ children }){
     }, [token, expiresAt])
 
     return (
-        <AuthContext.Provider value={{ login, logout, token }}>
+        <AuthContext.Provider value={{ login, logout, token, setSub, sub }}>
             { children }
         </AuthContext.Provider>
     )

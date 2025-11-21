@@ -1,11 +1,13 @@
 import { handlingAnalyzeDatas } from '../utils/errors/handlers/handlingAnalyzeDatas'
-import { useSsr } from '../contexts/ssr/useSsr';
+import { useFeedback } from '../contexts/api/useFeedback';
 
 import { badFeedback } from '../utils/helpers/feedback/Failure';
+import { useAuth } from '../contexts/auth/useAuth';
 
 export const useSignIn = () => {
 
-    const { renderCardFeedback } = useSsr();
+    const { renderCardFeedback } = useFeedback();
+    const { setSub } = useAuth();
 
     const signIn = async (body, axios) => {
 
@@ -26,11 +28,12 @@ export const useSignIn = () => {
 
             const token = await returnFromApi.user.accessToken
             const dateExpiration = await returnFromApi.user.expiresAt
+            const sub = await returnFromApi.user.sub
 
-            const tokenDatas = { token, dateExpiration }
+            const datas = { token, dateExpiration, sub }
 
             return body.login(token, () => {
-                if(token) return body.login(tokenDatas, () => setTimeout(() => body.navigate("/home"), 1000))
+                if(token) return body.login(datas, () => setTimeout(() => body.navigate("/home"), 1000))
             })
 
         } catch (error){
