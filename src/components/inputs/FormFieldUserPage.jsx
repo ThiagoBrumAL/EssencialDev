@@ -67,8 +67,8 @@ function FormFieldUserPage({ body, value }) {
                             outline-none 
                             border-[2px] 
                             font-Inter
-                            text-[0.95rem]
-                            md:text-[0.8rem]
+                            text-[0.9em]
+                            md:text-[1rem]
                             ${body["field"].hasErrorInField ? "mb-[3px]" : "mb-[0px]"}
                             ${body["field"].hasErrorInField ? "border-red-500" : "border-[#B5B5BD]"}
                         `}

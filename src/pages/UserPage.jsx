@@ -1,6 +1,6 @@
 import { UserRound, DoorOpen, Image, Lightbulb, X } from 'lucide-react';
 
-import { motion } from 'framer-motion';
+import { motion, spring } from 'framer-motion';
 
 import FormFieldUserPage from '../components/inputs/FormFieldUserPage';
 
@@ -71,6 +71,10 @@ function UserPage(){
         return (
             <motion.button
                 onClick={() => fn && type === "update" ? fn("patch", "/info/update", body) : fn()}
+                initial={ type === "edit" ? {} : { opacity: 0 }}
+                animate={ type === "edit" ? {} : { opacity: 1 }}
+                transition={ type === "edit" ? {} : { duration: 0.9 }}
+                exit={ type === "edit" ? {} : { opacity: 0 }}
                 whileTap={{ scale: 0.9 }} className={`
                     block
                     ${type === "update" ? "text-white ": "text-slate-950"}
@@ -291,9 +295,8 @@ function UserPage(){
                 <div className="
                     bg-[#FFFFFF]
                     w-full
-                    h-auto
+                    h-full
                     md:max-w-[280px]
-                    max-h-[572px]
                     shadow-lg
                     rounded-2xl
                     md:px-[32px] px-[24px]
@@ -334,6 +337,7 @@ function UserPage(){
                 <div className='
                     w-full
                     max-w-[896px]
+                    sm:mb-[0px]
                     mb-[42px]
                 '>
 
@@ -354,10 +358,14 @@ function UserPage(){
                         '>
                             Informações pessoais
                         </h2>
-                        { showEdit && <ClassicButton text={"Editar Perfil"} fn={enableFields} pos={"block"}/> }
+                        { showEdit && user ? <ClassicButton text={"Editar Perfil"} fn={enableFields} pos={"block"} type={"edit"}/> : null}
                     </div>
 
-                    { user &&  <div className='
+                    { user &&  <motion.div
+                    layout
+                    transition={{ type: "spring", stiffness: 140, damping: 10 }}
+                    exit={{ opacity: 0 }}
+                    className='
                         w-full
                         bg-[#FFFFFF] 
                         p-[32px]  
@@ -366,11 +374,12 @@ function UserPage(){
                         border-[2px]
                         border-slate-200
                     '>
-                        <form action=""
+                        <form 
+                            layout="true"
+                            action=""
                             className='
                                 w-full  
                                 h-auto
-                                md:pb-[32px]
                         '>
                             <div 
                                 id="body-form" 
@@ -420,9 +429,10 @@ function UserPage(){
 
                             </div>
                         </form>
-                        <div className='
+                        <motion.div 
+                        layout
+                        className='
                             w-full
-                            md:min-h-[45px]
                             h-auto
                             flex
                             gap-3
@@ -437,9 +447,9 @@ function UserPage(){
                                     </>
                                 } fn={disableFields} tupe={"classic"}/>}
                             
-                        </div>
+                        </motion.div>
                         
-                    </div>}
+                    </motion.div>}
                     
 
                 </div>
