@@ -17,6 +17,10 @@ import { OsProvider } from "./contexts/os/OsProvider"
 import { useContext } from "react"
 import { AuthContext } from "./contexts/auth/AuthContext"
 import HomePage from "./pages/HomePage"
+import FormUser from "./components/forms/FormUser"
+import CardAppointments from "./components/cards/CardAppointments"
+import CardTheme from "./components/cards/CardTheme"
+import CardLogout from "./components/cards/CardLogout"
 
 function PrivateRoute({ children }){
   const { token } = useContext(AuthContext)
@@ -104,7 +108,48 @@ function App() {
                     element={
                       <PrivateRoute>
                         <ScreenHome>
-                          <UserPage />
+                          <UserPage>
+                            <FormUser/>
+                          </UserPage>
+                        </ScreenHome>
+                      </PrivateRoute>
+                    }
+                  />
+
+                  <Route 
+                    path="/info/appointments" 
+                    element={
+                      <PrivateRoute>
+                        <ScreenHome>
+                          <UserPage>
+                            <CardAppointments />
+                          </UserPage>
+                        </ScreenHome>
+                      </PrivateRoute>
+                    }
+                  />
+
+                  <Route 
+                    path="/info/theme" 
+                    element={
+                      <PrivateRoute>
+                        <ScreenHome>
+                          <UserPage>
+                            <CardTheme />
+                          </UserPage>
+                        </ScreenHome>
+                      </PrivateRoute>
+                    }
+                  />
+
+                  <Route 
+                    path="/info/logout" 
+                    element={
+                      <PrivateRoute>
+                        <ScreenHome>
+                          <UserPage>
+                            <CardLogout />
+                          </UserPage>
                         </ScreenHome>
                       </PrivateRoute>
                     }
