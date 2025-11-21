@@ -75,7 +75,8 @@ function UserPage(){
                     block
                     ${type === "update" ? "text-white ": "text-slate-950"}
                     ${type === "update" ? "bg-gradient-to-tr ": null}
-                    text-[0.9rem]
+                    md:text-[0.9rem]
+                    text[0.8rem]
                     px-3
                     py-2
                     ${type === "update" ? validateTheme(theme, "from-teal-400 to-indigo-400" , "from-[#01051C] to-[#051782]") : "bg-white border-[2px] border-slate-200"}
@@ -113,7 +114,7 @@ function UserPage(){
                 '>
                     &nbsp;
                     { <Icon color={isActive ? "#000000" : "#777E90"}/> }
-                    <span className={` ${isActive ? "text-[#000000]" : "text-[#777E90]"} leading-normal text-[1rem] font-DmSans`}>{ text }</span>
+                    <span className={` ${isActive ? "text-[#000000]" : "text-[#777E90]"} leading-normal text-[0.85rem] font-DmSans`}>{ text }</span>
                     &nbsp;
                 </motion.button>
 
@@ -281,7 +282,8 @@ function UserPage(){
                 w-full
                 h-auto
                 max-w-[1280px]
-                pt-[80px]
+                md:pt-[80px]
+                pt-[20px]
                 flex
                 gap-[50px]
                 md:flex-row
@@ -295,8 +297,8 @@ function UserPage(){
                     max-h-[572px]
                     shadow-lg
                     rounded-2xl
-                    px-[32px]
-                    py-[42px]
+                    md:px-[32px] px-[24px]
+                    md:py-[42px] py-[32px]
                     border-[2px]
                     border-slate-200
                 ">
@@ -309,7 +311,7 @@ function UserPage(){
                             options.map((op, i) => {
                                 
                                     if(options.length -1 === options.indexOf(op)){
-                                        return <div key={i} className='w-full h-auto mt-[17px]'>< MyLi icon={op.icon} text={op.text} path={op.path}/></div>
+                                        return <div key={i} className='w-full h-auto md:mt-[17px] mt-[12px]'>< MyLi icon={op.icon} text={op.text} path={op.path}/></div>
                                     }
                                     
                                     return (
@@ -345,7 +347,8 @@ function UserPage(){
                         mb-[32px]
                     '>
                         <h2 className='
-                            text-[1.275rem]
+                            md:text-[1.275rem]
+                            tetx-[1rem]
                             text-[#101828]
                             font-DmSans
 
@@ -368,7 +371,7 @@ function UserPage(){
                             className='
                                 w-full  
                                 h-auto
-                                pb-[32px]
+                                md:pb-[32px]
                         '>
                             <div 
                                 id="body-form" 
@@ -420,9 +423,12 @@ function UserPage(){
                         </form>
                         <div className='
                             w-full
-                            min-h-[45px]
+                            md:min-h-[45px]
+                            h-auto
                             flex
                             gap-3
+                            md:flex-row
+                            flex-col
                         '>
                             { update && <ClassicButton text={`Atualizar perfil`} fn={ api } type={"update"}/>}
                             { update && <ClassicButton 

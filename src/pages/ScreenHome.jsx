@@ -96,7 +96,8 @@ function ScreenHome({ children }){
                             ${validateTheme(theme,"from-teal-400 to-indigo-400", "from-[#01051C] to-[#051782]")}
                             bg-gradient-to-tr
                             ${isWindows ? "md:h-[74px]" : "md:h-[90px]"}
-                            ${isWindows ? "h-[70px]" : "h-[86px]"}
+                            ${isWindows ? "md:h-[70px]" : "md:h-[86px]"}
+                            h-[68px]
                             w-full
                             px-[32px]
                             justify-center

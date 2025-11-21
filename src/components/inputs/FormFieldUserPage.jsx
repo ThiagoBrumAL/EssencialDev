@@ -46,7 +46,8 @@ function FormFieldUserPage({ body, value }) {
                             ${validateTheme(theme, "text-slate-950","text-slate-500")}
                             font-Inter
                             font-normal
-                            text-[0.95rem]
+                            md:text-[0.95rem]
+                            text-[0.8rem]
                         `}
                         htmlFor={body["field"].id}
                     >
@@ -67,6 +68,7 @@ function FormFieldUserPage({ body, value }) {
                             border-[2px] 
                             font-Inter
                             text-[0.95rem]
+                            md:text-[0.8rem]
                             ${body["field"].hasErrorInField ? "mb-[3px]" : "mb-[0px]"}
                             ${body["field"].hasErrorInField ? "border-red-500" : "border-[#B5B5BD]"}
                         `}
