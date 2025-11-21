@@ -1,7 +1,19 @@
 
 import { motion } from "framer-motion"
+import { useApi } from "../../api/api"
+import { useEffect } from "react"
 
 function CardAppointments () {
+
+    const api = useApi()
+
+    useEffect(() => {
+        
+        api("get", "/info/appointments")
+        return
+
+    }, [])
+
     return (
         <div className="
             w-full

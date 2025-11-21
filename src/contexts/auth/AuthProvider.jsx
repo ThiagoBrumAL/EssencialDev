@@ -41,6 +41,7 @@ export function AuthProvider({ children }){
 
         if(status === 200){
             Cookies.remove("tk")
+            Cookies.remove("sb")
             setToken(null)
             setExpiresAt(null)
         }

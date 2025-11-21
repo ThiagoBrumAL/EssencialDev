@@ -26,7 +26,7 @@ function UserPage({ children }){
         },
         {
             icon: Lightbulb, 
-            text: "Modo claro",
+            text: "Tema",
             fn: () => navigate("/info/theme"),
             path: "/info/theme"},
         {

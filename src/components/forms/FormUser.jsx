@@ -225,7 +225,6 @@ function FormUser() {
         setOriginalFields(newFields)
     }, [user, statusReq])
 
-
     return (
         <div className="
             w-full
@@ -263,94 +262,100 @@ function FormUser() {
                 </div>
 
             </div>
-            {user ? <motion.div
-                layout
-                transition={{ type: "tween", duration: 0.4, ease: "easeInOut" }}
-                exit={{ opacity: 0 }}
-                className='
-                    w-full
-                    bg-[#FFFFFF] 
-                    p-[32px]  
-                    shadow-lg
-                    rounded-2xl
-                    border-[2px]
-                    border-slate-200
-                '>
-                    <form 
-                        layout="true"
-                        action=""
-                        className='
-                            w-full  
-                            h-auto
-                    '>
-                        <div 
-                            id="body-form" 
-                            className=" 
-                                w-full 
-                                flex 
-                                lg:flex-row 
-                                flex-col 
-                                lg:gap-[32px]
-                        ">
-
-                            <div className="w-full">
-                                {leftFields.map((field, index) => {
-
-                                    return (
-                                        <FormFieldUserPage
-                                            key={index}
-                                            value={field.value}
-                                            body={{
-                                                field,
-                                                fields,
-                                                setFields
-                                            }}
-                                        />
-                                    );
-
-                                })}
-                            </div>
-
-                            <div className="w-full">
-                                {rightFields.map((field, index) => {
-
-                                    return (
-                                        <FormFieldUserPage
-                                            key={index}
-                                            value={field.value}
-                                            body={{
-                                                field,
-                                                fields,
-                                                setFields
-                                            }}
-                                        />
-                                    );
-
-                                })}
-                            </div>
-
-                        </div>
-                    </form>
-                    <motion.div 
+            <div className="
+                w-full
+                h-full
+                relative
+            ">
+                {user ? <motion.div
                     layout
+                    transition={{ type: "tween", duration: 0.4, ease: "easeInOut" }}
+                    exit={{ opacity: 0 }}
                     className='
                         w-full
-                        h-auto
-                        flex
-                        gap-3
-                        md:flex-row
-                        flex-col
+                        bg-[#FFFFFF] 
+                        p-[32px]  
+                        shadow-lg
+                        rounded-2xl
+                        border-[2px]
+                        border-slate-200
                     '>
-                        { update && <ClassicButton text={`Atualizar perfil`} fn={ api } type={"update"}/>}
-                        { update && <ClassicButton 
-                            text={
-                                <> 
-                                    <X height={24} width={24} className='inline-block'/> <span className='text-[0.9rem]'>Cancelar</span>
-                                </>
-                            } fn={disableFields} tupe={"classic"}/>}
-                        
-                    </motion.div>
-            </motion.div> : <SmallLoader />}
+                        <form 
+                            layout="true"
+                            action=""
+                            className='
+                                w-full  
+                                h-auto
+                        '>
+                            <div 
+                                id="body-form" 
+                                className=" 
+                                    w-full 
+                                    flex 
+                                    lg:flex-row 
+                                    flex-col 
+                                    lg:gap-[32px]
+                            ">
+
+                                <div className="w-full">
+                                    {leftFields.map((field, index) => {
+
+                                        return (
+                                            <FormFieldUserPage
+                                                key={index}
+                                                value={field.value}
+                                                body={{
+                                                    field,
+                                                    fields,
+                                                    setFields
+                                                }}
+                                            />
+                                        );
+
+                                    })}
+                                </div>
+
+                                <div className="w-full">
+                                    {rightFields.map((field, index) => {
+
+                                        return (
+                                            <FormFieldUserPage
+                                                key={index}
+                                                value={field.value}
+                                                body={{
+                                                    field,
+                                                    fields,
+                                                    setFields
+                                                }}
+                                            />
+                                        );
+
+                                    })}
+                                </div>
+
+                            </div>
+                        </form>
+                        <motion.div 
+                        layout
+                        className='
+                            w-full
+                            h-auto
+                            flex
+                            gap-3
+                            md:flex-row
+                            flex-col
+                        '>
+                            { update && <ClassicButton text={`Atualizar perfil`} fn={ api } type={"update"}/>}
+                            { update && <ClassicButton 
+                                text={
+                                    <> 
+                                        <X height={24} width={24} className='inline-block'/> <span className='text-[0.9rem]'>Cancelar</span>
+                                    </>
+                                } fn={disableFields} tupe={"classic"}/>}
+                            
+                        </motion.div>
+                </motion.div> : <SmallLoader />}
+            </div>
         </div>
     )
 }

@@ -6,6 +6,7 @@ import { useRecoverEmail } from '../service/recover';
 import { useConfirmPassword } from '../service/confirmPassword';
 import { useUser } from '../service/user';
 import { useDoctors } from '../service/doctors';
+import { useAppointments } from '../service/appointments';
 
 export const useApi = () => {
 
@@ -16,8 +17,9 @@ export const useApi = () => {
     const { getUser } = useUser();
     const { updateUser } = useUser();
     const getDoctorsForHome = useDoctors();
+    const { getAppointments } = useAppointments()
 
-    const api = async (method, where, body) => {
+    const api = async (method, where, body = null) => {
 
         const routes = {
             "post":{
@@ -28,7 +30,8 @@ export const useApi = () => {
             },
             "get": {
                 "/home": getDoctorsForHome,
-                "/info": getUser
+                "/info": getUser,
+                "/info/appointments": getAppointments
             },
             "patch":{
                 "/info/update": updateUser

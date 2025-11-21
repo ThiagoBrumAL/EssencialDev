@@ -1,7 +1,12 @@
 
 import { motion } from "framer-motion"
+import { useTheme } from "../../contexts/theme/useTheme";
+import ButtonTheme from "../buttons/ButtonTheme";
 
 function CardTheme () {
+
+    const { theme, changeTheme } = useTheme();
+
     return (
         <div className="
             w-full
@@ -33,7 +38,7 @@ function CardTheme () {
                         font-DmSans
 
                     '>
-                        Informações pessoais
+                        Tema
                     </h2>
                 </div>
 
@@ -51,15 +56,26 @@ function CardTheme () {
                     border-[2px]
                     border-slate-200
                 '>
-                    <form 
+                    <div 
                         layout="true"
-                        action=""
                         className='
                             w-full  
                             h-auto
+                            flex
+                            flex-row
+                            justify-between
+                            items-center
                     '>
-                        theme
-                    </form>
+                        <h1>
+                            Clique aqui para alterar o tema do jeito que preferir
+                        </h1>
+                        <div className="
+                            h-[20px]
+                            w-auto
+                        ">
+                            <ButtonTheme theme={theme} changeTheme={changeTheme} />
+                        </div>
+                    </div>
             </motion.div>
         </div>
     )
