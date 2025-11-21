@@ -97,7 +97,7 @@ function ScreenHome({ children }){
                             bg-gradient-to-tr
                             ${isWindows ? "md:h-[74px]" : "md:h-[90px]"}
                             ${isWindows ? "md:h-[70px]" : "md:h-[86px]"}
-                            h-[68px]
+                            h-[62px]
                             w-full
                             px-[32px]
                             justify-center
@@ -194,7 +194,7 @@ function ScreenHome({ children }){
                                         items-center
                                         md:w-[100px]
                                         md:h-full
-                                        h-[30px]
+                                        h-full
                                         w-[30px]
                                     ">
                                         <Link 
@@ -214,7 +214,8 @@ function ScreenHome({ children }){
                         transition 
                         duration-1000
                         ease-in-out
-                        pt-[80px]
+                        md:pt-[80px]
+                        pt-[86px]
 
                     `}>
                         { children }

@@ -114,7 +114,7 @@ function UserPage(){
                 '>
                     &nbsp;
                     { <Icon color={isActive ? "#000000" : "#777E90"}/> }
-                    <span className={` ${isActive ? "text-[#000000]" : "text-[#777E90]"} leading-normal text-[0.85rem] font-DmSans`}>{ text }</span>
+                    <span className={` ${isActive ? "text-[#000000]" : "text-[#777E90]"} leading-normal text-[1rem] font-DmSans`}>{ text }</span>
                     &nbsp;
                 </motion.button>
 
@@ -283,7 +283,6 @@ function UserPage(){
                 h-auto
                 max-w-[1280px]
                 md:pt-[80px]
-                pt-[20px]
                 flex
                 gap-[50px]
                 md:flex-row
