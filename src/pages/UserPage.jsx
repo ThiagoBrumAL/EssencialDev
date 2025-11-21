@@ -330,7 +330,6 @@ function UserPage(){
 
                 </div>
 
-
                 <div className='
                     w-full
                     max-w-[896px]
