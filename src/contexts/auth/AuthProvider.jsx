@@ -30,9 +30,9 @@ export function AuthProvider({ children }){
 
         setToken(datas.token)
         setExpiresAt(Number(datas.dateExpiration));
-        Cookies.set("tk", datas.token);
-        Cookies.set("sb", datas.sub)
-        Cookies.set("ksu", keepSessionUser)
+        Cookies.set("tk", datas.token, { expires: Number(datas.dateExpiration) });
+        Cookies.set("sb", datas.sub, { expires: Number(datas.dateExpiration) })
+        Cookies.set("ksu", keepSessionUser, { expires: 7 })
 
         if(callback) return callback()
 
