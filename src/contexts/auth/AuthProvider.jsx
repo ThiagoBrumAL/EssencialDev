@@ -24,6 +24,8 @@ export function AuthProvider({ children }){
 
     const [expiresAt, setExpiresAt] = useState(null)
 
+    const [user, setUser] = useState();
+
     const timer = useRef(null)
 
     function login(datas, callback){
@@ -117,7 +119,7 @@ export function AuthProvider({ children }){
     }, [token, expiresAt])
 
     return (
-        <AuthContext.Provider value={{ login, logout, token, setSub, sub, setKeepSessionUser, keepSession }}>
+        <AuthContext.Provider value={{ login, logout, token, setSub, sub, setKeepSessionUser, keepSession, setUser, user }}>
             { children }
         </AuthContext.Provider>
     )

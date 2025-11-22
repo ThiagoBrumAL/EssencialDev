@@ -30,6 +30,8 @@ export const useSignIn = () => {
 
             const datas = { token, dateExpiration, sub }
 
+            console.log(datas);
+
             return body.login(token, () => {
                 if(token) return body.login(datas, () => setTimeout(() => body.navigate("/home"), 1000))
             })

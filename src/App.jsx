@@ -180,6 +180,17 @@ function App() {
                     }
                   />
 
+                  <Route 
+                    path="/about" 
+                    element={
+                      <PrivateRoute>
+                        <ScreenHome>
+                            
+                        </ScreenHome>
+                      </PrivateRoute>
+                    }
+                  />
+
               </Routes>
               
             </OsProvider>

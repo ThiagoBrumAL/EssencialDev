@@ -34,7 +34,7 @@ function CardAppointments ({ params }) {
                 <span className={`
                     ${validateTheme(theme, "bg-slate-200", "bg-slate-800")}
                     rounded-xl
-                    px-2
+                    px-3
                     py-1
                     ${validateTheme(theme, "text-slate-800", "text-slate-400")}
                 `}>
@@ -67,9 +67,8 @@ function CardAppointments ({ params }) {
             `}>
                 <div className={`
                     w-full
-                    ${validateTheme(theme,"from-teal-400 to-indigo-300", "from-[#01051C] to-[#051782]")}
-                    bg-gradient-to-tr
-                    rounded-tr-2xl
+                    ${validateTheme(theme,"bg-slate-200", "bg-slate-800")}
+                    rounded-tr-xl
                     rounded-tl-xl
                     md:px-[32px]
                     px-[22px]
@@ -78,15 +77,12 @@ function CardAppointments ({ params }) {
                     <h1 className={`
                         md:text-[1rem]
                         text-[0.8rem]
-                        ${validateTheme(theme, "text-slate-50", "text-slate-400")}
+                        ${validateTheme(theme, "text-slate-900", "text-slate-300")}
                         font-DmSans
                         font-bold    
                     `}>
-                        <span className={`
-                            ${validateTheme(theme, "text-slate-800", "text-slate-300")}
-                        `}>
-                            ID:
-                        </span> { id }
+
+                        Id: { id }
                     </h1>
                 </div>
                 <div
