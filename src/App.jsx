@@ -60,7 +60,6 @@ function App() {
                 <Route 
                   path="/sign-in" 
                   element={
-                    
                       <PublicRoute>
                         <ScreenSSR>
                           <FormSignIn />

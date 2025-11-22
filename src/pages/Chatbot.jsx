@@ -1,6 +1,7 @@
 import { useTheme } from "../contexts/theme/useTheme";
 import { Send } from "lucide-react";
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 
 function Chatbot({ children }){
 
@@ -29,13 +30,31 @@ function Chatbot({ children }){
         )
     }
 
-    const Response = () => {
+    const InputChat = () => {
         return (
-            <div>
-                
-            </div>
+            <motion.div 
+            className="
+                w-full
+                h-[36px]
+            ">
+                <input 
+                    className="
+                        w-full
+                        bg-slate-200
+                        border-[2px]
+                        border-slate-300
+                        rounded-md
+                        outline-none
+                        px-[24px]
+                        py-[5px]
+                        text-[1rem]
+                        font-DmSans
+                    " 
+                    type="text"
+                />
+            </motion.div>
         )
-    } 
+    }
 
     return (
         <div className={`
@@ -99,12 +118,39 @@ function Chatbot({ children }){
                         <div
                         style={{ scrollbarWidth: "none" }}
                         className="
-                            px-[32px]
-                            py-[24px]
                             min-h-[400px]
                             overflow-y-scroll
                         ">
-                            {/* Body */}
+                            <div className="
+                                flex
+                                flex-row
+                                md:gap-[24px]
+                                gap-[12px]
+                            ">
+                                <div className="
+                                    h-[34px]
+                                    w-[34px] 
+                                ">
+                                    <img 
+                                        src="https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763819326/ChatbotImg_j1t1sl.png" 
+                                        alt="Chat Image" 
+                                        className="
+                                            min-h-[34px]
+                                            min-w-[34px] 
+                                    "/>
+                                </div>
+                                <div className="
+                                    bg-slate-100
+                                    px-[24px]
+                                    py-[16px]
+                                    rounded-lg
+                                    max-w-[500px]
+                                ">
+                                    <p>
+                                        Olá! Bem-vindo ao assistente virtual da EssencialDEV. Como posso ajudá-lo hoje?
+                                    </p>
+                                </div>
+                            </div>
                         </div>
 
                     </div>
@@ -115,11 +161,11 @@ function Chatbot({ children }){
                         px-[32px]
                         py-[24px]
                         flex
-                        sm:flex-row
-                        flex-col
+                        flex-row
                         justify-center
-                        sm:items-start
-                        items-end
+                        items-center
+                        sm:gap-[24px]
+                        gap-[12px]
                     ">
                         <div className="
                             w-full
@@ -128,13 +174,19 @@ function Chatbot({ children }){
                             gap-[20px]
                             flex-wrap
                         ">
-                            <Option text={"Agendar consulta"}/>
-                            <Option text={"Agendar consulta"}/>
-                            <Option text={"Agendar consulta"}/>
-                            <Option text={"Agendar consulta"}/>
-                            <Option text={"Agendar consulta"}/>
-                            <Option text={"Agendar consulta"}/>
-                            <Option text={"Agendar consulta"}/>
+                            {/*
+                            
+                                <Option text={"Agendar consulta"}/>
+                                <Option text={"Agendar consulta"}/>
+                                <Option text={"Agendar consulta"}/>
+                                <Option text={"Agendar consulta"}/>
+                                <Option text={"Agendar consulta"}/>
+                                <Option text={"Agendar consulta"}/>
+                                <Option text={"Agendar consulta"}/>    
+
+                            */}
+
+                            <InputChat />
                         </div>
                         <div className="
                             w-full

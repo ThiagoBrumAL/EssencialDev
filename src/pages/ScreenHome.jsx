@@ -10,6 +10,7 @@ import { useOs } from "../contexts/os/useOs.js";
 import { AnimatePresence, motion } from "framer-motion";
 import { useFeedback } from "../contexts/api/useFeedback.js";
 import CardFeedback from "../components/cards/CardFeedback.jsx";
+import { useWindowWidth } from "../hooks/WindowWidth.jsx";
 
 
 function ScreenHome({ children }){
@@ -17,6 +18,9 @@ function ScreenHome({ children }){
     const [load, setLoad] = useState(true)
     const locale = useLocation()
     const { isWindows } = useOs()
+
+    const width = useWindowWidth();
+    const [isOpen, setIsOpen] = useState(false);
 
     const { showMessage } = useFeedback();
 
@@ -76,11 +80,79 @@ function ScreenHome({ children }){
         )
     }
 
+    const LinkSide = ({ name, path }) => {
+        return (
+            <a 
+                href={path}
+                className={`
+                    text-white
+                    text-[1rem] 
+                    font-[600]
+                    leading-[1rem]
+                    text-center
+                    relative
+                    h-full
+                    group
+                    font-Inter
+            `}>
+                <div className="
+                    flex
+                    justify-start
+                    items-center
+                    h-full
+                    w-full
+                ">
+                    { name }
+                </div>
+    
+            </a>
+        )
+    }
+
+    const SideBar = () => {
+        return (
+            <motion.div 
+            initial={{ opacity: 0, x: -300 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -300 }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            className="
+                md:top-[116px]
+                top-[86px]
+                py-[32px]
+                px-[24px]
+                w-full
+                h-auto
+                max-w-[220px]
+                bg-sky-300
+                left-[24px]
+                flex
+                flex-col
+                fixed
+                rounded-xl
+            ">
+                <div className="
+                    flex
+                    flex-col
+                    gap-[32px]
+                ">
+                    <LinkSide path={"/home"} name={"Inicio"}/>
+                    <LinkSide path={"/about"} name={"Sobre Nós"}/>
+                    <LinkSide path={"/chat"} name={"Assistente Virtual"}/>
+                    <LinkSide path={"/blog"} name={"Blog"}/>
+                </div>
+            </motion.div>
+        )
+    }
+
+    const openSide = () => {
+        setIsOpen((prev) => !prev)
+    }
+
     const Structure = () => {
         return <div className="
             w-full
             h-full
-            relative
         ">
             <AnimatePresence mode="sync">
                 <motion.div
@@ -89,7 +161,7 @@ function ScreenHome({ children }){
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.9 }}
-                    className="w-full h-full"
+                    className="w-full h-full relative"
                 >
                     <header 
                         className={`
@@ -185,7 +257,13 @@ function ScreenHome({ children }){
                                         md:hidden
                                         block
                                     ">
-                                        <TextAlignJustify color="#FFFFFF"/>
+                                        <motion.button 
+                                        onClick={() => openSide()}
+                                        className="
+
+                                        ">
+                                            <TextAlignJustify color="#FFFFFF"/>
+                                        </motion.button>
                                     </div>
 
                                     <div className="
@@ -216,7 +294,12 @@ function ScreenHome({ children }){
                         ease-in-out
                         md:pt-[80px]
                         pt-[86px]
+                        relative
                     `}>
+                        <AnimatePresence>
+                            {isOpen && <SideBar /> }
+                        </AnimatePresence>
+                        
                         { children }
                     </main>
 

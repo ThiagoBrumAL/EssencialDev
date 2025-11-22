@@ -132,8 +132,6 @@ function HomePage(){
     }
 
     const renderDoctors = () => {
-
-        console.log(doctors);
         if (!doctors){
             return (
                 <div className="
