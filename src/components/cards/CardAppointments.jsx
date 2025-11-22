@@ -1,20 +1,140 @@
 
-import { motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import { useApi } from "../../api/api"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useTheme } from "../../contexts/theme/useTheme"
+import SmallLoader from "../loaders/SmallLoader"
 
 function CardAppointments ({ params }) {
 
     const api = useApi()
     const { theme, validateTheme } = useTheme()
 
+    const [values, setValues] = useState(null);
+
     useEffect(() => {
         
-        api("get", "/info/appointments")
+        const body = { setValues }
+
+        api("get", "/info/appointments", body)
         return
 
     }, [])
+
+    const MyStyle = ({ text, param }) => {
+        return (
+            <h1 className={`
+                md:text-[1rem]
+                text-[0.8rem]
+                font-DmSans
+                font-bold
+                flex
+                items-center      
+            `}>
+                <span className={`
+                    ${validateTheme(theme, "bg-slate-200", "bg-slate-800")}
+                    rounded-xl
+                    px-2
+                    py-1
+                    ${validateTheme(theme, "text-slate-800", "text-slate-400")}
+                `}>
+                    { text }:
+                </span>
+                &nbsp;
+                <span className={`
+                    w-auto
+                    ${validateTheme(theme, "text-slate-800", "text-slate-400")}  
+                `}>
+                    { param }
+                </span> 
+            </h1>
+        )
+    }
+
+    const Line = ({ doctor, date, id, hour, username }) => {
+        return (
+
+            <motion.div
+                layout
+                initial={false}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className={`
+                    border-[2px]
+                    ${validateTheme(theme, "border-slate-200", "border-slate-500")}
+                    rounded-2xl
+            `}>
+                <div className={`
+                    w-full
+                    ${validateTheme(theme,"from-teal-400 to-indigo-300", "from-[#01051C] to-[#051782]")}
+                    bg-gradient-to-tr
+                    rounded-tr-2xl
+                    rounded-tl-xl
+                    md:px-[32px]
+                    px-[22px]
+                    py-[8px]
+                `}>
+                    <h1 className={`
+                        md:text-[1rem]
+                        text-[0.8rem]
+                        ${validateTheme(theme, "text-slate-50", "text-slate-400")}
+                        font-DmSans
+                        font-bold    
+                    `}>
+                        <span className={`
+                            ${validateTheme(theme, "text-slate-800", "text-slate-300")}
+                        `}>
+                            ID:
+                        </span> { id }
+                    </h1>
+                </div>
+                <div
+                    className={`
+                        w-full
+                        ${validateTheme(theme, "bg-slate-50", "bg-slate-900")}
+                        pb-[32px]
+                        md:px-[32px]
+                        px-[22px] 
+                        shadow-lg
+                        rounded-br-2xl
+                        rounded-bl-xl
+                    `}>
+                        
+                        <div className="
+                            h-full
+                            w-full
+                            flex
+                            justify-between
+                            pt-[24px]
+                            md:flex-row
+                            flex-col
+                            md:gap-0
+                            gap-6
+                        ">
+                            <div className="
+                                flex
+                                flex-col
+                                gap-6
+                            ">
+                                <MyStyle text={ "Especialista" } param={ doctor }/>
+                                <MyStyle text={ "Data" } param={ date }/>
+                            </div>
+                            <div className="
+                                flex
+                                flex-col
+                                gap-6
+                            ">
+                                <MyStyle text={ "Paciente" } param={ username || "Paciente" }/>
+                                <MyStyle text={ "Hora" } param={ hour }/>
+                            </div>
+                        </div>
+
+                </div>
+            </motion.div>
+            
+        )    
+    }
 
     return (
         <div className="
@@ -49,31 +169,38 @@ function CardAppointments ({ params }) {
                         Agendamentos
                     </h2>
                 </div>
+                
+                <motion.div
+                style={{ scrollbarWidth: "none" }}
+                className={`
+                    flex
+                    flex-col
+                    gap-4
+                    min-h-[380px]
+                    max-h-[450px]
+                    overflow-y-scroll
+                    rounded-xl
+                    relative
+                `}>
+                    <AnimatePresence mode="popLayout">
+                        {values ? values.map((field) => {
+                            return (
+                                <Line 
+                                    key={field.id} 
+                                    id={field.id} 
+                                    doctor={field.specialist} 
+                                    hour={field.hour} 
+                                    date={field.date} 
+                                    username={field.patientName}
+                                />
+                            )
+                        }) : <SmallLoader />}
+                    </AnimatePresence>
 
+                </motion.div>
+                
             </div>
-            <motion.div
-                layout
-                transition={{ type: "tween", duration: 0.4, ease: "easeInOut" }}
-                exit={{ opacity: 0 }}
-                className='
-                    w-full
-                    bg-[#FFFFFF] 
-                    p-[32px]  
-                    shadow-lg
-                    rounded-2xl
-                    border-[2px]
-                    border-slate-200
-                '>
-                    <form 
-                        layout="true"
-                        action=""
-                        className='
-                            w-full  
-                            h-auto
-                    '>
-                        appointments
-                    </form>
-            </motion.div>
+            
         </div>
     )
 }

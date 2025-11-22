@@ -2,12 +2,10 @@ import { handlingAnalyzeDatas } from '../utils/errors/handlers/handlingAnalyzeDa
 import { useFeedback } from '../contexts/api/useFeedback';
 
 import { badFeedback } from '../utils/helpers/feedback/Failure';
-import { useAuth } from '../contexts/auth/useAuth';
 
 export const useSignIn = () => {
 
     const { renderCardFeedback } = useFeedback();
-    const { setId } = useAuth();
 
     const signIn = async (body, axios) => {
 

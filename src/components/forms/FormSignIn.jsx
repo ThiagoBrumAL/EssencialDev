@@ -185,9 +185,9 @@ function FormSignIn(){
                     onChange={(event) => setKeepSessionUser(event.target.checked)}
                     name="authorizedTerms" 
                     className="
-                        justify-self-end
                         w-5
                         h-5
+                        
                 "/>
                 <label 
                     className={`

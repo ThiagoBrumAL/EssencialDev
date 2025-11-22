@@ -30,10 +30,8 @@ function HomePage(){
     const scrollRef = useRef();
     const refSpecialties = useRef()
 
-
     const width = useWindowWidth();
     const api = useApi();
-
 
     const { theme, validateTheme } = useTheme();
 
@@ -151,8 +149,7 @@ function HomePage(){
         return doctors.slice(0,10).map((doc, i) => (
             <CardDoctor key={i} ref={i === 0 ? cardRef : null} width={width} specialty={doc.specialty} desc={"Cuide do seu coração com especialistas dedicados."}/>
         ));
-    };
-    
+    };  
 
     useEffect(() => {
 
@@ -164,9 +161,6 @@ function HomePage(){
     useEffect(() => {
         setHowManyClicks(width >= 1158 ? 3 : (width >= 775 ? 4 : 10))
     }, [])
-
-   
-
    
     return (
         <div

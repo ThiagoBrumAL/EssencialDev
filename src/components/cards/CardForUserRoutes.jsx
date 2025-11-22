@@ -65,6 +65,7 @@ function CardForUserRoutes ({ params }) {
                             flex-row
                             justify-between
                             items-center
+                            gap-2
                     '>
                         <p className={`
                             ${validateTheme(theme, "text-[#000000]", "text-slate-500")}
@@ -74,7 +75,9 @@ function CardForUserRoutes ({ params }) {
                             { params.text }
                         </p>
 
-                        { params.title === "Sair" ? <params.button text={<> <DoorOpen/> Sair</>} fn={() => logout()} type={"logout"}/> : <params.button /> }
+                        <div>
+                            { params.title === "Sair" ? <params.button text={<> <DoorOpen/> Sair</>} fn={() => logout()} type={"logout"}/> : <params.button /> }
+                        </div>
                     </div>
             </motion.div>
         </div>

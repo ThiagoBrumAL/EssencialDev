@@ -15,7 +15,11 @@ export const useAppointments = () => {
             }
         )
         const datas = await response.data
-        console.log(datas);
+
+        setTimeout(() => {
+            body.setValues(datas)
+        },1000)
+        
     }
 
     return {
