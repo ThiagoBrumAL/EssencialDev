@@ -196,23 +196,24 @@ function HomePage(){
                     mt-[32px]
                     mb-[20px]
                 ">
-                    <p className="
+                    <p className={`
                         text-[1.275rem]
                         leading-normal
-                        text-[#404040]
+                        ${validateTheme(theme, "text-[#404040]", "text-[#FFFAFE]")}
                         font-normal
                         font-DmSans
-                        mb-[18px]
-                    ">
+                        mb-[12px]
+                    `}>
                         Mais Procurados  
                     </p>
-                    <p className="
+                    <p className={`
                         text-[1.475rem]
                         leading-normal
-                        text-[#404040]
+                        ${validateTheme(theme, "text-[#404040]", "text-[#FFFAFE]")}
                         font-bold
                         font-DmSans
-                    ">
+                        mb-[24px]
+                    `}>
                         Encaixes Disponíveis
                     </p>
                 </div>
@@ -255,24 +256,24 @@ function HomePage(){
                     mt-[50px]
                     mb-[20px]
                 ">
-                    <p className="
+                    <p className={`
                         text-[1.275rem]
                         leading-normal
-                        text-[#404040]
+                        ${validateTheme(theme, "text-[#404040]", "text-[#FFFAFE]")}
                         font-normal
                         font-DmSans
                         mb-[18px]
-                    ">
+                    `}>
                         Mais Serviços  
                     </p>
-                    <p className="
+                    <p className={`
                         text-[1.475rem]
                         leading-normal
-                        text-[#404040]
+                        ${validateTheme(theme, "text-[#404040]", "text-[#FFFAFE]")}
                         font-bold
                         font-DmSans
                         mb-[24px]
-                    ">
+                    `}>
                         Veja abaixo com quais especialidades trabalhamos
                     </p>
                 </div>

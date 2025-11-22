@@ -298,7 +298,6 @@ function ScreenHome({ children }){
                     </main>
 
                     <footer className={`
-                        mt-[50px]
                         w-full
                         p-[24px]
                         bg-gradient-to-tr
@@ -340,6 +339,7 @@ function ScreenHome({ children }){
             className={`
                 block
                 w-full
+                h-full
                 ${validateTheme(theme,"bg-[#FAFAFA]","bg-slate-900")}
         `}>
 

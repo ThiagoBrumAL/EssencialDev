@@ -40,7 +40,7 @@ function Chatbot() {
         },
         { 
             ask: "Essa aplicação foi desenvolvida utilizando quais tecnologias?", 
-            response: "Esta aplicação foi desenvolvida com lingugens como: Typescript, Javascript, Tailwindcss, Cognito AWS, Google Firebase e dentre outras tecnologias e frameworks :)" 
+            response: "Esta aplicação foi desenvolvida com lingugens como: Typescript, Javascript, React, Tailwindcss, Cognito AWS, Google Firebase e dentre outras tecnologias e frameworks :)" 
         },
     ]);
 

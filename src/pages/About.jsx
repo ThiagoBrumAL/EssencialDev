@@ -2,6 +2,8 @@ import SectionWrapperA from "../components/wrappers/home/SectionWrapperA";
 import { useTheme } from "../contexts/theme/useTheme";
 import { cloudinary } from "../cloud/cloudinary";
 import SectionWrapperB from "../components/wrappers/home/SectionWrapperB";
+import SectionWrapperC from "../components/wrappers/home/SectionWrapperC";
+import SectionWrapperD from "../components/wrappers/home/SectionWrapperD";
 
 function About () {
 
@@ -9,10 +11,15 @@ function About () {
     
 
     return (
-        <div className="
-        ">
+        <div
+            className={`
+                w-full
+                h-full
+                ${validateTheme(theme,"bg-[#FAFAFA]","bg-slate-900")}
+        `}>
             <div className={`
                 w-full
+                h-full
                 md:py-[60px]
                 py-[32px]
                 ${validateTheme(theme, "bg-slate-50", "bg-slate-800")}
