@@ -25,22 +25,16 @@ import CardAppointments from "./components/cards/CardAppointments"
 import CardForUserRoutes from "./components/cards/CardForUserRoutes"
 import ClassicButton from "./components/buttons/ClassicButton"
 import ButtonTheme from "./components/buttons/ButtonTheme"
+import { useAuth } from "./contexts/auth/useAuth"
 
 function PrivateRoute({ children }){
-  const { token } = useContext(AuthContext)
+  const { token } = useAuth();
 
   if(token === null) return <Navigate to={"/sign-in"}/>
   return children
 }
 
 function PublicRoute({ children }) {
-
-  const { keepSessionUser } = useContext(AuthContext);
-
-  if (keepSessionUser) {
-    return <Navigate to="/home" replace />;
-  }
-
   return children;
 }
 

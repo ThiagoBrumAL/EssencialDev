@@ -8,140 +8,117 @@ import { AuthContext } from "./AuthContext";
 import Cookies from "js-cookie";
 
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-export function AuthProvider({ children }) {
+export function AuthProvider({ children }){
 
-    const [token, setToken] = useState(() => Cookies.get("tk") || null);
+    const navigate = useNavigate();
+    
+    const [token, setToken] = useState(() => Cookies.get("tk") || null)
+
     const [sub, setSub] = useState(() => Cookies.get("sb") || null);
 
-    const [keepSessionUser, setKeepSessionUser] = useState(() => {
-        const value = Cookies.get("ksu");
-        return value === "true";
-    });
+    const [keepSessionUser, setKeepSessionUser] = useState(false)
 
-    const [expiresAt, setExpiresAt] = useState(null);
+    const [ksu, setKsu] = useState(() => Cookies.get("ksu") === "true")
 
-    const timer = useRef(null);
+    const [expiresAt, setExpiresAt] = useState(null)
 
-    function login(datas, callback) {
+    const timer = useRef(null)
 
-        const expire = Number(datas.dateExpiration);
+    function login(datas, callback){
 
-        setToken(datas.token);
-        setSub(datas.sub);
-        setExpiresAt(expire);
+        setToken(datas.token)
+        setExpiresAt(Number(datas.dateExpiration));
+        Cookies.set("tk", datas.token);
+        Cookies.set("sb", datas.sub)
+        Cookies.set("ksu", keepSessionUser)
 
-        if (keepSessionUser) {
-            // cookie persistente
-            Cookies.set("tk", datas.token, { expires: new Date(expire) });
-            Cookies.set("sb", datas.sub, { expires: new Date(expire) });
-        } else {
-            // cookie de sessão
-            Cookies.set("tk", datas.token);
-            Cookies.set("sb", datas.sub);
-        }
+        if(callback) return callback()
 
-        if (callback) return callback();
     }
 
+    async function logout(){
 
-    async function logout() {
-
-        await axios.post(
+        const response = await axios.post(
             "https://essencial-server.vercel.app/auth/logout",
             {},
             { withCredentials: true }
         );
+        const status = response.status;
 
-        Cookies.remove("tk");
-        Cookies.remove("sb");
-        Cookies.remove("ksu");
+        if(status === 200){
+            Cookies.remove("tk")
+            Cookies.remove("sb")
+            Cookies.remove("ksu")
 
-        setToken(null);
-        setSub(null);
-        setExpiresAt(null);
-        setKeepSessionUser(false);
+            setToken(null)
+            setExpiresAt(null)
+            setKsu(null)
+            setSub(null)
+        }
     }
 
     async function keepSession() {
-        try {
-            const response = await axios.post(
-                "https://essencial-server.vercel.app/auth/session",
-                {},
-                { withCredentials: true }
-            );
+        const response = await axios.post(
+            "https://essencial-server.vercel.app/auth/session",
+            {},
+            { withCredentials: true }
+        );
 
-            const newToken = response.data?.user.accessToken;
-            const expire = Number(response.data?.user.expiresAt);
+        const newToken = response.data?.user.accessToken;
+        const expire = response.data?.user.expiresAt;
+        const sub = response.data?.user.sub;
 
-            if (newToken) {
-                setToken(newToken);
-                setExpiresAt(expire);
+        if (newToken) {
+            setToken(newToken);
+            setExpiresAt(Number(expire));
 
-                if (keepSessionUser) {
-                    Cookies.set("tk", newToken, { expires: new Date(expire) });
-                } else {
-                    Cookies.set("tk", newToken); // cookie de sessão
-                }
-            }
-
-        } catch (err) {
-            console.error("Erro no keepSession:", err);
-            logout();
+            Cookies.set("tk", newToken);
+            Cookies.set("sb", sub)
+            navigate("/home")
         }
     }
 
     useEffect(() => {
-        Cookies.set("ksu", keepSessionUser ? "true" : "false");
-    }, [keepSessionUser]);
 
-    useEffect(() => {
-        if (!token) return;
-
-        if (keepSessionUser) {
-            // tornar persistente
-            Cookies.set("tk", token, { expires: new Date(expiresAt) });
-            Cookies.set("sb", sub, { expires: new Date(expiresAt) });
-        } else {
-            // tornar cookie de sessão
-            Cookies.set("tk", token);
-            Cookies.set("sb", sub);
-        }
-    }, [keepSessionUser]);
-
-    useEffect(() => {
-        if (!token || !expiresAt) return;
+        if(!token || !expiresAt) return
 
         const now = Date.now();
+    
+        if(now >= expiresAt){
 
-        if (now >= expiresAt) {
-            if (keepSessionUser) keepSession();
-            else logout();
-            return;
+            if(keepSessionUser){
+                keepSession()
+                return
+            }else{
+                logout();
+                return 
+            }
+            
         }
 
-        const timeLeft = expiresAt - now;
+        const timeLeft = expiresAt - now
 
         timer.current = setTimeout(() => {
-            if (keepSessionUser) keepSession();
-            else logout();
-        }, timeLeft);
+            if(keepSessionUser){
+                keepSession()
+                return
+            }else{
+                logout();
+                return 
+            }
+        }, timeLeft)
 
-        return () => clearTimeout(timer.current);
+        return () => {
+            if(timer.current) clearTimeout(timer.current)
+        }
 
-    }, [token, expiresAt]);
+    }, [token, expiresAt])
 
     return (
-        <AuthContext.Provider value={{
-            login,
-            logout,
-            token,
-            sub,
-            setSub,
-            keepSessionUser,
-            setKeepSessionUser
-        }}>
-            {children}
+        <AuthContext.Provider value={{ login, logout, token, setSub, sub, setKeepSessionUser, keepSession }}>
+            { children }
         </AuthContext.Provider>
-    );
+    )
 }

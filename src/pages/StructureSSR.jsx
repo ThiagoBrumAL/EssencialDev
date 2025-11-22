@@ -8,7 +8,7 @@ import Img from '../components/img/Img.jsx';
 import { Sun, Moon } from "lucide-react";
 import { AnimatePresence } from 'framer-motion';
 
-
+import Cookies from 'js-cookie';
 
 // Hooks.
 import { useLocation } from "react-router-dom";
@@ -18,10 +18,25 @@ import { useEffect, useState } from "react";
 // Contexts.
 import { useTheme } from "../contexts/theme/useTheme.js";
 import { useFeedback } from "../contexts/api/useFeedback.js";
+import { useAuth } from '../contexts/auth/useAuth.js';
 
 
 // SSF - Sign-in / Sign-up / Recover.
 function ScreenSSR({ children }) {
+
+    const { ksu, keepSession } = useAuth();
+
+    useEffect(() => {
+
+        if(!ksu){
+            Cookies.remove("sb")
+            Cookies.remove("tk")
+        }
+
+        const bool = Cookies.get("ksu") === "true"
+
+        if(bool) keepSession();
+    }, [])
 
     const [load, setLoad] = useState(true)
     const [userOpacity, setUserOpacity] = useState(0);

@@ -30,7 +30,6 @@ function FormSignIn(){
 
     const [userOpacity, setUserOpacity] = useState(0);
 
-
     useEffect(() => {
         if(locale.pathname === "/sign-in") setUserOpacity(1)
     }, [locale.pathname])
@@ -45,7 +44,6 @@ function FormSignIn(){
     } = useTheme()
 
     const { login, setKeepSessionUser } = useAuth();
-
     
     const [fields, setFields] = useState([
 
@@ -86,7 +84,7 @@ function FormSignIn(){
                 messageError: "Campo obrigatório",
     
             },
-        ]);
+    ]);
 
     return (
         <div 
@@ -179,6 +177,7 @@ function FormSignIn(){
                     max-w-[450px] 
                     sm:mt-[50px]
                     mt-[60px] 
+                    items-center
             ">
                 <input 
                     type="checkbox" 
@@ -187,15 +186,16 @@ function FormSignIn(){
                     name="authorizedTerms" 
                     className="
                         justify-self-end
-                        w-6
-                        h-6
+                        w-5
+                        h-5
                 "/>
                 <label 
                     className={`
-                        block
+                        m-0 
                         p-0 
-                        m-0
-                        text-[14px] 
+                        text-slate-500 
+                        font-[600] 
+                        text-[0.90rem]
                         font-Inter
                 `}> 
                     Você deseja manter sua sessão conectada
@@ -209,8 +209,7 @@ function FormSignIn(){
                     font-[600] 
                     text-[0.90rem]
                     font-Inter
-                    mt-[24px]
-                    mb-[36px]
+                    mt-[20px]
             `}>
                 Não possui conta?
                 &nbsp;
