@@ -26,6 +26,7 @@ import CardForUserRoutes from "./components/cards/CardForUserRoutes"
 import ClassicButton from "./components/buttons/ClassicButton"
 import ButtonTheme from "./components/buttons/ButtonTheme"
 import { useAuth } from "./contexts/auth/useAuth"
+import Chatbot from "./pages/Chatbot"
 
 function PrivateRoute({ children }){
   const { token } = useAuth();
@@ -164,6 +165,17 @@ function App() {
                               button: ClassicButton}
                             }/>
                           </UserPage>
+                        </ScreenHome>
+                      </PrivateRoute>
+                    }
+                  />
+
+                  <Route 
+                    path="/chat" 
+                    element={
+                      <PrivateRoute>
+                        <ScreenHome>
+                            <Chatbot />
                         </ScreenHome>
                       </PrivateRoute>
                     }
