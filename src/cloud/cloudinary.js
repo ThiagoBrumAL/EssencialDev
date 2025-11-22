@@ -14,14 +14,28 @@ export const cloudinary = {
     "/home":{
         imageTop: {
             "light": "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763382138/Cardiologist-bro_1_ezmc76.png",
-            "dark" : ""
+            "dark" : "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763849274/Cardiologist-bro_2_xjpi3n.png"
         },
         imageMiddle: {
             "light": "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763405014/Medical_research-bro_i5rnb6.png",
-            "dark" : ""
+            "dark" : "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763849398/Medical_research-bro_1_ttoigz.png"
         },
         imageChatBot: {
             "light": "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763609234/chatbot_imqwxw.png",
+            "dark" : ""
+        }
+    },
+    "/about":{
+        imageTop: {
+            "light": "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763848474/About_us_page-rafiki_1_u09lxf.png",
+            "dark" : "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763848737/About_us_page-rafiki_2_gd7lxa.png"
+        },
+        imageMiddle: {
+            "light": "",
+            "dark" : ""
+        },
+        imageChatBot: {
+            "light": "",
             "dark" : ""
         }
     }

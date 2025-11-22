@@ -1,8 +1,12 @@
 import React, { memo } from "react"
 import Img from "../../img/ImgForHome"
+import { useTheme } from "../../../contexts/theme/useTheme";
 
 
-const SectionWrapperB = React.memo(function SectionWrapperB({ theme, cloudinary }){
+const SectionWrapperB = React.memo(function SectionWrapperB({ cloudinary, h1, text, path }){
+
+    const { theme, validateTheme } = useTheme();
+
     return (
         <section 
             className="
@@ -21,8 +25,8 @@ const SectionWrapperB = React.memo(function SectionWrapperB({ theme, cloudinary 
                 justify-center
             ">
                 <Img 
-                    light={cloudinary["/home"].imageMiddle.light}
-                    dark={""}
+                    light={cloudinary[path].imageMiddle.light}
+                    dark={cloudinary[path].imageMiddle.dark}
                     theme={theme}
                 />
             </div>
@@ -42,16 +46,16 @@ const SectionWrapperB = React.memo(function SectionWrapperB({ theme, cloudinary 
                         text-sky-300
                         mb-[1.275rem]
                 ">
-                    Sua saúde é a nossa prioridade
+                    { h1 }
                 </h1>
-                <p className="
+                <p className={`
                     font-DmSans
                     text-[1.275rem]
-                    text-[#000000]
+                    ${validateTheme(theme, "text-[#000000]", "text-[#FFFAFE]")}
                     font-normal
                     leading-normal
-                ">
-                    Conte com uma equipe preparada para cuidar de você.
+                `}>
+                    { text }
                 </p>
             </div>
         </section>

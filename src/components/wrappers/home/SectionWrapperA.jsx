@@ -1,8 +1,12 @@
 import React, { memo } from "react"
 import Img from "../../img/ImgForHome"
 import { motion } from "framer-motion"
+import { useTheme } from "../../../contexts/theme/useTheme";
 
-const SectionWrapperA = React.memo(function SectionWrapperA({ theme, cloudinary }){
+const SectionWrapperA = React.memo(function SectionWrapperA({ cloudinary, h1, text, hasButton, path }){
+
+    const { theme, validateTheme } = useTheme();
+
     return (
         <section 
             className="
@@ -33,20 +37,20 @@ const SectionWrapperA = React.memo(function SectionWrapperA({ theme, cloudinary 
                             text-sky-300
                             mb-[1.275rem]
                     ">
-                        Agende sua consulta em minutos
+                        { h1 }
                     </h1>
-                    <p className="
+                    <p className={`
                         font-DmSans
                         text-[1.275rem]
-                        text-[#000000]
+                        ${validateTheme(theme, "text-[#000000]", "text-[#FFFAFE]")}
                         font-normal
                         leading-normal
-                    ">
-                        Clínica geral e diversas especialidades em um só lugar.
+                    `}>
+                        { text }
                     </p>
                 </div>
 
-                <motion.button
+                { hasButton && <motion.button
                     whileTap={{ scale: 0.9 }}
                     className="
                         bg-[#A3B3FF]
@@ -63,7 +67,7 @@ const SectionWrapperA = React.memo(function SectionWrapperA({ theme, cloudinary 
                         md:hover:-translate-y-1
                 ">
                         Agendar Agora
-                </motion.button>
+                </motion.button> }
                 
             </div>
             <div className="
@@ -73,8 +77,8 @@ const SectionWrapperA = React.memo(function SectionWrapperA({ theme, cloudinary 
                 justify-center
             ">
                 <Img 
-                    light={cloudinary["/home"].imageTop.light}
-                    dark={""}
+                    light={cloudinary[path].imageTop.light}
+                    dark={cloudinary[path].imageTop.dark}
                     theme={theme}
                 />
             </div>

@@ -8,17 +8,13 @@ import FormSignIn from "./components/forms/FormSignIn"
 import FormSignUp from "./components/forms/FormSignUp"
 import FormRecover from "./components/forms/FormRecover"
 import UserPage from "./pages/UserPage"
+import Appointments from "./pages/Appointments"
 
 import { FeedbackProvider } from "./contexts/api/feebackProvider"
 import { AuthProvider } from "./contexts/auth/AuthProvider"
 import { ThemeProvider } from "./contexts/theme/ThemeProvider"
 import { OsProvider } from "./contexts/os/OsProvider"
 
-//Cookies
-import Cookies from "js-cookie";
-
-import { useContext, useEffect } from "react"
-import { AuthContext } from "./contexts/auth/AuthContext"
 import HomePage from "./pages/HomePage"
 import FormUser from "./components/forms/FormUser"
 import CardAppointments from "./components/cards/CardAppointments"
@@ -27,6 +23,7 @@ import ClassicButton from "./components/buttons/ClassicButton"
 import ButtonTheme from "./components/buttons/ButtonTheme"
 import { useAuth } from "./contexts/auth/useAuth"
 import Chatbot from "./pages/Chatbot"
+import About from "./pages/About"
 
 function PrivateRoute({ children }){
   const { token } = useAuth();
@@ -181,11 +178,22 @@ function App() {
                   />
 
                   <Route 
+                    path="/appointments" 
+                    element={
+                      <PrivateRoute>
+                        <ScreenHome>
+                            <Appointments />
+                        </ScreenHome>
+                      </PrivateRoute>
+                    }
+                  />
+
+                  <Route 
                     path="/about" 
                     element={
                       <PrivateRoute>
                         <ScreenHome>
-                            
+                            <About />
                         </ScreenHome>
                       </PrivateRoute>
                     }

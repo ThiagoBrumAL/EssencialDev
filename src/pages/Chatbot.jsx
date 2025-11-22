@@ -43,6 +43,7 @@ function Chatbot() {
             response: "Esta aplicação foi desenvolvida com lingugens como: Typescript, Javascript, Tailwindcss, Cognito AWS, Google Firebase e dentre outras tecnologias e frameworks :)" 
         },
     ]);
+
     const handleOptionClick = (question) => {
         setMessages(prev => [...prev, { author: "user", text: question }]);
 
@@ -125,7 +126,7 @@ function Chatbot() {
             `}>
                 {response}
             </div>
-            <div className="h-[34px] w-[34px] rounded-full bg-yellow-400 flex justify-center items-center font-bold text-[#FFFAFE]">
+            <div className="min-h-[34px] min-w-[34px] max-w-[34px] max-h-[34px] rounded-full bg-yellow-400 flex justify-center items-center font-bold text-[#FFFAFE]">
                 {user?.name?.charAt(0)}
             </div>
         </div>

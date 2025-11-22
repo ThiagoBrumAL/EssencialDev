@@ -116,7 +116,7 @@ function ScreenHome({ children }){
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -300 }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
-            className="
+            className={`
                 md:top-[116px]
                 top-[86px]
                 py-[32px]
@@ -124,13 +124,13 @@ function ScreenHome({ children }){
                 w-full
                 h-auto
                 max-w-[220px]
-                bg-sky-300
+                ${validateTheme(theme, "bg-[#59CCEF]", "bg-[#4F39F6]")}
                 left-[24px]
                 flex
                 flex-col
                 fixed
                 rounded-xl
-            ">
+            `}>
                 <div className="
                     flex
                     flex-col
@@ -232,12 +232,6 @@ function ScreenHome({ children }){
                                             name={"Inicio"}
                                             condition={"md:block hidden"}
                                         />
-
-                                        <Link 
-                                            path={"/blog"} 
-                                            name={"Blog"}
-                                            condition={"md:block hidden"}
-                                        />
                                         
                                         <Link 
                                             path={"/about"} 
@@ -247,7 +241,7 @@ function ScreenHome({ children }){
 
                                         <Link 
                                             path={"/chat"} 
-                                            name={<>Assistente <br /> Virtual</>}
+                                            name={<>Assistente Virtual</>}
                                             condition={"md:block hidden"}
                                         />
                                         
@@ -293,11 +287,11 @@ function ScreenHome({ children }){
                         duration-1000
                         ease-in-out
                         md:pt-[80px]
-                        pt-[86px]
+                        pt-[60px]
                         relative
                     `}>
                         <AnimatePresence>
-                            {isOpen && <SideBar /> }
+                            { width <= 939 && isOpen ? <SideBar /> : null }
                         </AnimatePresence>
                         
                         { children }

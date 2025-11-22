@@ -167,8 +167,19 @@ function HomePage(){
                 h-full
                 ${validateTheme(theme,"bg-[#FAFAFA]","bg-slate-900")}
         `}>
-            <SectionWrapperA theme={theme} cloudinary={cloudinary}/>
-            <SectionWrapperB theme={theme} cloudinary={cloudinary}/>
+            <SectionWrapperA 
+                cloudinary={cloudinary} 
+                h1={"Agende sua consulta em minutos"} 
+                text={"Clínica geral e diversas especialidades em um só lugar."}
+                hasButton={true}
+                path={"/home"}
+            />
+            <SectionWrapperB 
+                cloudinary={cloudinary}
+                h1={"Sua saúde é a nossa prioridade"} 
+                text={"Conte com uma equipe preparada para cuidar de você."}
+                path={"/home"}
+            />
 
             <section className="
                     flex
