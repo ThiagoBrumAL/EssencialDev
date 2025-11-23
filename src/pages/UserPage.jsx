@@ -80,6 +80,7 @@ function UserPage({ children }){
             justify-center
             items-start
             px-[24px]
+            pt-[50px]
         `}>
             <section className="
                 w-full

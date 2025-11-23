@@ -17,7 +17,7 @@ export const useApi = () => {
     const { getUser } = useUser();
     const { updateUser } = useUser();
     const getDoctors = useDoctors();
-    const { getAppointments } = useAppointments()
+    const { getAppointments, postAppointments } = useAppointments()
 
     const api = async (method, where, body = null) => {
 
@@ -26,7 +26,8 @@ export const useApi = () => {
                 "/sign-in": signIn,
                 "/sign-up": signUp,
                 "/recover": recoverEmail,
-                "/recover/confirm-password": confirmPassword
+                "/recover/confirm-password": confirmPassword,
+                "/appointments": postAppointments
             },
             "get": {
                 "/home": getDoctors,

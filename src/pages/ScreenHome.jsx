@@ -130,6 +130,7 @@ function ScreenHome({ children }){
                 flex-col
                 fixed
                 rounded-xl
+                z-50
             `}>
                 <div className="
                     flex
@@ -283,6 +284,7 @@ function ScreenHome({ children }){
                     <main className={`
                         ${validateTheme(theme,"bg-[#FAFAFA]","bg-slate-900")}
                         h-auto
+                        min-h-[88.5vh]
                         w-full
                         transition 
                         duration-1000

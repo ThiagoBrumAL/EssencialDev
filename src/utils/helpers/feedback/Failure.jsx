@@ -1,4 +1,4 @@
-import { ShieldOff } from "lucide-react"
+import { ShieldOff, Siren } from "lucide-react"
 
 export const badFeedback = (status, renderCardFeedback, path) => {
 
@@ -83,7 +83,22 @@ export const badFeedback = (status, renderCardFeedback, path) => {
                 message:"Erro no servidor",
                 timeout: 5000
             }
-        }
+        },
+
+        "/appointments":{
+            400: {
+                icon: <Siren />, 
+                color: "bg-red-400",
+                message:"Preencha os requisitos",
+                timeout: 5000
+            },
+            500: {
+                icon: <ShieldOff />, 
+                color: "bg-red-400",
+                message:"Erro no servidor",
+                timeout: 5000
+            }
+        },
         
     }
 

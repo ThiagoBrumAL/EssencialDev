@@ -11,6 +11,7 @@ function CardAppointments ({ params }) {
     const { theme, validateTheme } = useTheme()
 
     const [values, setValues] = useState(null);
+    const [user, setUser] = useState(null)
 
     useEffect(() => {
         
@@ -20,6 +21,14 @@ function CardAppointments ({ params }) {
         return
 
     }, [])
+
+    useEffect(() => {
+
+        const body = { setUser }
+        api("get", "/info", body)
+
+    }, [])
+
 
     const MyStyle = ({ text, param }) => {
         return (
@@ -180,16 +189,19 @@ function CardAppointments ({ params }) {
                 `}>
                     <AnimatePresence mode="popLayout">
                         {values ? values.map((field) => {
-                            return (
-                                <Line 
-                                    key={field.id} 
-                                    id={field.id} 
-                                    doctor={field.specialist} 
-                                    hour={field.hour} 
-                                    date={field.date} 
-                                    username={field.patientName}
-                                />
-                            )
+
+                            if(user.name === field.patientName){
+                                return (
+                                    <Line 
+                                        key={field.id} 
+                                        id={field.id} 
+                                        doctor={field.specialist} 
+                                        hour={field.hour} 
+                                        date={field.date} 
+                                        username={field.patientName}
+                                    />
+                                )
+                            }
                         }) : <SmallLoader />}
                     </AnimatePresence>
 

@@ -11,8 +11,8 @@ const CardHome = forwardRef((props, ref) => {
 
     const { setNameAppt } = useAppointment();
 
-    const mapCard = ({ name }) => {
-        setNameAppt(name)
+    const mapCard = ( name ) => {
+        setNameAppt( name )
 
         return navigate("/appointments")
     }
@@ -68,7 +68,7 @@ const CardHome = forwardRef((props, ref) => {
                                 text-left
                                 mb-[10px]
                             `}>
-                                {props.specialty}
+                                {props.doctor.specialty}
                             </h2>
                             <p className={`
                                 ${validateTheme(theme, "text-[#141416]", "text-slate-500")}
@@ -83,7 +83,7 @@ const CardHome = forwardRef((props, ref) => {
                         <motion.button
                             whileHover={{ y: -2 }}
                             whileTap={{ scale: 0.95 }}
-                            onClick={() => mapCard({ name:  props.specialty})}
+                            onClick={() => mapCard({ name: props.doctor.name, spec: props.doctor.specialty })}
                             className={`
                                 ${validateTheme(theme, "bg-sky-300", "bg-indigo-600")}
                                 px-6

@@ -22,3 +22,40 @@ body{
   width: 100%;
 }
 
+
+.my-datepicker .react-datepicker {
+  @apply bg-slate-100 dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700;
+}
+
+.my-datepicker .react-datepicker__header {
+  @apply bg-indigo-300 text-white border-none;
+}
+
+.my-datepicker .react-datepicker__current-month {
+  @apply text-white font-semibold;
+}
+
+.my-datepicker .react-datepicker__day-name {
+  @apply text-indigo-100 font-medium;
+}
+
+.my-datepicker .react-datepicker__day {
+  @apply text-gray-700 dark:text-gray-200 rounded-lg m-[2px];
+}
+
+.my-datepicker .react-datepicker__day:hover {
+  @apply bg-indigo-200 text-slate-800;
+}
+
+.my-datepicker .react-datepicker__day--selected,
+.my-datepicker .react-datepicker__day--keyboard-selected {
+  @apply bg-slate-700 text-white !important;
+}
+
+.my-datepicker .react-datepicker__day--today {
+  @apply border border-slate-400 rounded-lg;
+}
+
+.my-datepicker .react-datepicker__day--disabled {
+  @apply text-gray-400 cursor-not-allowed;
+}

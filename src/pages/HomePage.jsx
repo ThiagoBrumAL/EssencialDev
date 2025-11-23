@@ -145,7 +145,16 @@ function HomePage(){
             )
         }
         return doctors.slice(0,10).map((doc, i) => (
-            <CardHome key={i} ref={i === 0 ? cardRef : null} width={width} specialty={doc.specialty} desc={"Cuide do seu coração com especialistas dedicados."}/>
+            <CardHome 
+                key={i} 
+                ref={i === 0 ? cardRef : null} 
+                width={width} 
+                desc={"Cuide do seu coração com especialistas dedicados."}
+                doctor={{
+                    name: doc.name,
+                    specialty: doc.specialty
+                }}
+            />
         ));
     };  
 

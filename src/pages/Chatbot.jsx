@@ -153,6 +153,7 @@ function Chatbot() {
             items-start 
             px-[24px] 
             ${validateTheme(theme, "bg-[#FAFAFA]", "bg-slate-900")}
+            pt-[50px]
         `}>
             <section 
             className="

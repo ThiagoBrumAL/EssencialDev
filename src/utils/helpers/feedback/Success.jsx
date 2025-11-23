@@ -1,6 +1,6 @@
 
 //Icons
-import { UserRoundCheck, Send, ShieldOff, UserPen } from 'lucide-react';
+import { UserRoundCheck, Send, ShieldOff, UserPen, ClipboardClock } from 'lucide-react';
 
 export const goodFeedback = (status, renderCardFeedback, path) => {
 
@@ -39,6 +39,15 @@ export const goodFeedback = (status, renderCardFeedback, path) => {
                 icon: <UserRoundCheck />, 
                 color: "bg-green-400",
                 message: "Usuário cadastrado com sucesso",
+                timeout: 5000
+            },
+        },
+
+        "/appointments":{
+            201: {
+                icon: <ClipboardClock />, 
+                color: "bg-green-400",
+                message: "Consulta agendada",
                 timeout: 5000
             },
         },
