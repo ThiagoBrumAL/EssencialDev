@@ -8,7 +8,13 @@ export const useAppointments = () => {
     const { renderCardFeedback } = useFeedback();
     const { token } = useAuth();
 
-    const getAppointments = async (body = null, axios) => {
+    const getAppointments = async (body, axios) => {
+
+        if (!body || !body.setValues) {
+            console.error("getAppointments chamado SEM setValues");
+            return;
+        }
+
         const response = await axios.get(`https://essencial-server.vercel.app/appointments`,
             { 
                 withCredentials: true,

@@ -30,6 +30,15 @@ function HomePage(){
     const scrollRef = useRef();
     const refSpecialties = useRef()
 
+    const images = [
+        "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763909804/Vector-1_iqtiks.png",
+        "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763909805/Vector-3_jiucdf.png",
+        "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763909805/Vector-5_xflgvf.png",
+        "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763909805/Vector-7_dhajit.png",
+        "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763909805/Vector-7_dhajit.png",
+        "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763909812/Vector-12_yxuqwf.png"
+    ]
+
     const width = useWindowWidth();
     const api = useApi();
 
@@ -150,6 +159,7 @@ function HomePage(){
                 ref={i === 0 ? cardRef : null} 
                 width={width} 
                 desc={"Cuide do seu coração com especialistas dedicados."}
+                image={images[i]}
                 doctor={{
                     name: doc.name,
                     specialty: doc.specialty
@@ -168,6 +178,8 @@ function HomePage(){
     useEffect(() => {
         setHowManyClicks(width >= 1158 ? 3 : (width >= 775 ? 4 : 10))
     }, [])
+
+    
    
     return (
         <div

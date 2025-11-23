@@ -6,7 +6,7 @@ import { useTheme } from '../../contexts/theme/useTheme';
 
 export default function BasicDateCalendar({ value, set }) {
 
-    const { theme, validateTheme } = useTheme();
+    const { theme } = useTheme();
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -21,7 +21,7 @@ export default function BasicDateCalendar({ value, set }) {
                 border-[2px] 
                 rounded-xl
                 md:h-auto
-                ${theme ? "bg-slate-900 border-slate-700" : "bg-slate-100 border-slate-200"}
+                ${!theme ? "bg-slate-900 border-slate-700" : "bg-slate-100 border-slate-200"}
             `}
             minDate={dayjs()}
             maxDate={dayjs().year(2026).endOf("year")}
@@ -30,9 +30,9 @@ export default function BasicDateCalendar({ value, set }) {
                 minWidth: 0,
 
                 "&.MuiDateCalendar-root": {
-                    backgroundColor: theme ? "#0F172A" : "#F1F5F9",
+                    backgroundColor: !theme ? "#0F172A" : "#F1F5F9",
                     border: "2px solid",
-                    borderColor: theme ? "#334155" : "#E2E8F0",
+                    borderColor: !theme ? "#334155" : "#E2E8F0",
                     borderRadius: "12px",
                     padding: "6px 12px",
                 },
@@ -40,16 +40,16 @@ export default function BasicDateCalendar({ value, set }) {
                 "& .MuiPickersCalendarHeader-label": {
                     fontWeight: "bold",
                     fontSize: "1.1rem",
-                    color: theme ? "#F8FAFC" : "#0F172A",
+                    color: !theme ? "#F8FAFC" : "#0F172A",
                 },
 
                 "& .MuiPickersArrowSwitcher-button": {
-                    color: theme ? "#CBD5E1" : "#1E293B",
+                    color: !theme ? "#CBD5E1" : "#1E293B",
                 },
 
                 "& .MuiPickersDay-root": {
                     fontSize: "1rem",
-                    color: theme ? "#E2E8F0" : "#0F172A",
+                    color: !theme ? "#E2E8F0" : "#0F172A",
                     borderRadius: "8px",
                 },
 
@@ -59,7 +59,7 @@ export default function BasicDateCalendar({ value, set }) {
                 },
 
                 "& .MuiPickersDay-root:hover": {
-                    backgroundColor: theme ? "#1E293B" : "#E2E8F0",
+                    backgroundColor: !theme ? "#1E293B" : "#E2E8F0",
                 },
                 }}
         />

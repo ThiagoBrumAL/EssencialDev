@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion"
 import { useTheme } from "../../contexts/theme/useTheme"
 import { useNavigate } from "react-router-dom";
 import { useAppointment } from "../../contexts/appointment/useAppointment";
+import { Cross } from "lucide-react";
 
 const CardHome = forwardRef((props, ref) => {
 
@@ -16,6 +17,7 @@ const CardHome = forwardRef((props, ref) => {
 
         return navigate("/appointments")
     }
+
     
     return (
         <AnimatePresence mode="wait">
@@ -44,8 +46,12 @@ const CardHome = forwardRef((props, ref) => {
                             bg-gradient-to-tr
                             rounded-tl-[16px]
                             rounded-tr-[16px]
-                            block
-                        `}></div>
+                            flex
+                            items-center
+                            justify-center
+                        `}>
+                            <Cross color="#FFFAFE" height={100} width={100}/>
+                        </div>
                     </div>
                     <div className="
                         w-full

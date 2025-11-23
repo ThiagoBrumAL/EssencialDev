@@ -104,6 +104,9 @@ function About () {
                 h-full
                 ${validateTheme(theme,"bg-[#FAFAFA]","bg-slate-900")}
                 mb-[100px]
+                md:pt-[80px]
+                pt-[50px]
+                min-h-[100dvh]
         `}>
             <div className={`
                 w-full

@@ -31,8 +31,8 @@ export const cloudinary = {
             "dark" : "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763848737/About_us_page-rafiki_2_gd7lxa.png"
         },
         imageMiddle: {
-            "light": "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763848474/About_us_page-rafiki_1_u09lxf.png",
-            "dark" : "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763848737/About_us_page-rafiki_2_gd7lxa.png"
+            "light": "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763908717/Laboratory-bro_zbqguo.png",
+            "dark" : "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763908982/Laboratory-bro_1_bshda2.png"
         },
     }
 }

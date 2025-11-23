@@ -38,10 +38,6 @@ function Chatbot() {
             ask: "Como alterar a temática da aplicação?", 
             response: "No menu superior, olhe para o canto direito e clique no ícone de usuário. Assim que clicar você terá acesso aos recursos do usuário. Clique na opção 'Tema', lá você poderá se deslogar da aplicação." 
         },
-        { 
-            ask: "Essa aplicação foi desenvolvida utilizando quais tecnologias?", 
-            response: "Esta aplicação foi desenvolvida com Typescript, Javascript, React, Tailwindcss, Cognito AWS, Google Firebase e dentre outras tecnologias e frameworks :)" 
-        },
     ]);
 
     const handleOptionClick = (question) => {
@@ -148,7 +144,7 @@ function Chatbot() {
         <div 
         className={
             `w-full 
-            min-h-[100dvh] 
+            min-h-[100dvh]
             flex justify-center 
             items-start 
             px-[24px] 

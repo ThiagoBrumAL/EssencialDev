@@ -36,6 +36,7 @@ function ClassicButton ({ text, fn, type, body = null }) {
                 hover:cursor-pointer
                 font-DmSans
                 flex
+                justify-center
                 items-center
                 gap-[10px]
         `}>

@@ -187,10 +187,11 @@ function CardAppointments ({ params }) {
                     rounded-xl
                     relative
                 `}>
+                    
                     <AnimatePresence mode="popLayout">
                         {values ? values.map((field) => {
 
-                            if(user.name === field.patientName){
+                            if(user && user.name === field.patientName){
                                 return (
                                     <Line 
                                         key={field.id} 

@@ -218,12 +218,13 @@ function Appointments () {
                 w-full
                 h-full
                 ${validateTheme(theme,"bg-[#FAFAFA]","bg-slate-900")}
-                pt-[80px]
                 flex
-                justify-center
+                pt-[80px]
+                justify-start
                 items-center
                 flex-col
                 px-[24px]
+                min-h-[100dvh]
         `}>
             <div className="
                 w-full
