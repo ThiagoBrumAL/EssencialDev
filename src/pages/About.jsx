@@ -150,6 +150,34 @@ function About () {
                 maxWidth={"max-w-[700px]"}
             />
             <div className="
+                w-auto
+                h-auto
+                text-center
+                mt-[32px]
+                mb-[20px]
+            ">
+                <h1 className={`
+                    text-[1.475rem]
+                    leading-normal
+                    ${validateTheme(theme, "text-[#404040]", "text-[#FFFAFE]")}
+                    font-bold
+                    font-DmSans
+                    mb-[12px]
+                `}>
+                    Nossos Melhores Especialistas 
+                </h1>
+                <p className={`
+                    text-[1.275rem]
+                    leading-normal
+                    ${validateTheme(theme, "text-[#585858]", "text-[#FFFAFE]")}
+                    font-normal
+                    font-DmSans
+                    mb-[24px]
+                `}>
+                    Equipe qualificada para acompanhar você em cada etapa do cuidado com sua saúde.
+                </p>
+            </div>
+            <div className="
                 flex
                 flex-row
                 flex-wrap

@@ -11,8 +11,9 @@ import FormFielAppt from "../components/inputs/FormFielAppt";
 import { maskEmail } from "../utils/masks/maskEmail";
 import { badFeedback } from "../utils/helpers/feedback/Failure";
 import { useFeedback } from "../contexts/api/useFeedback";
+import { useLocation } from "react-router-dom";
 
-import { Calendar, CalendarClock, X } from "lucide-react";
+import SmallLoader from "../components/loaders/SmallLoader";
 
 
 function Appointments () {
@@ -26,6 +27,8 @@ function Appointments () {
     const [openCal, setOpenCal] = useState(false);
     const [openHou, setOpenHou] = useState(false);
 
+    const location = useLocation();
+
     const [chosenDate, setChosenDate] = useState(dayjs());
     const [chosenHour, setChosenHour] = useState("");
     const [datas, setDatas] = useState();
@@ -34,6 +37,7 @@ function Appointments () {
         setOpenHou(false);
         return !prev
     })
+
     const openHours = () => setOpenHou((prev) => {
         setOpenCal(false);
         return !prev
@@ -51,12 +55,17 @@ function Appointments () {
 
     }, [])
 
+    
     useEffect(() => {
 
-        const body = { setUser }
-        api("get", "/info", body)
+        const fetchUser = async () => {
+            const body = { setUser }
+            api("get", "/info", body);
+        };
 
-    }, [])
+        fetchUser();
+        
+    }, [location.pathname]); 
 
     const Op = ({ name, spec }) => {
         return (
@@ -255,7 +264,8 @@ function Appointments () {
                 `}>
                     Consulta ({ nameAppt?.spec || "" })
                 </h1>
-                    <motion.div className="
+                    {
+                        user ? <motion.div className="
                         w-full
                         flex
                         md:flex-nowrap
@@ -359,7 +369,8 @@ function Appointments () {
                         </div>
 
                     
-                    </motion.div>
+                    </motion.div> : <SmallLoader/>
+                    }
             </div>
             
         </motion.div>

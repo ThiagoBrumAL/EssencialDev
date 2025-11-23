@@ -1,23 +1,18 @@
 import { forwardRef } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import { useTheme } from "../../contexts/theme/useTheme"
-import { useNavigate } from "react-router-dom";
 import { useAppointment } from "../../contexts/appointment/useAppointment";
 import { Cross } from "lucide-react";
 
 const CardHome = forwardRef((props, ref) => {
 
     const { theme, validateTheme } = useTheme();
-    const navigate = useNavigate();
 
     const { setNameAppt } = useAppointment();
 
     const mapCard = ( name ) => {
         setNameAppt( name )
-
-        return navigate("/appointments")
     }
-
     
     return (
         <AnimatePresence mode="wait">
@@ -103,7 +98,7 @@ const CardHome = forwardRef((props, ref) => {
                                 max-w-[210px]
                             `}
                         >
-                            AGENDAR AGORA
+                            <a href="/appointments">AGENDAR AGORA</a>
                         </motion.button>
                     </div>
                     

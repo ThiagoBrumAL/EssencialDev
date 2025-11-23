@@ -19,7 +19,7 @@ export const useApi = () => {
     const getDoctors = useDoctors();
     const { getAppointments, postAppointments, getAppointmentsId } = useAppointments()
 
-    const api = async (method, where, body = null) => {
+    const api = async (method, where, body) => {
 
         const routes = {
             "post":{
