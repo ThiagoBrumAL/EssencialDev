@@ -20,7 +20,7 @@ function Chatbot() {
     const [ask, setAks] = useState([
         { 
             ask: "Como faço para agenda minha consulta?", 
-            response: "Primero retorne para a página de login e clique no primeiro botão agendar consulta" 
+            response: "Primero retorne para a o inicio e clique no primeiro botão agendar consulta" 
         },
 
         { 
@@ -40,7 +40,7 @@ function Chatbot() {
         },
         { 
             ask: "Essa aplicação foi desenvolvida utilizando quais tecnologias?", 
-            response: "Esta aplicação foi desenvolvida com lingugens como: Typescript, Javascript, React, Tailwindcss, Cognito AWS, Google Firebase e dentre outras tecnologias e frameworks :)" 
+            response: "Esta aplicação foi desenvolvida com Typescript, Javascript, React, Tailwindcss, Cognito AWS, Google Firebase e dentre outras tecnologias e frameworks :)" 
         },
     ]);
 

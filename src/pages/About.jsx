@@ -2,13 +2,96 @@ import SectionWrapperA from "../components/wrappers/home/SectionWrapperA";
 import { useTheme } from "../contexts/theme/useTheme";
 import { cloudinary } from "../cloud/cloudinary";
 import SectionWrapperB from "../components/wrappers/home/SectionWrapperB";
-import SectionWrapperC from "../components/wrappers/home/SectionWrapperC";
-import SectionWrapperD from "../components/wrappers/home/SectionWrapperD";
+import { useApi } from "../api/api";
+import { useEffect, useState } from "react";
 
 function About () {
 
     const { theme, validateTheme } = useTheme();
+    const [doctors, setDoctors] = useState(null);
+
+    const [top, setTop] = useState(null)
+    const [bottom, setBottom] = useState(null)
+
+    const api = useApi();
+
+    const doctorsImages = {
+        top: [
+            "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763857396/image1_q6je5s.png",
+            "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763861390/Middle-2_rmuced.png",
+            "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763861389/Middle_yjv32v.png",
+            "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763861390/Middle-6_jwcckc.png",
+        ],
+        bottom: [
+            "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763861390/Middle-3_fjqhic.png",
+            "",
+            "",
+            ""
+        ]
+    }
+
+    useEffect(() => {
     
+        const body = { setDoctors }
+        api("get", "/about", body)
+
+    }, [])
+
+    useEffect(() => {
+        if(doctors){
+            setTop(doctors.slice(0,4))
+            setBottom(doctors.slice(5,9))
+            console.log(doctors);
+        }
+    },[doctors])
+    
+    const CardDoctor = ({ name, specialty, image }) => {
+        return (
+            <div className="
+
+            ">
+
+                <div>
+                    <img 
+                    src={ image }
+                    alt=""
+                />
+                </div>
+                <div className="
+                    w-full
+                    max-w-[313px]
+                ">
+                    <h2 className={`
+                        font-DmSans
+                        text-[1.175rem]
+                        leading-normal
+                        ${validateTheme(theme, "text-slate-900", "text-slate-200")}
+                        mt-[12px]
+                        font-bold
+                    `}>
+                        { name }
+                    </h2>
+                    <p className={`
+                        font-Rubik
+                        text-[1rem]
+                        leading-normal
+                        ${validateTheme(theme, "text-slate-900", "text-slate-200")}
+                        my-[12px]
+                    `}>
+                        { specialty }
+                    </p>
+                    <p className={`
+                        font-DmSans
+                        text-[1rem]
+                        leading-normal
+                        ${validateTheme(theme, "text-slate-900", "text-slate-200")}    
+                    `}>
+                        Especialista em saúde do coração, Ana Flavia acompanha cada paciente com atenção, oferecendo diagnósticos precisos e orientações personalizadas.
+                    </p>
+                </div>
+            </div>
+        )
+    }
 
     return (
         <div
@@ -16,6 +99,7 @@ function About () {
                 w-full
                 h-full
                 ${validateTheme(theme,"bg-[#FAFAFA]","bg-slate-900")}
+                mb-[100px]
         `}>
             <div className={`
                 w-full
@@ -26,6 +110,7 @@ function About () {
                 flex
                 justify-center
                 items-center
+                mb-[50px]
             `}>
                 <h1 className={`
                     font-DmSans
@@ -34,7 +119,7 @@ function About () {
                     font-bold
                     md:leading-[3.975rem]
                     leading-[2.675rem]
-                    text-sky-300
+                    ${validateTheme(theme, "text-slate-950", "text-sky-300")}
                 `}>
                     Sobre nós
                 </h1>
@@ -42,17 +127,69 @@ function About () {
             <SectionWrapperB 
                 cloudinary={cloudinary}
                 h1={"Nossa história"} 
-                text={"When I opened Sugarplum Cake Shoppe in 2010, I began with the question, “What makes people smile?” I found that what brings a smile to any face is the perfectly baked treat, and while my business has grown and changed, this focus has stayed the same. My team and I strive to serve in a way that meets your goal. We believe that each sweet treat is an opportunity to bring joy to another person’s world. If You Can Dream It, We Can Bake It!"}
-                path={"/home"}
+                text={" Clínica EssencialDEV nasceu com o propósito de facilitar o acesso à saúde e oferecer um atendimento mais humano para quem muitas vezes não consegue encontrar suporte de forma simples ou acessível. Começamos de maneira modesta, com poucas especialidades e uma equipe pequena, mas sempre com a certeza de que poderíamos fazer a diferença. Com o tempo, a clínica cresceu, ganhou novos profissionais e ampliou sua atuação até alcançar as 16 especialidades que atendemos hoje. Esse crescimento veio da confiança dos pacientes e do compromisso contínuo em oferecer teleconsultas gratuitas, seguras e acolhedoras para qualquer pessoa maior de idade. Nossa história é marcada por evolução, dedicação e pelo desejo de levar cuidado e informação a quem precisa, unindo tecnologia e empatia para tornar a saúde mais acessível e essencial para todos."}
+                path={"/about"}
+                maxWidth={"700px"}
             />
             <SectionWrapperA 
                 theme={theme} 
                 cloudinary={cloudinary} 
                 h1={"Nossa Missão"} 
-                text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem facilisis egestas varius consequat massa quis. Nisl orci sed elementum lobortis viverra egestas. Quam sed elementum augue sed semper. Eget convallis pellentesque tortor, urna. Venenatis tincidunt duis nunc, aliquam augue velit. At aliquam mauris mollis fames viverra volutpat cursus et pharetra. Non vulputate placerat in eget elementum. Sagittis eget consectetur dui faucibus. Vestibulum nunc eu neque sed eget tincidunt platea. Velit gravida adipiscing et "}
+                text={"A missão da Clínica EssencialDEV é promover acesso universal, gratuito e humanizado à saúde, garantindo que qualquer pessoa maior de idade possa receber orientação e atendimento especializado com qualidade, agilidade e acolhimento. Nosso compromisso é romper barreiras — sejam financeiras, geográficas ou emocionais — oferecendo teleconsultas que aproximam profissionais de saúde e pacientes de forma simples, segura e respeitosa. Trabalhamos para criar uma experiência de cuidado que vai além da consulta: queremos que cada paciente seja ouvido com atenção, tenha suas necessidades compreendidas e encontre na clínica um espaço de confiança, empatia e responsabilidade."}
                 hasButton={false}
                 path={"/about"}
+                maxWidth={"700px"}
             />
+            <div className="
+                flex
+                flex-row
+                flex-wrap
+                gap-[42px]
+                items-center
+                justify-center
+                w-full
+                h-auto
+                mt-[70px]
+                px-[32px]
+            ">
+                {
+                    top &&
+                    top.map((doc, index) => {
+                        return <CardDoctor 
+                            key={doc.id} 
+                            name={doc.name} 
+                            specialty={doc.specialty}
+                            image={doctorsImages.top[index]}
+                        />
+                    })
+                }
+
+            </div>
+            <div className="
+                flex
+                flex-row
+                flex-wrap
+                gap-[42px]
+                items-center
+                justify-center
+                w-full
+                h-auto
+                mt-[70px]
+                px-[32px]
+            ">
+                
+                {
+                    bottom &&
+                    bottom.map((doc) => {
+                        return <CardDoctor 
+                            key={doc.id} 
+                            name={doc.name} 
+                            specialty={doc.specialty}
+                        />
+                    })
+                }
+
+            </div>
         </div>
     )
 }

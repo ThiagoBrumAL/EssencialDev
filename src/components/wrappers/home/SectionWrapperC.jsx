@@ -1,7 +1,11 @@
 import React, { memo } from "react"
 import CardAdventages from "../../cards/CardAdvantages"
+import { useTheme } from "../../../contexts/theme/useTheme";
 
-const SectionWrapperC = React.memo(function SectionWrapperC({ adventages, theme, validateTheme }){
+const SectionWrapperC = React.memo(function SectionWrapperC({ adventages }){
+
+    const { theme, validateTheme } = useTheme();
+
     return (
         <section className="
             block

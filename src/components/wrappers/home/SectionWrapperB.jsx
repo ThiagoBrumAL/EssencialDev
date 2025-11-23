@@ -3,7 +3,7 @@ import Img from "../../img/ImgForHome"
 import { useTheme } from "../../../contexts/theme/useTheme";
 
 
-const SectionWrapperB = React.memo(function SectionWrapperB({ cloudinary, h1, text, path }){
+const SectionWrapperB = React.memo(function SectionWrapperB({ cloudinary, h1, text, path, maxWidth }){
 
     const { theme, validateTheme } = useTheme();
 
@@ -31,10 +31,10 @@ const SectionWrapperB = React.memo(function SectionWrapperB({ cloudinary, h1, te
                 />
             </div>
             <div
-                className="
+                className={`
                     w-full
-                    max-w-[600px]
-            ">
+                    max-w-[${maxWidth}]
+            `}>
                 <h1 
                     className="
                         font-DmSans

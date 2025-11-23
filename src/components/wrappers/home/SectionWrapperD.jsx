@@ -1,9 +1,15 @@
 import React, { memo } from "react"
 import Img from "../../img/ImgForHome"
 import { motion } from "framer-motion"
+import { useTheme } from "../../../contexts/theme/useTheme"
+import { cloudinary } from "../../../cloud/cloudinary"
+import { useNavigate } from "react-router-dom"
 
+const SectionWrapperD = React.memo(function SectionWrapperD({ path }){
 
-const SectionWrapperD = React.memo(function SectionWrapperD({ theme, cloudinary }){
+    const { theme, validateTheme } = useTheme();
+    const navigate = useNavigate();
+
     return (
         <section
             className="
@@ -22,25 +28,25 @@ const SectionWrapperD = React.memo(function SectionWrapperD({ theme, cloudinary 
                 mt-[70px]
                 mb-[20px]
             ">
-                <p className="
+                <p className={`
                     text-[1.375rem]
                     leading-normal
-                    text-[#000000]
+                    ${validateTheme(theme, "text-[#000000]", "text-[#FFFAFE]")}
                     font-normal
                     font-DmSans
                     mb-[14px]
-                ">
+                `}>
                     Fale Conosco 
                 </p>
-                <p className="
+                <p className={`
                     sm:text-[1.575rem]
                     text-[1.425rem]
                     leading-normal
-                    text-[#000000]
+                    ${validateTheme(theme, "text-[#000000]", "text-[#FFFAFE]")}
                     font-bold
                     font-DmSans
                     mb-[46px]
-                ">
+                `}>
                     Tire suas dúvidas com nosso assistente virtual
                 </p>
             </div>
@@ -53,8 +59,8 @@ const SectionWrapperD = React.memo(function SectionWrapperD({ theme, cloudinary 
                 justify-center
             ">
                 <Img 
-                    light={cloudinary["/home"].imageChatBot.light}
-                    dark={""}
+                    light={cloudinary[path].imageChatBot.light}
+                    dark={cloudinary[path].imageChatBot.light}
                     theme={theme}
                 />
             </div>
@@ -78,6 +84,7 @@ const SectionWrapperD = React.memo(function SectionWrapperD({ theme, cloudinary 
                 </p>
                 <motion.button 
                     whileTap={ { scale: 0.9 } }
+                    onClick={() => navigate("/chat")}
                     className="
                         bg-[#A3B3FF]
                         px-6

@@ -281,6 +281,7 @@ function ScreenHome({ children }){
                     </header>
 
                     <main className={`
+                        ${validateTheme(theme,"bg-[#FAFAFA]","bg-slate-900")}
                         h-auto
                         w-full
                         transition 
@@ -289,6 +290,7 @@ function ScreenHome({ children }){
                         md:pt-[80px]
                         pt-[60px]
                         relative
+                        pb-[50px]
                     `}>
                         <AnimatePresence>
                             { width <= 939 && isOpen ? <SideBar /> : null }

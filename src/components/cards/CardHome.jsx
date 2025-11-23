@@ -1,7 +1,10 @@
 import { forwardRef } from "react"
 import { AnimatePresence, motion } from "framer-motion"
+import { useTheme } from "../../contexts/theme/useTheme"
 
-const CardDoctor = forwardRef((props, ref) => {
+const CardHome = forwardRef((props, ref) => {
+
+    const { theme, validateTheme } = useTheme();
     
     return (
         <AnimatePresence mode="wait">
@@ -16,21 +19,22 @@ const CardDoctor = forwardRef((props, ref) => {
                 <div ref={ref} className={`
                     ${props.width <= 407 ? "min-w-[270px]" : "min-w-[352px]"}
                     border-[2px]
-                    border-[#B1B5C3]
+                    ${validateTheme(theme, "border-[#B1B5C3]", "border-slate-600")}
                     rounded-[20px]
                     snap-start
                     shadow-md
                 `}>
 
                     <div>
-                        <div className="
+                        <div className={`
                             w-full
                             h-[273px]
-                            bg-teal-400
+                            ${validateTheme(theme,"from-teal-400 to-indigo-400", "from-[#01051C] to-[#051782]")}
+                            bg-gradient-to-tr
                             rounded-tl-[16px]
                             rounded-tr-[16px]
                             block
-                        "></div>
+                        `}></div>
                     </div>
                     <div className="
                         w-full
@@ -45,22 +49,22 @@ const CardDoctor = forwardRef((props, ref) => {
                         <div className="
                             mb-[22px]
                         ">
-                            <h2 className="
-                                text-[#141416]
+                            <h2 className={`
+                                ${validateTheme(theme, "text-[#141416]", "text-slate-200")}
                                 leading-normal
                                 font-DmSans
                                 text-[1.275rem]
                                 text-left
                                 mb-[10px]
-                            ">
+                            `}>
                                 {props.specialty}
                             </h2>
-                            <p className="
-                                text-[#141416]
+                            <p className={`
+                                ${validateTheme(theme, "text-[#141416]", "text-slate-500")}
                                 leading-normal
                                 font-DmSans
                                 text-[1rem]
-                            ">
+                            `}>
                                 {props.desc} 
                             </p>
                         </div>
@@ -68,8 +72,8 @@ const CardDoctor = forwardRef((props, ref) => {
                         <motion.button
                             whileHover={{ y: -2 }}
                             whileTap={{ scale: 0.95 }}
-                            className="
-                                bg-[#A3B3FF]
+                            className={`
+                                ${validateTheme(theme, "bg-sky-300", "bg-indigo-600")}
                                 px-6
                                 py-2
                                 rounded-full
@@ -79,7 +83,7 @@ const CardDoctor = forwardRef((props, ref) => {
                                 text-[1rem]
                                 shadow-sm
                                 max-w-[210px]
-                            "
+                            `}
                         >
                             AGENDAR AGORA
                         </motion.button>
@@ -92,4 +96,4 @@ const CardDoctor = forwardRef((props, ref) => {
     }
 )
 
-export default CardDoctor
+export default CardHome

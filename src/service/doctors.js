@@ -4,7 +4,7 @@ export const useDoctors = () => {
 
     const { token } = useAuth();
 
-    const getDoctorsForHome =  async (body, axios) => {
+    const getDoctors=  async (body, axios) => {
         const response = await axios.get("https://essencial-server.vercel.app/doctors", 
             { withCredentials: true,
                 headers: {
@@ -20,6 +20,6 @@ export const useDoctors = () => {
         
     }
 
-    return getDoctorsForHome
+    return getDoctors
 
 }

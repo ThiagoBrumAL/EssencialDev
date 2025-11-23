@@ -3,7 +3,7 @@ import Img from "../../img/ImgForHome"
 import { motion } from "framer-motion"
 import { useTheme } from "../../../contexts/theme/useTheme";
 
-const SectionWrapperA = React.memo(function SectionWrapperA({ cloudinary, h1, text, hasButton, path }){
+const SectionWrapperA = React.memo(function SectionWrapperA({ cloudinary, h1, text, hasButton, path, maxWidth }){
 
     const { theme, validateTheme } = useTheme();
 
@@ -19,12 +19,13 @@ const SectionWrapperA = React.memo(function SectionWrapperA({ cloudinary, h1, te
                 w-full
         ">
             <div
-                className="
+                className={`
                     w-full
-                    max-w-[600px]    
-            ">
+                    max-w-[${maxWidth}] 
+            `}>
                 <div className="
                     mb-[3rem]
+                    w-full
                 ">
                     <h1 
                         className="
@@ -52,8 +53,8 @@ const SectionWrapperA = React.memo(function SectionWrapperA({ cloudinary, h1, te
 
                 { hasButton && <motion.button
                     whileTap={{ scale: 0.9 }}
-                    className="
-                        bg-[#A3B3FF]
+                    className={`
+                        ${validateTheme(theme, "bg-sky-300", "bg-indigo-600")}
                         px-6
                         py-2
                         rounded-full
@@ -65,7 +66,7 @@ const SectionWrapperA = React.memo(function SectionWrapperA({ cloudinary, h1, te
                         duration-200
                         transition-transform
                         md:hover:-translate-y-1
-                ">
+                `}>
                         Agendar Agora
                 </motion.button> }
                 

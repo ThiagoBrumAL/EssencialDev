@@ -108,18 +108,6 @@ const SpecialtiesCar = memo(function SpecialtiesCar({ dir, ref }){
                 max-w-[1124px] 
                 mb-[62px]
         `}>
-            <div 
-                className="
-                    absolute left-0 top-0 bottom-0 z-10 w-12 pointer-events-none 
-                    [background:linear-gradient(to_right,white,transparent)]
-                "
-            />
-            <div 
-                className="
-                    absolute right-0 top-0 bottom-0 z-10 w-12 pointer-events-none 
-                    [background:linear-gradient(to_left,white,transparent)]
-                "
-            />
             <div
                 style={{ scrollbarWidth: "none" }}
                 className={`

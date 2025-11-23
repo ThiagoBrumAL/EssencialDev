@@ -8,7 +8,7 @@ import axios from "axios";
 
 import { ArrowLeft } from 'lucide-react';
 import { ArrowRight } from 'lucide-react';
-import CardDoctor from "../components/cards/CardDoctor";
+import CardHome from "../components/cards/CardHome";
 import SmallLoader from "../components/loaders/SmallLoader";
 import SpecialtiesCar from "../components/carrosel/SpecialtiesCar";
 import SectionWrapperA from "../components/wrappers/home/SectionWrapperA"
@@ -131,7 +131,7 @@ function HomePage(){
         )
     }
 
-    const renderDoctors = () => {
+    const renderCards = () => {
         if (!doctors){
             return (
                 <div className="
@@ -145,7 +145,7 @@ function HomePage(){
             )
         }
         return doctors.slice(0,10).map((doc, i) => (
-            <CardDoctor key={i} ref={i === 0 ? cardRef : null} width={width} specialty={doc.specialty} desc={"Cuide do seu coração com especialistas dedicados."}/>
+            <CardHome key={i} ref={i === 0 ? cardRef : null} width={width} specialty={doc.specialty} desc={"Cuide do seu coração com especialistas dedicados."}/>
         ));
     };  
 
@@ -173,12 +173,14 @@ function HomePage(){
                 text={"Clínica geral e diversas especialidades em um só lugar."}
                 hasButton={true}
                 path={"/home"}
+                maxWidth={"700px"}
             />
             <SectionWrapperB 
                 cloudinary={cloudinary}
                 h1={"Sua saúde é a nossa prioridade"} 
                 text={"Conte com uma equipe preparada para cuidar de você."}
                 path={"/home"}
+                maxWidth={"700px"}
             />
 
             <section className="
@@ -245,7 +247,7 @@ function HomePage(){
                             md:touch-none
                             md:select-none
                     `}>  
-                        { renderDoctors() }
+                        { renderCards() }
                     </div>
                 </div>
                 <div className="
@@ -284,8 +286,8 @@ function HomePage(){
                 </div>
             </section>
 
-            <SectionWrapperC adventages={adventages} theme={theme} validateTheme={validateTheme}/>
-            <SectionWrapperD theme={theme} cloudinary={cloudinary}/>
+            <SectionWrapperC adventages={adventages}/>
+            <SectionWrapperD path={"/home"}/>
 
         </div>
     )

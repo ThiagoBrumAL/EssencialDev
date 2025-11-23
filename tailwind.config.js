@@ -23,7 +23,7 @@ export default {
 
       fontFamily: {
         DmSans:["DM Sans", "sans-serif"],
-        Inter: ["Inter", "sans-serif"]
+        Inter: ["Inter", "sans-serif"],
       }
     },
     screens: {
