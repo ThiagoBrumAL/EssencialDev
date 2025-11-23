@@ -33,7 +33,7 @@ const SectionWrapperB = React.memo(function SectionWrapperB({ cloudinary, h1, te
             <div
                 className={`
                     w-full
-                    max-w-[${maxWidth}]
+                    ${maxWidth}
             `}>
                 <h1 
                     className="

@@ -22,7 +22,7 @@ export const cloudinary = {
         },
         imageChatBot: {
             "light": "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763609234/chatbot_imqwxw.png",
-            "dark" : ""
+            "dark" : "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763862433/streamline-pixel_technology-robot-ai_hrokro.png"
         }
     },
     "/about":{

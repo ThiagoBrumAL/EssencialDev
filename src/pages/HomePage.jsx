@@ -173,14 +173,14 @@ function HomePage(){
                 text={"Clínica geral e diversas especialidades em um só lugar."}
                 hasButton={true}
                 path={"/home"}
-                maxWidth={"700px"}
+                maxWidth={"max-w-[500px]"}
             />
             <SectionWrapperB 
                 cloudinary={cloudinary}
                 h1={"Sua saúde é a nossa prioridade"} 
                 text={"Conte com uma equipe preparada para cuidar de você."}
                 path={"/home"}
-                maxWidth={"700px"}
+                maxWidth={"max-w-[500px]"}
             />
 
             <section className="
@@ -286,7 +286,7 @@ function HomePage(){
                 </div>
             </section>
 
-            <SectionWrapperC adventages={adventages}/>
+            <SectionWrapperC adventages={ adventages }/>
             <SectionWrapperD path={"/home"}/>
 
         </div>

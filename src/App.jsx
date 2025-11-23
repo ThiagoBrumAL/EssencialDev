@@ -14,6 +14,7 @@ import { FeedbackProvider } from "./contexts/api/feebackProvider"
 import { AuthProvider } from "./contexts/auth/AuthProvider"
 import { ThemeProvider } from "./contexts/theme/ThemeProvider"
 import { OsProvider } from "./contexts/os/OsProvider"
+import { AppointmentProvider } from "./contexts/appointment/appointmentProvider"
 
 import HomePage from "./pages/HomePage"
 import FormUser from "./components/forms/FormUser"
@@ -52,155 +53,158 @@ function App() {
 
             <OsProvider>
 
-              <Routes>
+              <AppointmentProvider>
+                <Routes>
 
-                <Route 
-                  path="/sign-in" 
-                  element={
-                      <PublicRoute>
-                        <ScreenSSR>
-                          <FormSignIn />
-                        </ScreenSSR>
-                      </PublicRoute>
-                  }
-                />
-
-                <Route 
-                  path="/sign-up" 
-                  element={
-                      <PublicRoute>
-                        <ScreenSSR>
-                          <FormSignUp />
-                        </ScreenSSR>
-                      </PublicRoute>
-                    
-                  }
-                />
-
-                <Route 
-                  path="/recover" 
-                  element={
-                      <PublicRoute>
-                        <ScreenSSR>
-                          <FormRecover />
-                        </ScreenSSR>
-                      </PublicRoute>
-                  }
-                />
-
-                <Route 
-                  path="/*"
-                  element={
-                    <Navigate to={"/sign-in"}/>
-                  }
-                />
-
-                <Route 
-                    path="/home" 
+                  <Route 
+                    path="/sign-in" 
                     element={
-                      <PrivateRoute>
-                        <ScreenHome>
-                          <HomePage />
-                        </ScreenHome>
-                      </PrivateRoute>
+                        <PublicRoute>
+                          <ScreenSSR>
+                            <FormSignIn />
+                          </ScreenSSR>
+                        </PublicRoute>
                     }
                   />
 
                   <Route 
-                    path="/info" 
+                    path="/sign-up" 
                     element={
-                      <PrivateRoute>
-                        <ScreenHome>
-                          <UserPage>
-                            <FormUser/>
-                          </UserPage>
-                        </ScreenHome>
-                      </PrivateRoute>
+                        <PublicRoute>
+                          <ScreenSSR>
+                            <FormSignUp />
+                          </ScreenSSR>
+                        </PublicRoute>
+                      
                     }
                   />
 
                   <Route 
-                    path="/info/appointments" 
+                    path="/recover" 
                     element={
-                      <PrivateRoute>
-                        <ScreenHome>
-                          <UserPage>
-                            <CardAppointments />
-                          </UserPage>
-                        </ScreenHome>
-                      </PrivateRoute>
+                        <PublicRoute>
+                          <ScreenSSR>
+                            <FormRecover />
+                          </ScreenSSR>
+                        </PublicRoute>
                     }
                   />
 
                   <Route 
-                    path="/info/theme" 
+                    path="/*"
                     element={
-                      <PrivateRoute>
-                        <ScreenHome>
-                          <UserPage>
-                            <CardForUserRoutes params={{ 
-                              title: "Tema",
-                              text: "Clique aqui para alterar o tema do jeito que preferir" , 
-                              button: ButtonTheme}
-                            }/>
-                          </UserPage>
-                        </ScreenHome>
-                      </PrivateRoute>
+                      <Navigate to={"/sign-in"}/>
                     }
                   />
 
                   <Route 
-                    path="/info/logout" 
-                    element={
-                      <PrivateRoute>
-                        <ScreenHome>
-                          <UserPage>
-                            <CardForUserRoutes params={{ 
-                              title: "Sair",
-                              text: "Para sair da aplicação basta clicar aqui", 
-                              button: ClassicButton}
-                            }/>
-                          </UserPage>
-                        </ScreenHome>
-                      </PrivateRoute>
-                    }
-                  />
+                      path="/home" 
+                      element={
+                        <PrivateRoute>
+                          <ScreenHome>
+                            <HomePage />
+                          </ScreenHome>
+                        </PrivateRoute>
+                      }
+                    />
 
-                  <Route 
-                    path="/chat" 
-                    element={
-                      <PrivateRoute>
-                        <ScreenHome>
-                            <Chatbot />
-                        </ScreenHome>
-                      </PrivateRoute>
-                    }
-                  />
+                    <Route 
+                      path="/info" 
+                      element={
+                        <PrivateRoute>
+                          <ScreenHome>
+                            <UserPage>
+                              <FormUser/>
+                            </UserPage>
+                          </ScreenHome>
+                        </PrivateRoute>
+                      }
+                    />
 
-                  <Route 
-                    path="/appointments" 
-                    element={
-                      <PrivateRoute>
-                        <ScreenHome>
-                            <Appointments />
-                        </ScreenHome>
-                      </PrivateRoute>
-                    }
-                  />
+                    <Route 
+                      path="/info/appointments" 
+                      element={
+                        <PrivateRoute>
+                          <ScreenHome>
+                            <UserPage>
+                              <CardAppointments />
+                            </UserPage>
+                          </ScreenHome>
+                        </PrivateRoute>
+                      }
+                    />
 
-                  <Route 
-                    path="/about" 
-                    element={
-                      <PrivateRoute>
-                        <ScreenHome>
-                            <About />
-                        </ScreenHome>
-                      </PrivateRoute>
-                    }
-                  />
+                    <Route 
+                      path="/info/theme" 
+                      element={
+                        <PrivateRoute>
+                          <ScreenHome>
+                            <UserPage>
+                              <CardForUserRoutes params={{ 
+                                title: "Tema",
+                                text: "Clique aqui para alterar o tema do jeito que preferir" , 
+                                button: ButtonTheme}
+                              }/>
+                            </UserPage>
+                          </ScreenHome>
+                        </PrivateRoute>
+                      }
+                    />
 
-              </Routes>
+                    <Route 
+                      path="/info/logout" 
+                      element={
+                        <PrivateRoute>
+                          <ScreenHome>
+                            <UserPage>
+                              <CardForUserRoutes params={{ 
+                                title: "Sair",
+                                text: "Para sair da aplicação basta clicar aqui", 
+                                button: ClassicButton}
+                              }/>
+                            </UserPage>
+                          </ScreenHome>
+                        </PrivateRoute>
+                      }
+                    />
+
+                    <Route 
+                      path="/chat" 
+                      element={
+                        <PrivateRoute>
+                          <ScreenHome>
+                              <Chatbot />
+                          </ScreenHome>
+                        </PrivateRoute>
+                      }
+                    />
+
+                    <Route 
+                      path="/appointments" 
+                      element={
+                        <PrivateRoute>
+                          <ScreenHome>
+                              <Appointments />
+                          </ScreenHome>
+                        </PrivateRoute>
+                      }
+                    />
+
+                    <Route 
+                      path="/about" 
+                      element={
+                        <PrivateRoute>
+                          <ScreenHome>
+                              <About />
+                          </ScreenHome>
+                        </PrivateRoute>
+                      }
+                    />
+
+                </Routes>
               
+              </AppointmentProvider>
+
             </OsProvider>
 
             </FeedbackProvider>

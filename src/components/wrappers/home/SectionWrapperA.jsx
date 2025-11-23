@@ -2,10 +2,12 @@ import React, { memo } from "react"
 import Img from "../../img/ImgForHome"
 import { motion } from "framer-motion"
 import { useTheme } from "../../../contexts/theme/useTheme";
+import { useNavigate } from "react-router-dom";
 
 const SectionWrapperA = React.memo(function SectionWrapperA({ cloudinary, h1, text, hasButton, path, maxWidth }){
 
     const { theme, validateTheme } = useTheme();
+    const navigate = useNavigate();
 
     return (
         <section 
@@ -21,28 +23,28 @@ const SectionWrapperA = React.memo(function SectionWrapperA({ cloudinary, h1, te
             <div
                 className={`
                     w-full
-                    max-w-[${maxWidth}] 
+                    ${maxWidth}
             `}>
                 <div className="
                     mb-[3rem]
                     w-full
                 ">
                     <h1 
-                        className="
+                        className={`
                             font-DmSans
-                            md:text-[4.275rem]
+                            md:text-[3.275rem]
                             text-[3rem]
                             font-bold
-                            md:leading-[3.975rem]
+                            md:leading-[2.975rem]
                             leading-[2.675rem]
                             text-sky-300
                             mb-[1.275rem]
-                    ">
+                    `}>
                         { h1 }
                     </h1>
                     <p className={`
                         font-DmSans
-                        text-[1.275rem]
+                        text-[1.175rem]
                         ${validateTheme(theme, "text-[#000000]", "text-[#FFFAFE]")}
                         font-normal
                         leading-normal
@@ -53,6 +55,7 @@ const SectionWrapperA = React.memo(function SectionWrapperA({ cloudinary, h1, te
 
                 { hasButton && <motion.button
                     whileTap={{ scale: 0.9 }}
+                    onClick={() => navigate("/appointments")}
                     className={`
                         ${validateTheme(theme, "bg-sky-300", "bg-indigo-600")}
                         px-6

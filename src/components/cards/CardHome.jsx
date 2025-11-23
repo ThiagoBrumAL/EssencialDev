@@ -1,10 +1,21 @@
 import { forwardRef } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import { useTheme } from "../../contexts/theme/useTheme"
+import { useNavigate } from "react-router-dom";
+import { useAppointment } from "../../contexts/appointment/useAppointment";
 
 const CardHome = forwardRef((props, ref) => {
 
     const { theme, validateTheme } = useTheme();
+    const navigate = useNavigate();
+
+    const { setNameAppt } = useAppointment();
+
+    const mapCard = ({ name }) => {
+        setNameAppt(name)
+
+        return navigate("/appointments")
+    }
     
     return (
         <AnimatePresence mode="wait">
@@ -72,6 +83,7 @@ const CardHome = forwardRef((props, ref) => {
                         <motion.button
                             whileHover={{ y: -2 }}
                             whileTap={{ scale: 0.95 }}
+                            onClick={() => mapCard({ name:  props.specialty})}
                             className={`
                                 ${validateTheme(theme, "bg-sky-300", "bg-indigo-600")}
                                 px-6

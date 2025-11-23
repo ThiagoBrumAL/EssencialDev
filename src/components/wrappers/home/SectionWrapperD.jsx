@@ -60,7 +60,7 @@ const SectionWrapperD = React.memo(function SectionWrapperD({ path }){
             ">
                 <Img 
                     light={cloudinary[path].imageChatBot.light}
-                    dark={cloudinary[path].imageChatBot.light}
+                    dark={cloudinary[path].imageChatBot.dark}
                     theme={theme}
                 />
             </div>
@@ -71,22 +71,22 @@ const SectionWrapperD = React.memo(function SectionWrapperD({ path }){
                 text-center
                 mb-[180px]
             ">
-                <p className="
+                <p className={`
                     text-[1rem]
                     leading-normal
-                    text-[#3B5266]
+                    ${validateTheme(theme, "text-[#3B5266]", "text-[#FFFAFE]")}
                     font-normal
                     font-DmSans
                     max-w-[570px]
                     mb-[32px]
-                ">
+                `}>
                     Tem alguma dúvida sobre agendamento, especialidades ou resultados? Nosso chatbot responde rápido e te ajuda a resolver tudo sem complicação. 
                 </p>
                 <motion.button 
                     whileTap={ { scale: 0.9 } }
                     onClick={() => navigate("/chat")}
-                    className="
-                        bg-[#A3B3FF]
+                    className={`
+                        ${validateTheme(theme, "bg-sky-300", "bg-indigo-600")}
                         px-6
                         py-3
                         rounded-full
@@ -98,7 +98,7 @@ const SectionWrapperD = React.memo(function SectionWrapperD({ path }){
                         duration-200
                         transition-transform
                         md:hover:-translate-y-1
-                    "
+                    `}
                 >
                         CONHEÇA O AGENTE
                 </motion.button>

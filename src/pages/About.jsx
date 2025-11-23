@@ -53,6 +53,9 @@ function About () {
 
                 <div>
                     <img 
+                    className="
+                        rounded-xl
+                    "
                     src={ image }
                     alt=""
                 />
@@ -73,9 +76,10 @@ function About () {
                     </h2>
                     <p className={`
                         font-Rubik
-                        text-[1rem]
+                        text-[0.9rem]
+                        font-bold
                         leading-normal
-                        ${validateTheme(theme, "text-slate-900", "text-slate-200")}
+                        ${validateTheme(theme, "text-slate-900", "text-slate-400")}
                         my-[12px]
                     `}>
                         { specialty }
@@ -84,7 +88,7 @@ function About () {
                         font-DmSans
                         text-[1rem]
                         leading-normal
-                        ${validateTheme(theme, "text-slate-900", "text-slate-200")}    
+                        ${validateTheme(theme, "text-slate-900", "text-slate-300")}    
                     `}>
                         Especialista em saúde do coração, Ana Flavia acompanha cada paciente com atenção, oferecendo diagnósticos precisos e orientações personalizadas.
                     </p>
@@ -129,7 +133,7 @@ function About () {
                 h1={"Nossa história"} 
                 text={" Clínica EssencialDEV nasceu com o propósito de facilitar o acesso à saúde e oferecer um atendimento mais humano para quem muitas vezes não consegue encontrar suporte de forma simples ou acessível. Começamos de maneira modesta, com poucas especialidades e uma equipe pequena, mas sempre com a certeza de que poderíamos fazer a diferença. Com o tempo, a clínica cresceu, ganhou novos profissionais e ampliou sua atuação até alcançar as 16 especialidades que atendemos hoje. Esse crescimento veio da confiança dos pacientes e do compromisso contínuo em oferecer teleconsultas gratuitas, seguras e acolhedoras para qualquer pessoa maior de idade. Nossa história é marcada por evolução, dedicação e pelo desejo de levar cuidado e informação a quem precisa, unindo tecnologia e empatia para tornar a saúde mais acessível e essencial para todos."}
                 path={"/about"}
-                maxWidth={"700px"}
+                maxWidth={"max-w-[700px]"}
             />
             <SectionWrapperA 
                 theme={theme} 
@@ -138,7 +142,7 @@ function About () {
                 text={"A missão da Clínica EssencialDEV é promover acesso universal, gratuito e humanizado à saúde, garantindo que qualquer pessoa maior de idade possa receber orientação e atendimento especializado com qualidade, agilidade e acolhimento. Nosso compromisso é romper barreiras — sejam financeiras, geográficas ou emocionais — oferecendo teleconsultas que aproximam profissionais de saúde e pacientes de forma simples, segura e respeitosa. Trabalhamos para criar uma experiência de cuidado que vai além da consulta: queremos que cada paciente seja ouvido com atenção, tenha suas necessidades compreendidas e encontre na clínica um espaço de confiança, empatia e responsabilidade."}
                 hasButton={false}
                 path={"/about"}
-                maxWidth={"700px"}
+                maxWidth={"max-w-[700px]"}
             />
             <div className="
                 flex

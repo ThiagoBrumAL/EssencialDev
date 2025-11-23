@@ -1,28 +1,127 @@
 import { motion, useInView } from "framer-motion"
 import { memo } from "react"
+import { useTheme } from "../../contexts/theme/useTheme"
 
 const SpecialtiesCar = memo(function SpecialtiesCar({ dir, ref }){
 
+    const { theme, validateTheme } = useTheme();
+
     const specialtiesTop = [
-        {specialty: "Psiquiatria", image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458583/Psiquiatria_ddzzft.png"},
-        {specialty: "Psicologia", image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458581/Psicologia_w6dwqg.png"},
-        {specialty: "Neurologia", image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763462081/Neurologia_imrrz5.png"},
-        {specialty: "Geriatria", image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458577/Geriatria_wxkegf.png"},
-        {specialty: "Cardiologia", image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763462081/Cardiologia_roivrq.png"},
-        {specialty: "Clinica Geral", image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458576/Clinica_Geral_jvreyq.png"},
-        {specialty: "Pneumologia", image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458580/Pneumologia_giqzfu.png"},
-        {specialty: "Infectologia", image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458579/Infectologia_xdwzwb.png"},
+        {
+            specialty: "Psiquiatria", 
+            image: {
+                light: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458583/Psiquiatria_ddzzft.png",
+                dark: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763862497/Frame_1057_eio5rn.png"
+            }
+        },
+        {
+            specialty: "Psicologia", 
+            image: {
+                light: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458581/Psicologia_w6dwqg.png",
+                dark: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763862497/Frame_1057-1_cbnzsx.png"
+            }
+        },
+        {
+            specialty: "Neurologia", 
+            image: {
+                light: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763462081/Neurologia_imrrz5.png",
+                dark: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763862497/Frame_1057-2_sz4zgj.png"
+            }
+        },
+        {
+            specialty: "Geriatria", 
+            image: {
+                light: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458577/Geriatria_wxkegf.png",
+                dark: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763862498/Frame_1057-3_zvl5uc.png"
+            }
+        },
+        {
+            specialty: "Cardiologia", 
+            image: {
+                light: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763462081/Cardiologia_roivrq.png",
+                dark: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763862498/Frame_1057-4_hmbqyp.png"
+            }
+        },
+        {
+            specialty: "Clinica Geral",
+            image: {
+                light: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458576/Clinica_Geral_jvreyq.png",
+                dark: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763862499/Frame_1057-5_cspz2u.png"
+            }
+        },
+        {
+            specialty: "Pneumologia", 
+            image: {
+                light: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458580/Pneumologia_giqzfu.png",
+                dark: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763862504/Frame_1057-6_ogef3u.png"
+            }
+        },
+        {
+            specialty: "Infectologia", 
+            image: {
+                light: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458579/Infectologia_xdwzwb.png",
+                dark: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763862504/Frame_1057-7_ztqokj.png"
+            }
+        },
     ]
     
     const specialtiesBottom = [
-        {specialty: "Endocrinologia", image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458577/Endocrinologia_rno75a.png"},
-        {specialty: "Nutrologia", image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458580/Nutrologia_uz7ht9.png"},
-        {specialty: "Ortopedia", image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458580/Ortopedia_y7lgeg.png"},
-        {specialty: "Reumatologia", image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458583/Reumatologia_ytgons.png"},
-        {specialty: "Dermatologia", image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458577/Dermatologia_et86tf.png"},
-        {specialty: "Alergologia", image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458576/Alergologia_rhafed.png"},
-        {specialty: "Ginecologia", image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458578/Ginecologia_insrwh.png"},
-        {specialty: "Urologia", image: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458583/Urologia_jv7fbz.png"},
+        {
+            specialty: "Endocrinologia", 
+            image: {
+                light: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458577/Endocrinologia_rno75a.png",
+                dark: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763862504/Frame_1057-8_iajqnh.png"
+            }
+        },
+        {
+            specialty: "Nutrologia", 
+            image: {
+                light: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458580/Nutrologia_uz7ht9.png",
+                dark: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763862504/Frame_1057-9_onq4kh.png"
+            }
+        },
+        {
+            specialty: "Ortopedia", 
+            image: {
+                light: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458580/Ortopedia_y7lgeg.png",
+                dark: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763862508/Frame_1057-10_djf8tt.png"
+            }
+        },
+        {
+            specialty: "Reumatologia", 
+            image: {
+                light: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458583/Reumatologia_ytgons.png",
+                dark: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763862508/Frame_1057-11_qz37zr.png"
+            }
+        },
+        {
+            specialty: "Dermatologia", 
+            image: {
+                light: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458577/Dermatologia_et86tf.png",
+                dark: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763862508/Frame_1057-12_psu83d.png"
+            }
+        },
+        {
+            specialty: "Alergologia", 
+            image: {
+                light: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458576/Alergologia_rhafed.png",
+                dark: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763862509/Frame_1057-14_nlrrrs.png"
+            }
+        },
+        {
+            specialty: "Ginecologia", 
+            image: {
+                light: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458578/Ginecologia_insrwh.png",
+                dark: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763862508/Frame_1057-13_rwxg9g.png"
+            }
+        },
+        {
+            specialty: "Urologia", 
+            image: {
+                light: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763458583/Urologia_jv7fbz.png",
+                dark: "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763862512/Frame_1057-15_nzgist.png"
+            }
+        },
     ]
 
     const inView = useInView(ref, {
@@ -62,16 +161,16 @@ const SpecialtiesCar = memo(function SpecialtiesCar({ dir, ref }){
                         src={image} 
                         alt={text} 
                     />
-                    <h2 className="
+                    <h2 className={`
                         text-[1.02rem]
                         leading-normal
-                        text-[#404040]
+                        ${validateTheme(theme, "text-[#404040]", "text-[#FFFAFE]")}
                         font-bold
                         font-DmSans
                         mt-4
                         w-[130px]
                         text-center
-                    ">
+                    `}>
                         {text}
                     </h2>
                 </div>
@@ -82,21 +181,27 @@ const SpecialtiesCar = memo(function SpecialtiesCar({ dir, ref }){
     const renderSpecialties = (dir) => {
 
         return dir === "top" ?
-            specialtiesTop.map((spec, i) => 
-                <SpecialtyDiv
+            specialtiesTop.map((spec, i) => {
+                
+                const thm = theme ? "light" : "dark"
+                
+                return <SpecialtyDiv
                     key={i}
-                    image={spec.image}
+                    image={spec.image[thm]}
                     text={spec.specialty}
                 />
             
-            )
-         : specialtiesBottom.map((spec, i) => 
-                <SpecialtyDiv 
+        })
+         : specialtiesBottom.map((spec, i) => {
+
+                const thm = theme ? "light" : "dark"
+                
+                return <SpecialtyDiv
                     key={i}
-                    image={spec.image}
+                    image={spec.image[thm]}
                     text={spec.specialty}
                 />
-            )
+        })
         
     }
 
