@@ -61,7 +61,7 @@ function Appointments () {
     const Op = ({ name, spec }) => {
         return (
             <option className={`
-                text-slate-100
+                ${validateTheme(theme, "text-slate-900", "text-slate-100")}
             `} value={ name }>
                 { name } ({ spec })
             </option>
@@ -197,6 +197,14 @@ function Appointments () {
         setFields(newFields)
     }, [user])
 
+
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth" 
+        });
+    }, []);
+
     useEffect(() => {
 
         if(user && nameAppt){
@@ -213,14 +221,19 @@ function Appointments () {
     }, [chosenDate, chosenHour, nameAppt, user])
 
     return (
-        <div
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            exit={{ opacity: 0 }}
             className={`
                 w-full
                 h-full
                 ${validateTheme(theme,"bg-[#FAFAFA]","bg-slate-900")}
                 flex
-                pt-[80px]
-                justify-start
+                md:pt-[150px]
+                pt-[50px]
+                md:justify-start
                 items-center
                 flex-col
                 px-[24px]
@@ -338,7 +351,7 @@ function Appointments () {
                         </div>
 
                         <div className="
-                            xs:w-auto
+                            md:w-auto
                             w-full
                         ">
                             { openCal && <BasicDateCalendar value={chosenDate} set={setChosenDate}/> }
@@ -349,7 +362,7 @@ function Appointments () {
                     </motion.div>
             </div>
             
-        </div>
+        </motion.div>
     )
 }
 

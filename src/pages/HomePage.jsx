@@ -187,6 +187,7 @@ function HomePage(){
                 w-full
                 h-full
                 ${validateTheme(theme,"bg-[#FAFAFA]","bg-slate-900")}
+                md:pt-[80px]
         `}>
             <SectionWrapperA 
                 cloudinary={cloudinary} 

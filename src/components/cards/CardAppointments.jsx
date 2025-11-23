@@ -1,4 +1,3 @@
-
 import { AnimatePresence, motion } from "framer-motion"
 import { useApi } from "../../api/api"
 import { useEffect, useState } from "react"
@@ -187,11 +186,13 @@ function CardAppointments ({ params }) {
                     rounded-xl
                     relative
                 `}>
-                    
-                    <AnimatePresence mode="popLayout">
-                        {values ? values.map((field) => {
 
-                            if(user && user.name === field.patientName){
+                    {values && console.log(values)}
+                    
+                    {user && <AnimatePresence mode="popLayout">
+                        {values && values ? values.map((field) => {
+
+                            if(user && user.id === field.patient_id){
                                 return (
                                     <Line 
                                         key={field.id} 
@@ -204,7 +205,7 @@ function CardAppointments ({ params }) {
                                 )
                             }
                         }) : <SmallLoader />}
-                    </AnimatePresence>
+                    </AnimatePresence> }
 
                 </motion.div>
                 

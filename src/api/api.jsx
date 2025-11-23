@@ -17,7 +17,7 @@ export const useApi = () => {
     const { getUser } = useUser();
     const { updateUser } = useUser();
     const getDoctors = useDoctors();
-    const { getAppointments, postAppointments } = useAppointments()
+    const { getAppointments, postAppointments, getAppointmentsId } = useAppointments()
 
     const api = async (method, where, body = null) => {
 

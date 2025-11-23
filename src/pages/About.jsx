@@ -4,6 +4,7 @@ import { cloudinary } from "../cloud/cloudinary";
 import SectionWrapperB from "../components/wrappers/home/SectionWrapperB";
 import { useApi } from "../api/api";
 import { useEffect, useState } from "react";
+import SmallLoader from "../components/loaders/SmallLoader";
 
 function About () {
 
@@ -24,9 +25,9 @@ function About () {
         ],
         bottom: [
             "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763861390/Middle-3_fjqhic.png",
-            "",
-            "",
-            ""
+            "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763861390/Middle-4_se0ldf.png",
+            "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763921912/Middle-1_t6g9zm.png",
+            "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763921912/Middle_eph2d5.png",
         ]
     }
 
@@ -55,6 +56,7 @@ function About () {
                     <img 
                     className="
                         rounded-xl
+                        max-w-[313px]
                     "
                     src={ image }
                     alt=""
@@ -158,9 +160,10 @@ function About () {
                 h-auto
                 mt-[70px]
                 px-[32px]
+                relative
             ">
                 {
-                    top &&
+                    top ?
                     top.map((doc, index) => {
                         return <CardDoctor 
                             key={doc.id} 
@@ -168,7 +171,7 @@ function About () {
                             specialty={doc.specialty}
                             image={doctorsImages.top[index]}
                         />
-                    })
+                    }) : <SmallLoader />
                 }
 
             </div>
@@ -187,11 +190,12 @@ function About () {
                 
                 {
                     bottom &&
-                    bottom.map((doc) => {
+                    bottom.map((doc, index) => {
                         return <CardDoctor 
                             key={doc.id} 
                             name={doc.name} 
                             specialty={doc.specialty}
+                            image={doctorsImages.bottom[index]}
                         />
                     })
                 }
