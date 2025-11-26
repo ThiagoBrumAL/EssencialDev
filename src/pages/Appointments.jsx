@@ -247,16 +247,14 @@ function Appointments () {
             exit={{ opacity: 0 }}
             className={`
                 w-full
-                h-full
                 ${validateTheme(theme,"bg-[#FAFAFA]","bg-slate-900")}
                 flex
-                md:pt-[150px]
-                pt-[50px]
                 md:justify-start
                 items-center
                 flex-col
                 px-[24px]
-                min-h-[100dvh]
+                md:mt-[30px]
+                mt-[90px]
         `}>
             <div className="
                 w-full

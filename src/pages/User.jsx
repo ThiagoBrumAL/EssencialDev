@@ -73,14 +73,13 @@ function User({ children }){
     return (
         <div className={`
             w-full
-            h-full
             ${validateTheme(theme,"bg-[#FAFAFA]","bg-slate-900")}
-            min-h-[100dvh]
             flex
             justify-center
             items-start
             px-[24px]
-            pt-[50px]
+            mt-[90px]
+            md:mt-[30px]
         `}>
             <section className="
                 w-full

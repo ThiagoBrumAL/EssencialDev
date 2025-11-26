@@ -42,7 +42,7 @@ function PublicRoute({ children }) {
 function App() {
 
   return (
-    <main className="h-[100dvh] w-full">
+    <main className="w-full h-full">
 
       <BrowserRouter>
 

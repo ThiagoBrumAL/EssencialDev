@@ -103,17 +103,13 @@ function About () {
         <div
             className={`
                 w-full
-                h-full
                 ${validateTheme(theme,"bg-[#FAFAFA]","bg-slate-900")}
-                mb-[100px]
-                md:pt-[80px]
-                pt-[50px]
-                min-h-[100dvh]
+                md:mt-[30px]
+                mt-[90px]
         `}>
             <div className={`
                 w-full
                 h-full
-                md:py-[60px]
                 py-[32px]
                 ${validateTheme(theme, "bg-slate-50", "bg-slate-800")}
                 flex
@@ -155,6 +151,7 @@ function About () {
                 text-center
                 mt-[32px]
                 mb-[20px]
+                px-[24px]
             ">
                 <h1 className={`
                     text-[1.475rem]

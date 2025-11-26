@@ -136,8 +136,16 @@ function StructureHome({ children }){
         setIsOpen((prev) => !prev)
     }
 
-    const Structure = () => {
-        return <div className="
+    return (
+        <div 
+            style={{ height: "100%" }}
+            className={`
+                w-full
+                h-full
+                ${validateTheme(theme,"bg-[#FAFAFA]","bg-slate-900")}
+        `}>
+
+            {load ? <Loader /> : <div className="
             w-full
             h-full
         ">
@@ -148,7 +156,7 @@ function StructureHome({ children }){
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.9 }}
-                    className="w-full h-full relative"
+                    className="w-full h-full flex flex-col"
                 >
                     <header 
                         className={`
@@ -266,18 +274,19 @@ function StructureHome({ children }){
                                 
                             </div>
                     </header>
+                    <div className={`
+                        ${isWindows ? "md:h-[74px]" : "md:h-[90px]"}
+                        ${isWindows ? "md:h-[70px]" : "md:h-[86px]"}
+                    `}></div>
 
                     <main className={`
                         ${validateTheme(theme,"bg-[#FAFAFA]","bg-slate-900")}
-                        h-auto
                         w-full
                         transition 
                         duration-1000
                         ease-in-out
-                        md:pt-[0px]
-                        pt-[60px]
                         relative
-                        pb-[32px]
+                        flex-1
                     `}>
                         <AnimatePresence>
                             { width <= 939 && isOpen ? <motion.div 
@@ -326,7 +335,7 @@ function StructureHome({ children }){
                         justify-center
                         items-center
                         flex-col
-                        ${validateTheme(theme,"from-teal-400 to-indigo-400", "from-[#01051C] to-[#051782]")}    
+                        ${validateTheme(theme,"from-teal-400 to-indigo-400", "from-[#01051C] to-[#051782]")}
                     `}>
                         <h1 className="
                             text-[1.375rem]
@@ -352,19 +361,7 @@ function StructureHome({ children }){
                 { showMessage && <CardFeedback params={"top-[100px]"}/> }
             </AnimatePresence>
             
-        </div>
-    }
-
-    return (
-        <div 
-            className={`
-                block
-                w-full
-                h-full
-                ${validateTheme(theme,"bg-[#FAFAFA]","bg-slate-900")}
-        `}>
-
-            {load ? <Loader /> : Structure()}
+        </div>}
 
         </div>
     )

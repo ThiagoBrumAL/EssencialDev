@@ -187,9 +187,9 @@ function Home(){
         <div
             className={`
                 w-full
-                h-full
                 ${validateTheme(theme,"bg-[#FAFAFA]","bg-slate-900")}
-                md:pt-[80px]
+                mt-[90px]
+                md:mt-[30px]
         `}>
             <SectionWrapperA 
                 cloudinary={cloudinary} 
@@ -213,7 +213,6 @@ function Home(){
                     justify-center
                     flex-col
                     w-full
-                    px-[24px]
             ">
                 <div className="
                     w-auto
@@ -221,6 +220,7 @@ function Home(){
                     text-center
                     mt-[32px]
                     mb-[20px]
+                    px-[24px]
                 ">
                     <p className={`
                         text-[1.275rem]
@@ -281,6 +281,7 @@ function Home(){
                     sm:mt-[100px]
                     mt-[50px]
                     mb-[20px]
+                    px-[24px]
                 ">
                     <p className={`
                         text-[1.275rem]
