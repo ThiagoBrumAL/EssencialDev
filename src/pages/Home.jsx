@@ -189,7 +189,6 @@ function Home(){
                 w-full
                 ${validateTheme(theme,"bg-[#FAFAFA]","bg-slate-900")}
                 mt-[90px]
-                md:mt-[30px]
         `}>
             <SectionWrapperA 
                 cloudinary={cloudinary} 

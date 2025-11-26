@@ -282,7 +282,7 @@ function StructureHome({ children }){
                     <main className={`
                         ${validateTheme(theme,"bg-[#FAFAFA]","bg-slate-900")}
                         w-full
-                        transition 
+                        transition-transform
                         duration-1000
                         ease-in-out
                         relative
@@ -293,7 +293,6 @@ function StructureHome({ children }){
                                     initial={{ opacity: 0, x: -300 }}
                                     animate={{ opacity: 1, x: 0 }}
                                     exit={{ opacity: 0, x: -300 }}
-                                    transition={{ duration: 0.5, ease: "easeInOut" }}
                                     className={`
                                         md:top-[116px]
                                         top-[86px]
@@ -310,6 +309,9 @@ function StructureHome({ children }){
                                         fixed
                                         rounded-xl
                                         z-50
+                                        transition-transform
+                                        duration-300
+                                        ease-in-out
                                     `}>
                                         <div className="
                                             flex
@@ -326,7 +328,6 @@ function StructureHome({ children }){
                         
                         { children }
                     </main>
-
                     <footer className={`
                         w-full
                         p-[24px]

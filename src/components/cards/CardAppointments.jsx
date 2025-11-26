@@ -49,6 +49,7 @@ function CardAppointments ({ params }) {
                     { text }:
                 </span>
                 &nbsp;
+                &nbsp;
                 <span className={`
                     w-auto
                     ${validateTheme(theme, "text-slate-800", "text-slate-400")}  
@@ -72,6 +73,7 @@ function CardAppointments ({ params }) {
                     border-[2px]
                     ${validateTheme(theme, "border-slate-200", "border-slate-500")}
                     rounded-2xl
+                    
             `}>
                 <div className={`
                     w-full
@@ -80,7 +82,7 @@ function CardAppointments ({ params }) {
                     rounded-tl-xl
                     md:px-[32px]
                     px-[22px]
-                    py-[8px]
+                    py-[12px]
                 `}>
                     <h1 className={`
                         md:text-[1rem]
@@ -103,6 +105,7 @@ function CardAppointments ({ params }) {
                         shadow-lg
                         rounded-br-2xl
                         rounded-bl-xl
+                        min-h-[200px]
                     `}>
                         
                         <div className="
@@ -121,7 +124,38 @@ function CardAppointments ({ params }) {
                                 flex-col
                                 gap-6
                             ">
-                                <MyStyle text={ "Especialista" } param={ doctor }/>
+                                <div className="
+                                    h-auto
+                                    w-full
+                                    flex
+                                    gap-2
+                                    items-center
+                                ">
+                                    <div className="min-h-[34px] min-w-[34px] max-w-[34px] max-h-[34px] rounded-full bg-indigo-400 flex justify-center items-center font-bold text-[#FFFAFE] text-[1.2rem]">
+
+                                        <p className="
+                                            font-DmSans
+                                            font-bold 
+                                            text-[#FFFAFE] 
+                                            md:text-[1rem] 
+                                            text-[0.9rem]
+                                        ">
+                                            { doctor?.charAt(2) === "a" ? doctor?.charAt(5) : doctor?.charAt(4) }
+                                        </p>
+                                        
+                                    </div>
+
+                                    <p className={`
+                                        md:text-[1rem]
+                                        text-[0.8rem]
+                                        font-DmSans
+                                        font-bold
+                                        ${validateTheme(theme, "text-slate-800", "text-slate-400")}  
+                                    `}>
+                                        { doctor || "Paciente" }
+                                    </p>
+                                </div>
+                                
                                 <MyStyle text={ "Data" } param={ date }/>
                             </div>
                             <div className="
@@ -129,7 +163,35 @@ function CardAppointments ({ params }) {
                                 flex-col
                                 gap-6
                             ">
-                                <MyStyle text={ "Paciente" } param={ username || "Paciente" }/>
+                                <div className="
+                                    h-auto
+                                    w-full
+                                    flex
+                                    gap-2
+                                    items-center
+                                ">
+                                    <div className="min-h-[34px] min-w-[34px] max-w-[34px] max-h-[34px] rounded-full bg-yellow-400 flex justify-center items-center ">
+                                        <p className="
+                                            font-DmSans
+                                            font-bold 
+                                            text-[#FFFAFE] 
+                                            md:text-[1rem] 
+                                            text-[0.9rem]
+                                        ">
+                                            {user?.name?.charAt(0)}
+                                        </p>
+                                    </div>
+
+                                    <p className={`
+                                        md:text-[1rem]
+                                        text-[0.8rem]
+                                        font-DmSans
+                                        font-bold
+                                        ${validateTheme(theme, "text-slate-800", "text-slate-400")}  
+                                    `}>
+                                        { username || "Paciente" }
+                                    </p>
+                                </div>
                                 <MyStyle text={ "Hora" } param={ hour }/>
                             </div>
                         </div>

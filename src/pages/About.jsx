@@ -104,8 +104,9 @@ function About () {
             className={`
                 w-full
                 ${validateTheme(theme,"bg-[#FAFAFA]","bg-slate-900")}
-                md:mt-[30px]
+                md:mt-[110px]
                 mt-[90px]
+                mb-[50px]
         `}>
             <div className={`
                 w-full
