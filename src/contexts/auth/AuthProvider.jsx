@@ -14,27 +14,19 @@ export function AuthProvider({ children }){
 
     const navigate = useNavigate();
     
-    const [token, setToken] = useState(() => Cookies.get("tk") || null)
-
+    const [token, setToken] = useState(() => Cookies.get("tk") ? Cookies.get("tk") : undefined)
     const [sub, setSub] = useState(() => Cookies.get("sb") || null);
-
     const [keepSessionUser, setKeepSessionUser] = useState(false)
-
-    const [ksu, setKsu] = useState(() => Cookies.get("ksu") === "true")
-
-    const [expiresAt, setExpiresAt] = useState(null)
-
+    const [ksu, setKsu] = useState(() => localStorage.getItem("ksu") === "true")
     const [user, setUser] = useState();
-
-    const timer = useRef(null)
-
+12
     function login(datas, callback){
 
         setToken(datas.token)
-        setExpiresAt(Number(datas.dateExpiration));
-        Cookies.set("tk", datas.token, { expires: Number(datas.dateExpiration) });
-        Cookies.set("sb", datas.sub, { expires: Number(datas.dateExpiration) })
-        Cookies.set("ksu", keepSessionUser, { expires: 7 })
+        Cookies.set("tk", datas.token, { expires: datas.dateExpiration});
+        Cookies.set("sb", datas.sub, { expires: datas.dateExpiration})
+        localStorage.setItem("ksu", keepSessionUser)
+        setKsu(keepSessionUser)
 
         if(callback) return callback()
 
@@ -47,21 +39,23 @@ export function AuthProvider({ children }){
             {},
             { withCredentials: true }
         );
-        const status = response.status;
 
+        const status = response.status;
         if(status === 200){
             Cookies.remove("tk")
             Cookies.remove("sb")
-            Cookies.remove("ksu")
+            localStorage.removeItem("ksu")
 
             setToken(null)
-            setExpiresAt(null)
-            setKsu(null)
             setSub(null)
+            setKsu(null)
         }
-    }
 
+        navigate("/sign-in")
+    }
+    
     async function keepSession() {
+
         const response = await axios.post(
             "https://essencial-server.vercel.app/auth/session",
             {},
@@ -69,57 +63,36 @@ export function AuthProvider({ children }){
         );
 
         const newToken = response.data?.user.accessToken;
-        const expire = response.data?.user.expiresAt;
         const sub = response.data?.user.sub;
+
 
         if (newToken) {
             setToken(newToken);
-            setExpiresAt(Number(expire));
 
-            Cookies.set("tk", newToken);
-            Cookies.set("sb", sub)
-            navigate("/home")
+            Cookies.set("tk", newToken, { expires: response.data?.user.expiresAt});
+            Cookies.set("sb", sub, { expires: response.data?.user.expiresAt})
         }
     }
 
     useEffect(() => {
+        localStorage.setItem("ksu", ksu)
+    }, [ksu])
 
-        if(!token || !expiresAt) return
-
-        const now = Date.now();
-    
-        if(now >= expiresAt){
-
-            if(keepSessionUser){
-                keepSession()
-                return
-            }else{
-                logout();
-                return 
-            }
-            
-        }
-
-        const timeLeft = expiresAt - now
-
-        timer.current = setTimeout(() => {
-            if(keepSessionUser){
-                keepSession()
-                return
-            }else{
-                logout();
-                return 
-            }
-        }, timeLeft)
-
-        return () => {
-            if(timer.current) clearTimeout(timer.current)
-        }
-
-    }, [token, expiresAt])
 
     return (
-        <AuthContext.Provider value={{ login, logout, token, setSub, sub, setKeepSessionUser, keepSession, setUser, user }}>
+        <AuthContext.Provider value={{
+            login,
+            logout,
+            token,
+            sub,
+            ksu,
+            setKsu,
+            keepSession,
+            user,
+            setUser,
+            setKeepSessionUser,
+            setToken, 
+        }}>
             { children }
         </AuthContext.Provider>
     )

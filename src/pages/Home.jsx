@@ -20,7 +20,7 @@ import SectionWrapperD from "../components/wrappers/home/SectionWrapperD";
 import { cloudinary } from "../cloud/cloudinary";
 import { useApi } from "../api/api";
 
-function HomePage(){
+function Home(){
 
     const [doctors, setDoctors] = useState(null);
     const [touch, setTouch] = useState(0);
@@ -29,6 +29,8 @@ function HomePage(){
     const cardRef = useRef();
     const scrollRef = useRef();
     const refSpecialties = useRef()
+
+    const { listenerToken } = useAuth();
 
     const images = [
         "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763909804/Vector-1_iqtiks.png",
@@ -316,4 +318,4 @@ function HomePage(){
 
 }
 
-export default HomePage;
+export default Home;

@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { useTheme } from '../contexts/theme/useTheme';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-function UserPage({ children }){
+function User({ children }){
 
     const { theme, validateTheme } = useTheme();
     const locale = useLocation();
@@ -144,4 +144,4 @@ function UserPage({ children }){
     )
 }
 
-export default UserPage
+export default User

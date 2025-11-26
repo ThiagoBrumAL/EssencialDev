@@ -46,7 +46,11 @@ export default function CardHours({ value, set }) {
 
 
     return (
-        <div
+        <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
             className={`
                 ${validateTheme(theme, "bg-slate-100 border-slate-200", "bg-slate-900 border-slate-700")}
                 border-[2px] 
@@ -65,8 +69,8 @@ export default function CardHours({ value, set }) {
                 gap-[12px]
             ">
                 {
-                    hoursOne.map((h) => {
-                        return <Item hour={h} value={value} set={set}/>
+                    hoursOne.map((h, i) => {
+                        return <Item key={i} hour={h} value={value} set={set}/>
                     })
                 }
             </div>
@@ -78,12 +82,12 @@ export default function CardHours({ value, set }) {
                 gap-[12px]
             ">
                 {
-                    hoursTwo.map((h) => {
-                        return <Item hour={h} value={value} set={set}/>
+                    hoursTwo.map((h, i) => {
+                        return <Item key={i} hour={h} value={value} set={set}/>
                     })
                 }
             </div>
             
-        </div>
+        </motion.div>
   );
 }

@@ -195,7 +195,8 @@ function FormSignIn(){
                         p-0 
                         text-slate-500 
                         font-[600] 
-                        text-[0.90rem]
+                        md:text-[0.90rem]
+                        text-[0.85rem]
                         font-Inter
                 `}> 
                     Você deseja manter sua sessão conectada
@@ -207,7 +208,8 @@ function FormSignIn(){
                     p-0 
                     text-slate-500 
                     font-[600] 
-                    text-[0.90rem]
+                    md:text-[0.90rem]
+                    text-[0.85rem]
                     font-Inter
                     mt-[20px]
             `}>

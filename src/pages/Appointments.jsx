@@ -3,7 +3,7 @@ import { useAppointment } from "../contexts/appointment/useAppointment";
 import { useApi } from "../api/api";
 import { useTheme } from "../contexts/theme/useTheme";
 import BasicDateCalendar from "../components/calendar/Calendar";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import dayjs from "dayjs";
 import CardHours from "../components/cards/CardHours";
 import { maskFullName } from "../utils/masks/maskFullName";
@@ -11,7 +11,7 @@ import FormFielAppt from "../components/inputs/FormFielAppt";
 import { maskEmail } from "../utils/masks/maskEmail";
 import { badFeedback } from "../utils/helpers/feedback/Failure";
 import { useFeedback } from "../contexts/api/useFeedback";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import SmallLoader from "../components/loaders/SmallLoader";
 
@@ -34,11 +34,19 @@ function Appointments () {
     const [datas, setDatas] = useState();
 
     const openCalendar = () => setOpenCal((prev) => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth" 
+        });
         setOpenHou(false);
         return !prev
     })
 
     const openHours = () => setOpenHou((prev) => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth" 
+        });
         setOpenCal(false);
         return !prev
     })
@@ -80,6 +88,8 @@ function Appointments () {
     const toSchedule = (datas) => {
         if(user.email && user.name && nameAppt && chosenDate && chosenHour){
             api("post", "/appointments", datas)
+            setOpenHou(false)
+            setOpenCal(false)
         }else{
             badFeedback("400", renderCardFeedback, "/appointments")
         }
@@ -360,6 +370,7 @@ function Appointments () {
                             </motion.button>
                         </div>
 
+                    <AnimatePresence>
                         <div className="
                             md:w-auto
                             w-full
@@ -367,7 +378,7 @@ function Appointments () {
                             { openCal && <BasicDateCalendar value={chosenDate} set={setChosenDate}/> }
                             { openHou && <CardHours value={chosenHour} set={setChosenHour}/> }
                         </div>
-
+                    </AnimatePresence>
                     
                     </motion.div> : <SmallLoader/>
                     }

@@ -2,13 +2,15 @@ import "./index.css"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 
 //Components
-import ScreenSSR from "./pages/StructureSSR"
-import ScreenHome from "./pages/ScreenHome"
+import StructureSSR from "./pages/StructureSSR"
+import StructureHome from "./pages/StructureHome"
 import FormSignIn from "./components/forms/FormSignIn"
 import FormSignUp from "./components/forms/FormSignUp"
 import FormRecover from "./components/forms/FormRecover"
-import UserPage from "./pages/UserPage"
+import User from "./pages/User"
 import Appointments from "./pages/Appointments"
+
+import Cookies from 'js-cookie'
 
 import { FeedbackProvider } from "./contexts/api/feebackProvider"
 import { AuthProvider } from "./contexts/auth/AuthProvider"
@@ -16,20 +18,19 @@ import { ThemeProvider } from "./contexts/theme/ThemeProvider"
 import { OsProvider } from "./contexts/os/OsProvider"
 import { AppointmentProvider } from "./contexts/appointment/appointmentProvider"
 
-import HomePage from "./pages/HomePage"
+import Home from "./pages/Home"
 import FormUser from "./components/forms/FormUser"
 import CardAppointments from "./components/cards/CardAppointments"
 import CardForUserRoutes from "./components/cards/CardForUserRoutes"
 import ClassicButton from "./components/buttons/ClassicButton"
 import ButtonTheme from "./components/buttons/ButtonTheme"
-import { useAuth } from "./contexts/auth/useAuth"
 import Chatbot from "./pages/Chatbot"
 import About from "./pages/About"
 
 function PrivateRoute({ children }){
-  const { token } = useAuth();
-
-  if(token === null) return <Navigate to={"/sign-in"}/>
+  const token = Cookies.get("tk")
+  if(!token) return <Navigate to={"/sign-in"}/>
+  
   return children
 }
 
@@ -60,9 +61,9 @@ function App() {
                     path="/sign-in" 
                     element={
                         <PublicRoute>
-                          <ScreenSSR>
+                          <StructureSSR>
                             <FormSignIn />
-                          </ScreenSSR>
+                          </StructureSSR>
                         </PublicRoute>
                     }
                   />
@@ -71,9 +72,9 @@ function App() {
                     path="/sign-up" 
                     element={
                         <PublicRoute>
-                          <ScreenSSR>
+                          <StructureSSR>
                             <FormSignUp />
-                          </ScreenSSR>
+                          </StructureSSR>
                         </PublicRoute>
                       
                     }
@@ -83,9 +84,9 @@ function App() {
                     path="/recover" 
                     element={
                         <PublicRoute>
-                          <ScreenSSR>
+                          <StructureSSR>
                             <FormRecover />
-                          </ScreenSSR>
+                          </StructureSSR>
                         </PublicRoute>
                     }
                   />
@@ -101,9 +102,9 @@ function App() {
                       path="/home" 
                       element={
                         <PrivateRoute>
-                          <ScreenHome>
-                            <HomePage />
-                          </ScreenHome>
+                          <StructureHome>
+                            <Home />
+                          </StructureHome>
                         </PrivateRoute>
                       }
                     />
@@ -112,11 +113,11 @@ function App() {
                       path="/info" 
                       element={
                         <PrivateRoute>
-                          <ScreenHome>
-                            <UserPage>
+                          <StructureHome>
+                            <User>
                               <FormUser/>
-                            </UserPage>
-                          </ScreenHome>
+                            </User>
+                          </StructureHome>
                         </PrivateRoute>
                       }
                     />
@@ -125,11 +126,11 @@ function App() {
                       path="/info/appointments" 
                       element={
                         <PrivateRoute>
-                          <ScreenHome>
-                            <UserPage>
+                          <StructureHome>
+                            <User>
                               <CardAppointments />
-                            </UserPage>
-                          </ScreenHome>
+                            </User>
+                          </StructureHome>
                         </PrivateRoute>
                       }
                     />
@@ -138,15 +139,15 @@ function App() {
                       path="/info/theme" 
                       element={
                         <PrivateRoute>
-                          <ScreenHome>
-                            <UserPage>
+                          <StructureHome>
+                            <User>
                               <CardForUserRoutes params={{ 
                                 title: "Tema",
                                 text: "Clique aqui para alterar o tema do jeito que preferir" , 
                                 button: ButtonTheme}
                               }/>
-                            </UserPage>
-                          </ScreenHome>
+                            </User>
+                          </StructureHome>
                         </PrivateRoute>
                       }
                     />
@@ -155,15 +156,15 @@ function App() {
                       path="/info/logout" 
                       element={
                         <PrivateRoute>
-                          <ScreenHome>
-                            <UserPage>
+                          <StructureHome>
+                            <User>
                               <CardForUserRoutes params={{ 
                                 title: "Sair",
                                 text: "Para sair da aplicação basta clicar aqui", 
                                 button: ClassicButton}
                               }/>
-                            </UserPage>
-                          </ScreenHome>
+                            </User>
+                          </StructureHome>
                         </PrivateRoute>
                       }
                     />
@@ -172,9 +173,9 @@ function App() {
                       path="/chat" 
                       element={
                         <PrivateRoute>
-                          <ScreenHome>
+                          <StructureHome>
                               <Chatbot />
-                          </ScreenHome>
+                          </StructureHome>
                         </PrivateRoute>
                       }
                     />
@@ -183,9 +184,9 @@ function App() {
                       path="/appointments" 
                       element={
                         <PrivateRoute>
-                          <ScreenHome>
+                          <StructureHome>
                               <Appointments />
-                          </ScreenHome>
+                          </StructureHome>
                         </PrivateRoute>
                       }
                     />
@@ -194,9 +195,9 @@ function App() {
                       path="/about" 
                       element={
                         <PrivateRoute>
-                          <ScreenHome>
+                          <StructureHome>
                               <About />
-                          </ScreenHome>
+                          </StructureHome>
                         </PrivateRoute>
                       }
                     />

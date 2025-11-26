@@ -6,7 +6,7 @@ import CardFeedback from "../components/cards/CardFeedback.jsx";
 import Loader from "../components/loaders/Loader.jsx";
 import Img from '../components/img/Img.jsx';
 import { Sun, Moon } from "lucide-react";
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import Cookies from 'js-cookie';
 
@@ -21,10 +21,11 @@ import { useFeedback } from "../contexts/api/useFeedback.js";
 import { useAuth } from '../contexts/auth/useAuth.js';
 
 
-// SSF - Sign-in / Sign-up / Recover.
-function ScreenSSR({ children }) {
 
-    const { ksu, keepSession } = useAuth();
+function StructureSSR({ children }) {
+
+    const { ksu, keepSession, listenerToken } = useAuth();
+    const [load, setLoad] = useState(true)
 
     useEffect(() => {
 
@@ -37,9 +38,6 @@ function ScreenSSR({ children }) {
 
         if(bool) keepSession();
     }, [])
-
-    const [load, setLoad] = useState(true)
-    const [userOpacity, setUserOpacity] = useState(0);
     
     const { showMessage } = useFeedback();
 
@@ -61,7 +59,6 @@ function ScreenSSR({ children }) {
         },
     ]
 
-
     const locale = useLocation()
 
     const { 
@@ -77,14 +74,11 @@ function ScreenSSR({ children }) {
 
         const timer = setTimeout(() => {
             setLoad(false)
-            setUserOpacity(1)
-        }, 3000)
+        }, 2000)
 
         return (() => clearTimeout(timer))
-
     }, [])
 
-    
 
     return (
 
@@ -99,13 +93,13 @@ function ScreenSSR({ children }) {
             relative
             ${validateTheme(theme,"bg-[#FAFAFA]","bg-slate-900")}
             z-[1]
-            ${load ? "overflow-y-hidden" : null}
         `}>
 
-            {load && <Loader />}
-
-            <div 
-            style={{ opacity: userOpacity }} 
+            {load ? <Loader/> : <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
             className={`
                 flex
                 sm:flex-row
@@ -113,7 +107,7 @@ function ScreenSSR({ children }) {
                 transition 
                 duration-1000
                 ease-in-out
-                ${load ? "opacity-0 h-0 w-0" : "opacity-100 w-full h-full "}
+                w-full
             `}>
                 <section
                     id="login-screen-section-one"
@@ -143,16 +137,17 @@ function ScreenSSR({ children }) {
                             />
                         </div>
 
-                        <div className="
+                        <motion.div 
+                        className="
                             w-full 
                             flex 
                             justify-center"
                         >
-                            <Img 
-                                path={locale.pathname} 
+                            <Img
+                                path={locale.pathname}
                                 theme={theme}
                             />
-                        </div>
+                        </motion.div>
                     </div>
                 </section>
 
@@ -210,9 +205,11 @@ function ScreenSSR({ children }) {
                         { showMessage && <CardFeedback params={ "top-[30px]" }/> }
                 </AnimatePresence>
                 
-            </div>
+            </motion.div>}
+
+            
         </div>
     );
 }
 
-export default ScreenSSR;
+export default StructureSSR;

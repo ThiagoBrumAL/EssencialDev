@@ -3,17 +3,20 @@ import { AnimatePresence, motion } from "framer-motion"
 import { useTheme } from "../../contexts/theme/useTheme"
 import { useAppointment } from "../../contexts/appointment/useAppointment";
 import { Cross } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const CardHome = forwardRef((props, ref) => {
 
     const { theme, validateTheme } = useTheme();
+    const navigate = useNavigate()
 
     const { setNameAppt } = useAppointment();
-
-    const mapCard = ( name ) => {
-        setNameAppt( name )
-    }
     
+    const change = (doc) => {
+        setNameAppt(doc);
+        navigate("/appointments")
+    }
+
     return (
         <AnimatePresence mode="wait">
             <motion.div 
@@ -84,7 +87,7 @@ const CardHome = forwardRef((props, ref) => {
                         <motion.button
                             whileHover={{ y: -2 }}
                             whileTap={{ scale: 0.95 }}
-                            onClick={() => mapCard({ name: props.doctor.name, spec: props.doctor.specialty })}
+                            onClick={() => change({ name: props.doctor.name, spec: props.doctor.specialty })}
                             className={`
                                 ${validateTheme(theme, "bg-sky-300", "bg-indigo-600")}
                                 px-6
@@ -98,7 +101,7 @@ const CardHome = forwardRef((props, ref) => {
                                 max-w-[210px]
                             `}
                         >
-                            <a href="/appointments">AGENDAR AGORA</a>
+                            AGENDAR AGORA
                         </motion.button>
                     </div>
                     

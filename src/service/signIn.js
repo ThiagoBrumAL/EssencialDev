@@ -30,15 +30,15 @@ export const useSignIn = () => {
 
             const datas = { token, dateExpiration, sub }
 
-            console.log(datas);
+            console.log(returnFromApi);
 
-            return body.login(token, () => {
-                if(token) return body.login(datas, () => setTimeout(() => body.navigate("/home"), 1000))
+            return body.login(datas, () => {
+                setTimeout(() => body.navigate("/home"), 500)
             })
+
 
         } catch (error){
 
-            console.log(error);
             const status = error.response?.status
             badFeedback(status, renderCardFeedback, "/sign-in")
             throw new Error(error)

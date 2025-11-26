@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Loader from "../components/loaders/Loader.jsx";
 
 import { useTheme } from "../contexts/theme/useTheme.js";
+import Cookies from 'js-cookie'
 
 import { User, TextAlignJustify  } from 'lucide-react';
 import { useLocation } from "react-router-dom";
@@ -11,9 +12,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useFeedback } from "../contexts/api/useFeedback.js";
 import CardFeedback from "../components/cards/CardFeedback.jsx";
 import { useWindowWidth } from "../hooks/WindowWidth.jsx";
+import { useAuth } from "../contexts/auth/useAuth.js";
 
 
-function ScreenHome({ children }){
+function StructureHome({ children }){
 
     const [load, setLoad] = useState(true)
     const locale = useLocation()
@@ -22,14 +24,35 @@ function ScreenHome({ children }){
     const width = useWindowWidth();
     const [isOpen, setIsOpen] = useState(false);
 
+    const { keepSession, ksu, setToken, logout } = useAuth();
+
     const { showMessage } = useFeedback();
 
     useEffect(() => {
+
         const timer = setTimeout(() => {
             setLoad(false)
-        }, 3000)
+        }, 2000)
 
         return (() => clearTimeout(timer))
+    }, [])
+
+    useEffect(() => {
+        const checkToken = () => {
+            const currentToken = Cookies.get("tk");
+            if(!currentToken){
+                setToken(null)
+
+                if(ksu) {
+                    keepSession();
+                } else {
+                    logout(); 
+                }
+            } 
+        }
+
+        const interval = setInterval(checkToken, 1000);
+        return () => clearInterval(interval)
     }, [])
 
     const { 
@@ -106,43 +129,6 @@ function ScreenHome({ children }){
                 </div>
     
             </a>
-        )
-    }
-
-    const SideBar = () => {
-        return (
-            <motion.div 
-            initial={{ opacity: 0, x: -300 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -300 }}
-            transition={{ duration: 0.5, ease: "easeInOut" }}
-            className={`
-                md:top-[116px]
-                top-[86px]
-                py-[32px]
-                px-[24px]
-                w-full
-                h-auto
-                max-w-[220px]
-                ${validateTheme(theme, "bg-[#59CCEF]", "bg-[#4F39F6]")}
-                left-[24px]
-                flex
-                flex-col
-                fixed
-                rounded-xl
-                z-50
-            `}>
-                <div className="
-                    flex
-                    flex-col
-                    gap-[32px]
-                ">
-                    <LinkSide path={"/home"} name={"Inicio"}/>
-                    <LinkSide path={"/about"} name={"Sobre Nós"}/>
-                    <LinkSide path={"/chat"} name={"Assistente Virtual"}/>
-                    <LinkSide path={"/blog"} name={"Blog"}/>
-                </div>
-            </motion.div>
         )
     }
 
@@ -294,7 +280,39 @@ function ScreenHome({ children }){
                         pb-[32px]
                     `}>
                         <AnimatePresence>
-                            { width <= 939 && isOpen ? <SideBar /> : null }
+                            { width <= 939 && isOpen ? <motion.div 
+                                    initial={{ opacity: 0, x: -300 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    exit={{ opacity: 0, x: -300 }}
+                                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                                    className={`
+                                        md:top-[116px]
+                                        top-[86px]
+                                        py-[32px]
+                                        px-[24px]
+                                        w-full
+                                        h-auto
+                                        max-w-[220px]
+                                        ${validateTheme(theme, "bg-[#59CCEF] border-[#ace4f7]", "bg-[#4F39F6] border-[#6a58f1]")}
+                                        border-[2px]
+                                        left-[24px]
+                                        flex
+                                        flex-col
+                                        fixed
+                                        rounded-xl
+                                        z-50
+                                    `}>
+                                        <div className="
+                                            flex
+                                            flex-col
+                                            gap-[32px]
+                                        ">
+                                            <LinkSide path={"/home"} name={"Inicio"}/>
+                                            <LinkSide path={"/about"} name={"Sobre Nós"}/>
+                                            <LinkSide path={"/chat"} name={"Assistente Virtual"}/>
+                                            <LinkSide path={"/blog"} name={"Blog"}/>
+                                        </div>
+                                    </motion.div> : null }
                         </AnimatePresence>
                         
                         { children }
@@ -352,4 +370,4 @@ function ScreenHome({ children }){
     )
 }
 
-export default ScreenHome;
+export default StructureHome;

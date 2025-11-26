@@ -84,7 +84,6 @@ const SectionWrapperD = React.memo(function SectionWrapperD({ path }){
                 </p>
                 <motion.button 
                     whileTap={ { scale: 0.9 } }
-                    onClick={() => navigate("/chat")}
                     className={`
                         ${validateTheme(theme, "bg-sky-300", "bg-indigo-600")}
                         px-6
@@ -100,7 +99,7 @@ const SectionWrapperD = React.memo(function SectionWrapperD({ path }){
                         md:hover:-translate-y-1
                     `}
                 >
-                        CONHEÇA O AGENTE
+                        <a href="/chat">CONHEÇA O AGENTE</a>
                 </motion.button>
             </div>
         </section>
