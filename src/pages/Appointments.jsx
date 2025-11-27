@@ -260,10 +260,10 @@ function Appointments () {
                 flex-col
                 px-[24px]
                 md:mt-[30px]
-                mt-[90px]
                 mb-[40px]
         `}>
             <div className={`
+                mt-[90px]
                 w-full
                 h-full
                 flex

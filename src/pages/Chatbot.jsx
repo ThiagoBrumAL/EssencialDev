@@ -40,7 +40,7 @@ function Chatbot() {
         },
         { 
             ask: "Como alterar a temática da aplicação?", 
-            response: "No menu superior, olhe para o canto direito e clique no ícone de usuário. Assim que clicar você terá acesso aos recursos do usuário. Clique na opção 'Tema', lá você poderá se deslogar da aplicação." 
+            response: "No menu superior, olhe para o canto direito e clique no ícone de usuário. Assim que clicar você terá acesso aos recursos do usuário. Clique na opção 'Tema', lá você poderá alterar o tema da sua aplicação. :)" 
         },
     ]);
 
