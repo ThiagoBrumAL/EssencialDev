@@ -11,7 +11,6 @@ import FormFielAppt from "../components/inputs/FormFielAppt";
 import { maskEmail } from "../utils/masks/maskEmail";
 import { badFeedback } from "../utils/helpers/feedback/Failure";
 import { useFeedback } from "../contexts/api/useFeedback";
-import { useLocation } from "react-router-dom";
 
 import SmallLoader from "../components/loaders/SmallLoader";
 import { useAuth } from "../contexts/auth/useAuth";
@@ -33,6 +32,8 @@ function Appointments () {
     const [chosenDate, setChosenDate] = useState(dayjs());
     const [chosenHour, setChosenHour] = useState("");
     const [datas, setDatas] = useState();
+
+    const [status, setStatus] = useState(null);
 
     const openCalendar = () => setOpenCal((prev) => {
         window.scrollTo({
@@ -220,7 +221,8 @@ function Appointments () {
                 specialist: nameAppt.name,
                 patientEmail: user.email,
                 patientName: user.name,
-                patient_id: user.id
+                patient_id: user.id,
+                setStatus
             })
         }
         
@@ -242,8 +244,10 @@ function Appointments () {
                 px-[24px]
                 md:mt-[30px]
                 mt-[90px]
+                mb-[40px]
         `}>
-            <div className="
+            {
+                status !== 201 ? <div className="
                 w-full
                 flex
                 gap-[32px]
@@ -369,7 +373,7 @@ function Appointments () {
                     
                     </motion.div> : <SmallLoader/>
                     }
-            </div>
+            </div> : <h1 className="font-DmSans text-[1.155rem]">Consulta agendada!</h1>}
             
         </motion.div>
     )

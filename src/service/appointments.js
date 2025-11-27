@@ -56,10 +56,10 @@ export const useAppointments = () => {
 
     const postAppointments = async (body = null, axios) => {
 
-        console.log(body);
-        
+        const { setStatus, ...rest } = body;
+
         try{
-            const response = await axios.post(`https://essencial-server.vercel.app/appointments`, body,
+            const response = await axios.post(`https://essencial-server.vercel.app/appointments`, rest,
                 { 
                     withCredentials: true,
                     headers: {
@@ -70,6 +70,9 @@ export const useAppointments = () => {
 
             const datas = await response.data
             
+            if(response.status === 201) setStatus(response.status);
+            
+
             return goodFeedback(response.status, renderCardFeedback, "/appointments")
 
         }catch(e){

@@ -73,6 +73,7 @@ function User({ children }){
     return (
         <div className={`
             w-full
+            h-full
             ${validateTheme(theme,"bg-[#FAFAFA]","bg-slate-900")}
             flex
             justify-center

@@ -287,6 +287,9 @@ function StructureHome({ children }){
                         ease-in-out
                         relative
                         flex-1
+                        flex
+                        justify-center
+                        items-center
                     `}>
                         <AnimatePresence>
                             { width <= 939 && isOpen ? <motion.div 
@@ -321,7 +324,6 @@ function StructureHome({ children }){
                                             <LinkSide path={"/home"} name={"Inicio"}/>
                                             <LinkSide path={"/about"} name={"Sobre Nós"}/>
                                             <LinkSide path={"/chat"} name={"Assistente Virtual"}/>
-                                            <LinkSide path={"/blog"} name={"Blog"}/>
                                         </div>
                                     </motion.div> : null }
                         </AnimatePresence>
