@@ -264,6 +264,7 @@ function Appointments () {
             {
                 status !== 201 ? <div className="
                 w-full
+                h-full
                 flex
                 gap-[32px]
                 max-w-[900px]
@@ -279,7 +280,7 @@ function Appointments () {
                     Consulta ({ nameAppt?.spec || "" })
                 </h1>
                     {
-                        user ? <motion.div className="
+                        false ? <motion.div className="
                         w-full
                         flex
                         md:flex-nowrap
@@ -386,7 +387,7 @@ function Appointments () {
                         </div>
                     </AnimatePresence>
                     
-                    </motion.div> : <SmallLoader/>
+                    </motion.div> : <div className="w-full h-full"><SmallLoader/></div>
                     }
             </div> : <SmallLoader/>}
             
