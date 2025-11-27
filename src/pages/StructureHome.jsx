@@ -322,6 +322,7 @@ function StructureHome({ children }){
                                             <LinkSide path={"/home"} name={"Inicio"}/>
                                             <LinkSide path={"/about"} name={"Sobre Nós"}/>
                                             <LinkSide path={"/chat"} name={"Assistente Virtual"}/>
+                                            <LinkSide path={"/info/appointments"} name={"Meus agendamentos"}/>
                                         </div>
                                     </motion.div> : null }
                         </AnimatePresence>

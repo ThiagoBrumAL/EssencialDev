@@ -50,7 +50,7 @@ export default function CardHours({ value, set }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
+            transition={{ duration: 1}}
             className={`
                 ${validateTheme(theme, "bg-slate-100 border-slate-200", "bg-slate-900 border-slate-700")}
                 border-[2px] 

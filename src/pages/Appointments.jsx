@@ -261,8 +261,7 @@ function Appointments () {
                 mt-[90px]
                 mb-[40px]
         `}>
-            {
-                status !== 201 ? <div className="
+            <div className="
                 w-full
                 h-full
                 flex
@@ -277,10 +276,11 @@ function Appointments () {
                     font-DmSans
                     font-bold
                 `}>
-                    Consulta ({ nameAppt?.spec || "" })
+                    Consulta ({ nameAppt?.spec || "Carregando..." })
                 </h1>
                     {
-                        user ? <motion.div className="
+                        user && doctors ? <motion.div 
+                        className="
                         w-full
                         flex
                         md:flex-nowrap
@@ -288,7 +288,10 @@ function Appointments () {
                         max-w-[900px]
                         flex-wrap-reverse
                     ">
-                        <div className={`
+                        <motion.div
+                        layout
+                        transition={{ duration: 0.1, ease: "easeInOut" }}
+                        className={`
                             flex
                             flex-col
                             ${validateTheme(theme, "bg-slate-100 border-slate-200", "bg-slate-900 border-slate-700 text-slate-200")}
@@ -358,24 +361,31 @@ function Appointments () {
                                 { openHou ? "Fechar" : "Agendar horário" }
                             </motion.button>
 
-                            <motion.button
-                                whileTap={{ scale: 0.9 }}
-                                onClick={() => toSchedule(datas)}
-                                className={`
-                                    w-full
-                                    bg-gradient-to-tr
-                                    ${validateTheme(theme,
-                                        "from-teal-400 to-indigo-400 text-slate-50" , 
-                                        "from-[#01051C] to-[#051782] text-slate-50")}
-                                    py-2
-                                    px-4
-                                    rounded-xl
-                                    font-bold
-                                `}
-                            >
-                                Agendar Consulta
-                            </motion.button>
-                        </div>
+                            {
+                                status !== 201 
+                                ? <motion.button
+                                    whileTap={{ scale: 0.9 }}
+                                    onClick={() => toSchedule(datas)}
+                                    className={`
+                                        w-full
+                                        bg-gradient-to-tr
+                                        ${validateTheme(theme,
+                                            "from-teal-400 to-indigo-400 text-slate-50" , 
+                                            "from-[#01051C] to-[#051782] text-slate-50")}
+                                        py-2
+                                        px-4
+                                        rounded-xl
+                                        font-bold
+                                    `}
+                                >
+                                    Agendar Consulta
+                                </motion.button>
+
+                                : <div className="relative w-full min-h-[70px]">
+                                    <SmallLoader/> 
+                                </div>
+                            }
+                        </motion.div>
 
                     <AnimatePresence>
                         <div className="
@@ -387,9 +397,8 @@ function Appointments () {
                         </div>
                     </AnimatePresence>
                     
-                    </motion.div> : <div className="w-full h-full"><SmallLoader/></div>
-                    }
-            </div> : <SmallLoader/>}
+                    </motion.div> : <SmallLoader/> }
+            </div>
             
         </motion.div>
     )

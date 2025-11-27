@@ -1,5 +1,4 @@
 import { useApi } from "../../api/api";
-import { useLocation } from "react-router-dom";
 import { useTheme } from "../../contexts/theme/useTheme";
 import { useState, useEffect } from "react";
 

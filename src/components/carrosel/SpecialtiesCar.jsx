@@ -141,7 +141,7 @@ const SpecialtiesCar = memo(function SpecialtiesCar({ dir, ref }){
                 variants={variants}
                 initial="hidden"
                 animate={ inView ? "visible" : "hidden" }
-                transition={{ duration: 0.5, delay: 0.25 }}
+                transition={{ duration: 1, delay: 0.25 }}
                 className="w-full"
             >
                 <div className="
