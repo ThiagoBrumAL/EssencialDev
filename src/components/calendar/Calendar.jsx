@@ -4,17 +4,19 @@ import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import dayjs from 'dayjs';
 import { useTheme } from '../../contexts/theme/useTheme';
 import { motion } from 'framer-motion';
+import { useWindowWidth } from '../../hooks/WindowWidth';
 
 export default function BasicDateCalendar({ value, set }) {
 
     const { theme } = useTheme();
-
+    const width = useWindowWidth();
+    
     return (
         <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}>
+            transition={ width <= 640 ? {} : { duration: 0.4 }}>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DateCalendar
                 value={value}

@@ -1,10 +1,13 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useTheme } from "../../contexts/theme/useTheme";
+import { useWindowWidth } from "../../hooks/WindowWidth";
 
 export default function CardHours({ value, set }) {
 
     const { theme, validateTheme } = useTheme();
+
+    const width = useWindowWidth()
 
     const hoursOne = [
         "09:00",
@@ -50,7 +53,7 @@ export default function CardHours({ value, set }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 1}}
+            transition={ width <= 640 ? {} : { duration: 1}}
             className={`
                 ${validateTheme(theme, "bg-slate-100 border-slate-200", "bg-slate-900 border-slate-700")}
                 border-[2px] 

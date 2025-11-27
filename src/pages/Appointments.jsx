@@ -15,6 +15,7 @@ import { useFeedback } from "../contexts/api/useFeedback";
 import SmallLoader from "../components/loaders/SmallLoader";
 import { useAuth } from "../contexts/auth/useAuth";
 import { useNavigate } from "react-router-dom";
+import { useWindowWidth } from "../hooks/WindowWidth";
 
 
 function Appointments () {
@@ -27,6 +28,7 @@ function Appointments () {
     const navigate = useNavigate();
 
     const { user } = useAuth();
+    const width = useWindowWidth();
 
     const [doctors, setDoctors] = useState(null);
     const [openCal, setOpenCal] = useState(false);
@@ -289,8 +291,7 @@ function Appointments () {
                         flex-wrap-reverse
                     ">
                         <motion.div
-                        layout
-                        transition={{ duration: 0.1, ease: "easeInOut" }}
+                        transition={ width <= 640 ? {} : { duration: 0.1, ease: "easeInOut" }}
                         className={`
                             flex
                             flex-col
@@ -397,7 +398,7 @@ function Appointments () {
                         </div>
                     </AnimatePresence>
                     
-                    </motion.div> : <SmallLoader/> }
+                    </motion.div> : <div className="w-full h-full flex justify-center items-center py-[80px]"><SmallLoader/></div> }
             </div>
             
         </motion.div>
