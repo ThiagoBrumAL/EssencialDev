@@ -3,13 +3,17 @@ import { useAuth } from '../contexts/auth/useAuth';
 import { handlingAnalyzeDatas } from '../utils/errors/handlers/handlingAnalyzeDatas'
 import { badFeedback } from '../utils/helpers/feedback/Failure';
 import { goodFeedback } from '../utils/helpers/feedback/Success';
+import Cookies from 'js-cookie'
 
 export const useUser = () => {
 
-    const { sub, token } = useAuth();
+    const { token } = useAuth();
     const { renderCardFeedback } = useFeedback();
 
+    const sub = Cookies.get("sb")
+
     const getUser = async (body, axios) => {
+        
         const response = await axios.get(`https://essencial-server.vercel.app/users/${sub}`,
             { 
                 withCredentials: true,

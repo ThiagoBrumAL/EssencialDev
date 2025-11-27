@@ -49,7 +49,7 @@ function About () {
     const CardDoctor = ({ name, specialty, image }) => {
         return (
             <div className="
-
+                mb-[30px]
             ">
 
                 <div>
@@ -103,10 +103,8 @@ function About () {
         <div
             className={`
                 w-full
-                ${validateTheme(theme,"bg-[#FAFAFA]","bg-slate-900")}
-                md:mt-[110px]
                 mt-[90px]
-                mb-[50px]
+                mb-[60px]
         `}>
             <div className={`
                 w-full

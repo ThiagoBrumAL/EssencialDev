@@ -30,7 +30,7 @@ function Home(){
     const scrollRef = useRef();
     const refSpecialties = useRef()
 
-    const { listenerToken } = useAuth();
+    const { token, sub, setUser } = useAuth();
 
     const images = [
         "https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763909804/Vector-1_iqtiks.png",
@@ -176,6 +176,15 @@ function Home(){
         api("get", "/home", body)
 
     }, [])
+
+    useEffect(() => {
+
+        if(!token && !sub) return;
+
+        const body = { setUser }
+        api("get", "/info", body);
+
+    }, [token, sub]); 
 
     useEffect(() => {
         setHowManyClicks(width >= 1158 ? 3 : (width >= 775 ? 4 : 10))

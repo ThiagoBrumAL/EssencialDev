@@ -11,9 +11,10 @@ import FormFielAppt from "../components/inputs/FormFielAppt";
 import { maskEmail } from "../utils/masks/maskEmail";
 import { badFeedback } from "../utils/helpers/feedback/Failure";
 import { useFeedback } from "../contexts/api/useFeedback";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import SmallLoader from "../components/loaders/SmallLoader";
+import { useAuth } from "../contexts/auth/useAuth";
 
 
 function Appointments () {
@@ -23,11 +24,11 @@ function Appointments () {
     const { theme, validateTheme } = useTheme();
     const { nameAppt, setNameAppt } = useAppointment(null);
 
+    const { user } = useAuth();
+
     const [doctors, setDoctors] = useState(null);
     const [openCal, setOpenCal] = useState(false);
     const [openHou, setOpenHou] = useState(false);
-
-    const location = useLocation();
 
     const [chosenDate, setChosenDate] = useState(dayjs());
     const [chosenHour, setChosenHour] = useState("");
@@ -52,28 +53,14 @@ function Appointments () {
     })
 
     const [fields, setFields] = useState([])
-    const [user, setUser] = useState(null)
 
     const api = useApi();
 
     useEffect(() => {
-        
         const body = { setDoctors }
         api("get", "/about", body)
-
     }, [])
 
-    
-    useEffect(() => {
-
-        const fetchUser = async () => {
-            const body = { setUser }
-            api("get", "/info", body);
-        };
-
-        fetchUser();
-        
-    }, [location.pathname]); 
 
     const Op = ({ name, spec }) => {
         return (
@@ -354,15 +341,17 @@ function Appointments () {
                             <motion.button
                                 whileTap={{ scale: 0.9 }}
                                 onClick={() => toSchedule(datas)}
-                                className="
+                                className={`
                                     w-full
                                     bg-gradient-to-tr
-                                    from-teal-400 to-indigo-400 text-slate-50
+                                    ${validateTheme(theme,
+                                        "from-teal-400 to-indigo-400 text-slate-50" , 
+                                        "from-[#01051C] to-[#051782] text-slate-50")}
                                     py-2
                                     px-4
                                     rounded-xl
                                     font-bold
-                                "
+                                `}
                             >
                                 Agendar Consulta
                             </motion.button>

@@ -143,25 +143,28 @@ function Chatbot() {
     return (
         <div 
         className={
-            `w-full 
-            flex justify-center 
+            `w-full
+            h-full
+            flex 
+            justify-center 
             items-start 
             px-[24px]
             ${validateTheme(theme, "bg-[#FAFAFA]", "bg-slate-900")}
-            md:mt-[30px]
-            mt-[90px]
         `}>
             <section 
             className="
                 w-full 
                 flex 
                 justify-center 
+                h-full
             ">
 
                 {user ? (
                     <div 
                     className={`
                         w-full 
+                        mt-[80px]
+                        mb-[30px]
                         max-w-[1200px] 
                         shadow-lg 
                         rounded-2xl 
