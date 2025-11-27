@@ -287,9 +287,6 @@ function StructureHome({ children }){
                         ease-in-out
                         relative
                         flex-1
-                        flex
-                        justify-center
-                        items-center
                     `}>
                         <AnimatePresence>
                             { width <= 939 && isOpen ? <motion.div 

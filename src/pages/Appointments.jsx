@@ -14,6 +14,7 @@ import { useFeedback } from "../contexts/api/useFeedback";
 
 import SmallLoader from "../components/loaders/SmallLoader";
 import { useAuth } from "../contexts/auth/useAuth";
+import { useNavigate } from "react-router-dom";
 
 
 function Appointments () {
@@ -22,6 +23,8 @@ function Appointments () {
 
     const { theme, validateTheme } = useTheme();
     const { nameAppt, setNameAppt } = useAppointment(null);
+
+    const navigate = useNavigate();
 
     const { user } = useAuth();
 
@@ -129,6 +132,14 @@ function Appointments () {
             </div>
         )
     }
+
+    useEffect(() => {
+        if(status === 201){
+            setTimeout(() => {
+                navigate("/home")
+            }, 3000)
+        }
+    }, [status])
 
     useEffect(() => {
         if (!doctors || doctors.length === 0) return;
@@ -373,7 +384,7 @@ function Appointments () {
                     
                     </motion.div> : <SmallLoader/>
                     }
-            </div> : <h1 className="font-DmSans text-[1.155rem]">Consulta agendada!</h1>}
+            </div> : <SmallLoader/>}
             
         </motion.div>
     )

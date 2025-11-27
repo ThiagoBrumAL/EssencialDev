@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { useApi } from "../api/api";
 import SmallLoader from "../components/loaders/SmallLoader";
+import { useWindowWidth } from "../hooks/WindowWidth";
+import { Forward } from 'lucide-react';
 
 function Chatbot() {
     const api = useApi();
@@ -12,6 +14,8 @@ function Chatbot() {
     const [isTyping, setIsTyping] = useState(false);
 
     const messagesContainerRef = useRef(null);
+
+    const width = useWindowWidth()
 
     const [messages, setMessages] = useState([
         { author: "bot", text: "Olá! Como posso ajudar?" }
@@ -128,6 +132,54 @@ function Chatbot() {
         </div>
     );
 
+    const SelectOptions = () => {
+
+        const [selectedAsk, setSelectedAsk] = useState(ask[0].ask);
+
+        return (
+
+            <div className="
+                px-[24px]
+                flex
+                gap-4
+            ">
+                <select 
+                onChange={(e) => setSelectedAsk(e.target.value)}
+                className={`
+                w-full
+                outline-none
+                px-[8px]
+                py-[10px]
+                rounded-lg
+                border-[2px]
+                ${validateTheme(theme, "bg-slate-200 border-slate-300 text-slate-900", "bg-slate-800 border-slate-500 text-slate-400")}
+                `} name="options-user" id="">
+                    {
+                        ask.map((a, i) => {
+                            return <option key={i} value={`${ a.ask }`}> { a.ask } </option>
+                        })
+                    }
+                </select>
+                <button
+                className={`
+                    px-4
+                    rounded-lg
+                    flex
+                    justify-center
+                    items-center
+                    bg-gradient-to-tr
+                    ${validateTheme(theme,
+                        "from-teal-400 to-indigo-400 text-slate-50" , 
+                        "from-[#01051C] to-[#051782] text-slate-50")}    
+                `}
+                onClick={() => handleOptionClick(selectedAsk)}>
+                    <Forward />
+                </button>
+            </div>
+            
+        )
+    }
+
     const TypingIndicator = () => (
         <div className="flex flex-row gap-[12px] md:gap-[24px] opacity-80">
             <img
@@ -222,11 +274,15 @@ function Chatbot() {
                             </div>
                         </div>
 
-                        <div className={`w-full border-t-[2px] ${validateTheme(theme, "border-slate-200", "border-slate-500")}  px-[32px] py-[24px] flex flex-wrap gap-[20px]`}>
-                            {ask.map(item => (
-                                <Option key={item.ask} onClick={() => handleOptionClick(item.ask)} text={item.ask} />
-                            ))}
-                        </div>
+                        {
+                            width <= 396
+                            ? <SelectOptions />
+                                : <div className={`w-full border-t-[2px] ${validateTheme(theme, "border-slate-200", "border-slate-500")}  px-[32px] py-[24px] flex flex-wrap gap-[20px]`}>
+                                {ask.map(item => (
+                                    <Option key={item.ask} onClick={() => handleOptionClick(item.ask)} text={item.ask} />
+                                ))}
+                            </div>
+                        }
 
                     </div>
                 ) : (

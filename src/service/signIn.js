@@ -30,8 +30,6 @@ export const useSignIn = () => {
 
             const datas = { token, dateExpiration, sub }
 
-            console.log(returnFromApi);
-
             return body.login(datas, () => {
                 setTimeout(() => body.navigate("/home"), 500)
             })

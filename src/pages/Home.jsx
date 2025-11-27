@@ -4,8 +4,6 @@ import { useTheme } from "../contexts/theme/useTheme";
 import { useWindowWidth } from '../hooks/WindowWidth'
 import { useAuth } from "../contexts/auth/useAuth";
 
-import axios from "axios";
-
 import { ArrowLeft } from 'lucide-react';
 import { ArrowRight } from 'lucide-react';
 import CardHome from "../components/cards/CardHome";
@@ -15,6 +13,8 @@ import SectionWrapperA from "../components/wrappers/home/SectionWrapperA"
 import SectionWrapperB from "../components/wrappers/home/SectionWrapperB";
 import SectionWrapperC from "../components/wrappers/home/SectionWrapperC";
 import SectionWrapperD from "../components/wrappers/home/SectionWrapperD";
+
+import { motion } from "framer-motion";
 
 
 import { cloudinary } from "../cloud/cloudinary";
@@ -193,11 +193,17 @@ function Home(){
     
    
     return (
-        <div
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             className={`
                 w-full
                 ${validateTheme(theme,"bg-[#FAFAFA]","bg-slate-900")}
                 mt-[90px]
+                transition-transform
+                duration-300
+                ease-in-out
         `}>
             <SectionWrapperA 
                 cloudinary={cloudinary} 
@@ -322,7 +328,7 @@ function Home(){
             <SectionWrapperC adventages={ adventages }/>
             <SectionWrapperD path={"/home"}/>
 
-        </div>
+        </motion.div>
     )
 
 }
