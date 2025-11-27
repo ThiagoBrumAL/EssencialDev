@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion, transform } from "framer-motion"
 import { useApi } from "../../api/api"
 import { useEffect, useState } from "react"
 import { useTheme } from "../../contexts/theme/useTheme"
@@ -37,7 +37,8 @@ function CardAppointments ({ params }) {
                 font-DmSans
                 font-bold
                 flex
-                items-center      
+                items-center  
+                justify-end    
             `}>
                 <span className={`
                     ${validateTheme(theme, "bg-slate-200", "bg-slate-800")}
@@ -61,6 +62,13 @@ function CardAppointments ({ params }) {
     }
 
     const Line = ({ doctor, date, id, hour, username }) => {
+
+        const transformDate = date.split('')
+        transformDate[4] = "/"
+        transformDate[7] = "/"
+        
+        const newDate = transformDate.join("")
+
         return (
 
             <motion.div
@@ -156,7 +164,7 @@ function CardAppointments ({ params }) {
                                     </p>
                                 </div>
                                 
-                                <MyStyle text={ "Data" } param={ date }/>
+                                <MyStyle text={ "Data da consulta" } param={ newDate }/>
                             </div>
                             <div className="
                                 flex
@@ -192,7 +200,7 @@ function CardAppointments ({ params }) {
                                         { username || "Paciente" }
                                     </p>
                                 </div>
-                                <MyStyle text={ "Hora" } param={ hour }/>
+                                <MyStyle text={ "Horário da consulta" } param={ hour }/>
                             </div>
                         </div>
 
@@ -248,8 +256,6 @@ function CardAppointments ({ params }) {
                     rounded-xl
                     relative
                 `}>
-
-                    {values && console.log(values)}
                     
                     {user && <AnimatePresence mode="popLayout">
                         {values && values ? values.map((field) => {

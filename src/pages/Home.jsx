@@ -200,7 +200,7 @@ function Home(){
             className={`
                 w-full
                 ${validateTheme(theme,"bg-[#FAFAFA]","bg-slate-900")}
-                mt-[90px]
+                mt-[20px]
                 transition-transform
                 duration-300
                 ease-in-out

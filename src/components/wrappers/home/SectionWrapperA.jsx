@@ -44,7 +44,8 @@ const SectionWrapperA = React.memo(function SectionWrapperA({ cloudinary, h1, te
                     </h1>
                     <p className={`
                         font-DmSans
-                        text-[1.175rem]
+                        md:text-[1.175rem]
+                        text-[1rem]
                         ${validateTheme(theme, "text-[#000000]", "text-[#FFFAFE]")}
                         font-normal
                         leading-normal

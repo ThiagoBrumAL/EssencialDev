@@ -282,12 +282,12 @@ function StructureHome({ children }){
                     <main className={`
                         ${validateTheme(theme,"bg-[#FAFAFA]","bg-slate-900")}
                         w-full
-                        h-full
                         transition-transform
                         duration-1000
                         ease-in-out
                         relative
                         flex-1
+                        py-[32px]
                     `}>
                         <AnimatePresence>
                             { width <= 939 && isOpen ? <motion.div 
