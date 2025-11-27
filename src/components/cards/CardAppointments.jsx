@@ -12,11 +12,14 @@ function CardAppointments ({ params }) {
     const [values, setValues] = useState(null);
     const [user, setUser] = useState(null)
 
+    const [existAppointment, setExistAppointment] = useState(null);
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
         
         const body = { setValues }
-
         api("get", "/info/appointments", body)
+
         return
 
     }, [])
@@ -27,6 +30,14 @@ function CardAppointments ({ params }) {
         api("get", "/info", body)
 
     }, [])
+
+
+    useEffect(() => {
+        if(user && values){
+            handleAppointments();
+            setLoading(false);
+        }
+    }, [user, values])
 
 
     const MyStyle = ({ text, param }) => {
@@ -60,6 +71,13 @@ function CardAppointments ({ params }) {
                 </span> 
             </h1>
         )
+    }
+
+    const handleAppointments = () => {
+        const bool = values.some((a) => a.patient_id === user.id)
+
+        if(bool == true) return setExistAppointment(true)
+        else return setExistAppointment(false)
     }
 
     const Line = ({ doctor, date, id, hour, username }) => {
@@ -246,35 +264,50 @@ function CardAppointments ({ params }) {
                 </div>
                 
                 <motion.div
-                style={{ scrollbarWidth: "none" }}
-                className={`
-                    flex
-                    flex-col
-                    gap-4
-                    min-h-[380px]
-                    max-h-[450px]
-                    overflow-y-scroll
-                    rounded-xl
-                    relative
-                `}>
-                    
-                    {user && <AnimatePresence mode="popLayout">
-                        {values && values ? values.map((field) => {
+                    style={{ scrollbarWidth: "none" }}
+                    className="
+                        flex flex-col gap-4
+                        min-h-[380px] max-h-[450px]
+                        overflow-y-scroll rounded-xl relative
+                    "
+                >
 
-                            if(user && user.id === field.patient_id){
-                                return (
-                                    <Line 
-                                        key={field.id} 
-                                        id={field.id} 
-                                        doctor={field.specialist} 
-                                        hour={field.hour} 
-                                        date={field.date} 
-                                        username={field.patientName}
-                                    />
-                                )
-                            }
-                        }) : <SmallLoader />}
-                    </AnimatePresence> }
+                    {loading && (
+                        <div className="flex w-full h-full justify-center items-center">
+                            <SmallLoader />
+                        </div>
+                    )}
+
+                    {!loading && existAppointment && (
+                        <AnimatePresence mode="popLayout">
+                            {values?.map((field) => {
+                                if(user && user.id === field.patient_id){
+                                    return (
+                                        <Line
+                                            key={field.id}
+                                            id={field.id}
+                                            doctor={field.specialist}
+                                            hour={field.hour}
+                                            date={field.date}
+                                            username={field.patientName}
+                                        />
+                                    );
+                                }
+                            })}
+                        </AnimatePresence>
+                    )}
+
+                    {!loading && existAppointment === false && (
+                        <div className="flex w-full justify-center">
+                            <h1 className={`
+                                text-[1.375rem]
+                                ${validateTheme(theme, "text-slate-700", "text-slate-500")}
+                                font-DmSans font-bold
+                            `}>
+                                Ops! Você não possui agendamentos :(
+                            </h1>
+                        </div>
+                    )}
 
                 </motion.div>
                 
