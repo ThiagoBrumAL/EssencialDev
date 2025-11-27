@@ -142,6 +142,7 @@ function Chatbot() {
                 px-[24px]
                 flex
                 gap-4
+                py-[24px]
             ">
                 <select 
                 onChange={(e) => setSelectedAsk(e.target.value)}

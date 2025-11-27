@@ -81,6 +81,10 @@ function Appointments () {
             api("post", "/appointments", datas)
             setOpenHou(false)
             setOpenCal(false)
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth" 
+            });
         }else{
             badFeedback("400", renderCardFeedback, "/appointments")
         }
