@@ -38,7 +38,8 @@ function CardAppointments ({ params }) {
                 font-bold
                 flex
                 items-center  
-                justify-end    
+                md:justify-end
+                justify-start
             `}>
                 <span className={`
                     ${validateTheme(theme, "bg-slate-200", "bg-slate-800")}
