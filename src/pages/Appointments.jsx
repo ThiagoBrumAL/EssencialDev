@@ -280,7 +280,7 @@ function Appointments () {
                     Consulta ({ nameAppt?.spec || "" })
                 </h1>
                     {
-                        false ? <motion.div className="
+                        user ? <motion.div className="
                         w-full
                         flex
                         md:flex-nowrap
