@@ -263,15 +263,15 @@ function Appointments () {
                 mt-[90px]
                 mb-[40px]
         `}>
-            <div className="
+            <div className={`
                 w-full
                 h-full
                 flex
                 gap-[32px]
                 max-w-[900px]
-                justify-start
+                ${ user && doctors ? "justify-start" : "justify-center"}
                 flex-col
-            ">
+            `}>
                 <h1 className={`
                     text-[1.475rem]
                     ${validateTheme(theme, "text-black", "text-slate-200")}
@@ -398,7 +398,7 @@ function Appointments () {
                         </div>
                     </AnimatePresence>
                     
-                    </motion.div> : <div className="w-full h-full flex justify-center items-center py-[80px]"><SmallLoader/></div> }
+                    </motion.div> : <div className="w-full h-full flex relative justify-center items-center py-[150px] my-[80px]"><SmallLoader/></div> }
             </div>
             
         </motion.div>
