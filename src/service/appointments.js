@@ -76,7 +76,6 @@ export const useAppointments = () => {
             return goodFeedback(response.status, renderCardFeedback, "/appointments")
 
         }catch(e){
-            console.log(e);
             const status = error.response?.status
             badFeedback(status, renderCardFeedback, "/appointments")
             throw new Error(error)
@@ -84,10 +83,40 @@ export const useAppointments = () => {
         
     }
 
+    const deleteAppointment = async (body = null, axios) => {
+
+        try{
+            const response = await axios.delete(`https://essencial-server.vercel.app/appointments/${body.id}`, 
+                { 
+                    withCredentials: true,
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            )
+
+            if(response.status === 204) {
+                body.setDeletedStatus(response.status)
+                setTimeout(() => {
+                    body.setRenderConfirmDelete(() => {
+                        return { isActive: false, id: null }
+                    })
+                }, 1000)
+            }
+            
+        }catch{
+            const status = error.response?.status
+            badFeedback(status, renderCardFeedback, "/appointments")
+            throw new Error(error)
+        }
+
+    }
+
     return {
         getAppointments,
         postAppointments,
-        getAppointmentsId
+        getAppointmentsId, 
+        deleteAppointment
     }
 
 }

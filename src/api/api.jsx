@@ -17,7 +17,7 @@ export const useApi = () => {
     const { getUser } = useUser();
     const { updateUser } = useUser();
     const getDoctors = useDoctors();
-    const { getAppointments, postAppointments, getAppointmentsId } = useAppointments()
+    const { getAppointments, postAppointments, deleteAppointment } = useAppointments()
 
     const api = async (method, where, body) => {
 
@@ -39,7 +39,9 @@ export const useApi = () => {
                 "/info/update": updateUser
             },
             "put":{},
-            "delete":{}
+            "delete":{
+                "/info/appointments": deleteAppointment,
+            }
         }
 
         return routes[method][where](body, axios)
