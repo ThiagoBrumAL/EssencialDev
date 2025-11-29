@@ -291,7 +291,7 @@ function CardAppointments ({ params }) {
                 className={`
                     fixed
                     border-[2px]
-                    ${validateTheme(theme, "bg-slate-100 border-slate-200", "border-slate-500")}
+                    ${validateTheme(theme, "bg-slate-100 border-slate-200", "border-slate-500 bg-slate-900")}
                     rounded-2xl
                     z-50
                     left-[50%]
@@ -406,7 +406,7 @@ function CardAppointments ({ params }) {
                         transition={{ duration: 0.3 }}
                         className="
                             fixed inset-0
-                            bg-black bg-opacity-30 
+                            bg-black bg-opacity-60 
                             z-40
                         "
                         onClick={() => setRenderConfirmDelete({ isActive: false, id: null })}
@@ -487,9 +487,10 @@ function CardAppointments ({ params }) {
                             transition={{ duration: 0.6 }}
                             className="flex w-full justify-center">
                                 <h1 className={`
-                                    text-[1.375rem]
+                                    md:text-[1.375rem]
+                                    text-[1.125rem]
                                     ${validateTheme(theme, "text-slate-700", "text-slate-500")}
-                                    font-DmSans font-bold
+                                    font-DmSans font-bold text-center
                                 `}>
                                     Ops! Você não possui agendamentos :(
                                 </h1>
