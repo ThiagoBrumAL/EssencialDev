@@ -24,7 +24,6 @@ function CardAppointments ({ params }) {
     const deleteAppointment = (id) => {
         const body = { id, setDeletedStatus, setRenderConfirmDelete }
         api("delete", "/info/appointments", body)
-
     }
 
     useEffect(() => {
@@ -53,15 +52,18 @@ function CardAppointments ({ params }) {
     useEffect(() => {
         if(deletedStatus === 204){
             setKeyReload(prev => !prev)
+            setDeletedStatus(0)
+            window.location.reload()
         }
     }, [deletedStatus])
 
 
     useEffect(() => {
         if (values && user) {
-            const has = values.some(a => a.patient_id === user.id)
-            setExistAppointment(has)
-            setLoading(false)
+
+            const has = values.length > 0 && values.some(a => a.patient_id === user.id);
+            setExistAppointment(has);
+            setLoading(false);
         }
     }, [values, user])
 
@@ -97,13 +99,6 @@ function CardAppointments ({ params }) {
                 </span> 
             </h1>
         )
-    }
-
-    const handleAppointments = () => {
-        const bool = values.some((a) => a.patient_id === user.id)
-
-        if(bool == true) return setExistAppointment(true)
-        else return setExistAppointment(false)
     }
 
     const Line = ({ doctor, date, id, hour, username }) => {
@@ -287,6 +282,7 @@ function CardAppointments ({ params }) {
 
         return (
             <motion.div
+                key={id}
                 transition={{ duration: 0.5 }}
                 className={`
                     fixed
@@ -461,25 +457,24 @@ function CardAppointments ({ params }) {
 
                         {!loading && existAppointment && (
                             <AnimatePresence mode="popLayout">
-                                {values?.map((field) => {
-                                    if(user && user.id === field.patient_id){
-                                        return (
-                                            <Line
-                                                key={field.id}
-                                                id={field.id}
-                                                doctor={field.specialist}
-                                                hour={field.hour}
-                                                date={field.date}
-                                                username={field.patientName}
-                                            />
-                                        );
-                                    }
-                                })}
+                                {values
+                                    ?.filter(field => field.patient_id === user?.id)
+                                    .map(field => (
+                                        <Line
+                                        key={field.id}
+                                        id={field.id}
+                                        doctor={field.specialist}
+                                        hour={field.hour}
+                                        date={field.date}
+                                        username={field.patientName}
+                                        />
+                                    ))
+                                }
                             </AnimatePresence>
                         )}
 
                         {!loading && existAppointment === false && (
-                            <motion.div 
+                            <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}

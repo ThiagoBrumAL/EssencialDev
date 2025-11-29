@@ -73,8 +73,10 @@ function StructureHome({ children }){
                     { h3 }
                 </h3>
                 {
-                    arr.map((p) => {
-                        return <p className="
+                    arr.map((p, index) => {
+                        return <p
+                            key={index}
+                            className="
                             font-DmSans
                             font-normal
                             text-[1rem]
