@@ -60,6 +60,49 @@ function StructureHome({ children }){
         validateTheme,
     } = useTheme()
 
+    const Info = ({ h3, arr }) => {
+        return (
+            <div>
+                <h3 className="
+                    font-DmSans
+                    font-normal
+                    text-[1.275rem]
+                    text-white
+                    mb-[12px]
+                ">
+                    { h3 }
+                </h3>
+                {
+                    arr.map((p) => {
+                        return <p className="
+                            font-DmSans
+                            font-normal
+                            text-[1rem]
+                            text-white
+                            leading-normal
+                        ">
+                            { p }
+                        </p>
+                    })
+                }
+                { width <= 640 ? <hr className="mt-[16px]"/> : null }
+            </div>
+        )
+    }
+
+    const SocialMedia = ({ link, alt }) => {
+        return (
+            <img 
+                src={ link } 
+                alt={ alt } 
+                className="
+                    w-[32px]
+                    h-[32px]
+                "
+            />
+        )
+    }
+
     const Link = ({ name, path, condition}) => {
         const isActive = locale.pathname === path ? true : false
 
@@ -331,32 +374,92 @@ function StructureHome({ children }){
                     </main>
                     <footer className={`
                         w-full
-                        p-[24px]
-                        bg-gradient-to-tr
+                        py-[24px]
+                        md:px-[36px]
+                        px-[24px]
+                        bg-gradient-to-t
                         flex
-                        justify-center
-                        items-center
                         flex-col
+                        justify-between
+                        items-center
                         ${validateTheme(theme,"from-teal-400 to-indigo-400", "from-[#01051C] to-[#051782]")}
                     `}>
-                        <h1 className="
-                            text-[1.375rem]
-                            leading-normal
-                            text-[#FFFAFE]
-                            font-normal
-                            font-DmSans
+
+                        <div className="
+                            w-full
+                            h-auto
+                            flex
+                            justify-start
+                            items-start
+                            mb-[42px]
                         ">
-                            Clinica EssencialDev
-                        </h1>
-                        <h2 className="
-                            text-[1.175rem]
-                            leading-normal
-                            text-[#FFFAFE]
-                            font-normal
-                            font-DmSans
+                            <div className="
+                                w-full
+                                max-w-[1400px]
+                                h-auto
+                                flex
+                                sm:flex-row
+                                flex-col
+                                justify-between
+                                gap-3
+                            ">
+                                <Info h3={"Sobre nós"} arr={["Quem somos", "Nossa missão", "+1-2345-6789", "Chat / Suporte Técnico"]}/>
+                                <Info h3={"Contato"} arr={["E-mail", "Telefone / WhatsApp", "Endereço", "Horário de atendimento"]}/>
+                                <Info h3={"Legal"} arr={["Termos de Uso", "Política de Privacidade", "Política de Cookies"]}/>
+                                <Info h3={"Serviços"} arr={["Agendamentos", "Exames", "Análises"]}/>
+                            </div>
+                        </div>
+
+                        <div className="
+                            w-full
+                            h-auto
+                            flex
+                            justify-between
                         ">
-                            Sua saúde, nossa prioridade!
-                        </h2>
+                            <div className="
+                                w-full
+                                max-w-[168px]
+                                h-auto
+                                flex
+                                flex-row
+                                justify-between
+                            ">
+                                <SocialMedia 
+                                    link={"https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1764385667/Link_z2r2s2.png"} 
+                                    alt={"Facebook"}
+                                />
+                                <SocialMedia 
+                                    link={"https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1764385668/Link-1_lz4f5w.png"} 
+                                    alt={"Linkedin"}
+                                />
+                                <SocialMedia 
+                                    link={"https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1764385668/Link-2_nldwxh.png"} 
+                                    alt={"Twitter"}
+                                />
+                                <SocialMedia 
+                                    link={"https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1764385668/Link-3_m2wgfd.png"} 
+                                    alt={"Instagram"}
+                                />
+                            </div>
+
+                            <div className="
+                                w-auto
+                                h-auto
+                            ">
+                                <img 
+                                    src="https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1763457834/Slice_1-removebg-preview_v3clbw.png"
+                                    alt="Essencial Dev"
+                                    className="
+                                        md:h-[47px]
+                                        md:w-[50px]
+                                        h-[37px]
+                                        w-[40px]
+                                    "
+                                />
+                            </div>
+                        </div>
+
+
                     </footer>
                 </motion.div>
 

@@ -78,18 +78,20 @@ function User({ children }){
             justify-center
             items-start
             px-[24px]
-            mt-[90px]
+            my-[90px]
             md:mt-[30px]
         `}>
             <section className="
                 w-full
                 h-auto
                 max-w-[1280px]
+                min-h-[533px]
                 md:pt-[80px]
                 flex
                 gap-[50px]
                 md:flex-row
                 flex-col
+                justify-start
             ">
                 <div className={`}
                     ${validateTheme(

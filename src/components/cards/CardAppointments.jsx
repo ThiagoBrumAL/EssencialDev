@@ -422,7 +422,6 @@ function CardAppointments ({ params }) {
                 w-full
                 max-w-[896px]
                 sm:mb-[0px]
-                mb-[42px]
                 relative
             '>
 

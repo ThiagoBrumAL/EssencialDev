@@ -12,8 +12,6 @@ function CardForUserRoutes ({ params }) {
         <div className="
             w-full
             max-w-[896px]
-            sm:mb-[0px]
-            mb-[42px]
             relative
         ">
             <div className='
