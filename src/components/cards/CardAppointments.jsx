@@ -10,9 +10,6 @@ function CardAppointments ({ params }) {
     const api = useApi()
     const { theme, validateTheme } = useTheme()
 
-    const [keyReload, setKeyReload] = useState(false);
-    const [deletedStatus, setDeletedStatus] = useState(0);
-
     const [values, setValues] = useState(null);
     const [user, setUser] = useState(null)
 
@@ -22,7 +19,11 @@ function CardAppointments ({ params }) {
     const [renderConfirmDelete, setRenderConfirmDelete] = useState({ isActive: false, id: null });
 
     const deleteAppointment = (id) => {
-        const body = { id, setDeletedStatus, setRenderConfirmDelete }
+        setValues(prevValues => prevValues.filter(appointment => appointment.id !== id));
+        
+        setRenderConfirmDelete({ isActive: false, id: null });
+
+        const body = { id } 
         api("delete", "/info/appointments", body)
     }
 
@@ -41,31 +42,18 @@ function CardAppointments ({ params }) {
         return 
 
     }, [])
-
+    
     useEffect(() => {
-        if (keyReload) {
-            const body = { setValues };
-            api("get", "/info/appointments", body);
-        }
-    }, [keyReload]);
 
-    useEffect(() => {
-        if(deletedStatus === 204){
-            setKeyReload(prev => !prev)
-            setDeletedStatus(0)
-            window.location.reload()
-        }
-    }, [deletedStatus])
+        if (!values || !user) return;
 
+        const filtered = values.filter(a => a.patient_id === user.id);
+        const has = filtered.length > 0;
 
-    useEffect(() => {
-        if (values && user) {
+        setExistAppointment(has);
+        setLoading(false);
 
-            const has = values.length > 0 && values.some(a => a.patient_id === user.id);
-            setExistAppointment(has);
-            setLoading(false);
-        }
-    }, [values, user])
+    }, [values, user]);
 
 
     const MyStyle = ({ text, param }) => {
@@ -113,7 +101,7 @@ function CardAppointments ({ params }) {
 
             <motion.div
                 layout
-                initial={false}
+                initial={{ opacity: 0 }} 
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
@@ -440,7 +428,6 @@ function CardAppointments ({ params }) {
                 </div>
                 
                     <motion.div
-                        key={keyReload}
                         style={{ scrollbarWidth: "none" }}
                         className={`
                             flex flex-col gap-4
@@ -461,12 +448,12 @@ function CardAppointments ({ params }) {
                                     ?.filter(field => field.patient_id === user?.id)
                                     .map(field => (
                                         <Line
-                                        key={field.id}
-                                        id={field.id}
-                                        doctor={field.specialist}
-                                        hour={field.hour}
-                                        date={field.date}
-                                        username={field.patientName}
+                                            key={field.id}
+                                            id={field.id}
+                                            doctor={field.specialist}
+                                            hour={field.hour}
+                                            date={field.date}
+                                            username={field.patientName}
                                         />
                                     ))
                                 }

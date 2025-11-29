@@ -67,11 +67,8 @@ export const useAppointments = () => {
                     }
                 }
             )
-
-            const datas = await response.data
             
             if(response.status === 201) setStatus(response.status);
-            
 
             return goodFeedback(response.status, renderCardFeedback, "/appointments")
 
