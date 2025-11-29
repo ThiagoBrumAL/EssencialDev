@@ -96,7 +96,7 @@ function FormSignIn(){
                 flex-col 
                 items-center 
                 md:mt-[100px] 
-                mt-[50px]
+                my-[50px]
                 transition
                 ease-in-out
                 duration-700

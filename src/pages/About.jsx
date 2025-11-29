@@ -103,7 +103,8 @@ function About () {
         <div
             className={`
                 w-full
-                mt-[90px]
+                md:mt-[50px]
+                mt-[30px]
                 mb-[60px]
         `}>
             <div className={`

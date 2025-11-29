@@ -178,7 +178,7 @@ function FormSignUp(){
                 flex 
                 flex-col 
                 items-center 
-                mt-[50px]
+                my-[50px]
                 transition
                 ease-in-out
                 duration-700
